@@ -23,5 +23,5 @@ const multiples53 = (limit) => {
       
 }
 
-console.log(multiples53(10))
-console.log(multiples53(1000))
+// console.log(multiples53(10))
+console.log("Answer to problem 1: ", multiples53(1000))

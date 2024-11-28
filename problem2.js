@@ -32,5 +32,5 @@ const fibonacci = (limit) => {
 
 }
 
-console.log(fibonacci(100))
-console.log(fibonacci(4000000))
+// console.log(fibonacci(100))
+console.log("Answer to problem 2: ", fibonacci(4000000))
