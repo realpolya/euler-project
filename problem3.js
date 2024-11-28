@@ -30,6 +30,26 @@ const isPrime = (number) => {
   
 }
 
+const findPrime = limit => {
+
+      const primes = []
+      for (let i = 1; i <= Math.sqrt(limit); i += 2) {
+            if (isPrime(i) && limit % i === 0) {
+                  primes.push(i)
+            }
+      }
+      
+      return primes[primes.length - 1]
+
+}
+
+
+// console.log(findPrime(13195))
+console.log("Answer to problem 3: ", findPrime(600851475143))
+
+
+/*----------------------------- TESTS BELOW ------------------------------------*/
+
 /* ascending order function */
 const largestPrimeAsc = (number) => {
 
@@ -54,7 +74,7 @@ const largestPrimeAsc = (number) => {
 
 }
 
-
+/* descending order function */
 const largestPrimeDesc = (number) => {
 
       let largest;
@@ -71,7 +91,6 @@ const largestPrimeDesc = (number) => {
             }
             
            i -= 2
-           console.log('i is ', i)
 
       }
 
@@ -81,6 +100,3 @@ const largestPrimeDesc = (number) => {
       return "Unable to find"
 
 }
-
-console.log(largestPrimeDesc(13195))
-console.log(largestPrimeDesc(600851475143))
