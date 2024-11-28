@@ -15,7 +15,7 @@ const multiples53 = (limit) => {
             }
       }
 
-      return sum = multiples.reduce((arg, i) => {
+      return multiples.reduce((arg, i) => {
 
             return arg += i;
 

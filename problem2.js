@@ -6,3 +6,31 @@ $$1, 2, 3, 5, 8, 13, 21, 34, 55, 89...
 By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
 */
+
+const fibonacci = (limit) => {
+
+      if (limit < 3) return "Need limit above 2"
+
+      const sequence = [1, 2]
+      let len = sequence.length
+      let i = 0;
+      while (i <= limit) {
+
+            if (i) {
+                  sequence.push(i)
+                  len = sequence.length
+            }
+
+            i = sequence[len - 1] + sequence[len - 2]
+      }
+
+      const evenSequence = sequence.filter(member => member % 2 === 0)
+
+      return evenSequence.reduce((arg, member) => {
+            return arg += member
+      }, 0)
+
+}
+
+console.log(fibonacci(100))
+console.log(fibonacci(4000000))
