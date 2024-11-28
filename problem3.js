@@ -60,7 +60,7 @@ const largestPrimeDesc = (number) => {
       let largest;
 
       // find the first prime number in descending order
-      let i = number;
+      let i = Math.round(number / 2) + 1;
       if (i % 2 === 0) i--;
       while (i >= 1) {
 
@@ -71,6 +71,7 @@ const largestPrimeDesc = (number) => {
             }
             
            i -= 2
+           console.log('i is ', i)
 
       }
 
