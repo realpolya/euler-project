@@ -62,4 +62,4 @@ const findPrime = orderNum => {
 
 }
 
-console.log("Answer to problem 6: ", findPrime(10001))
+console.log("Answer to problem 7: ", findPrime(10001))
