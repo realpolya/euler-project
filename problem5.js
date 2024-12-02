@@ -47,5 +47,4 @@ const smallestMultiple = (range) => {
 
 }
 
-console.log(smallestMultiple([1, 10]))
-console.log(smallestMultiple([1, 20]))
+console.log("Answer to problem 5: ", smallestMultiple([1, 20]))
