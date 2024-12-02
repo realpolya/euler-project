@@ -85,30 +85,63 @@ const largestProduct = (length, number=given) => {
       const sequences = []
       
       // find all possible sequences of "length" adjacent numbers
-
       // create a loop to start with all the digits minus the last ones
       for (let i = 0; i < (+number.length - +length); i++) {
 
             let adjSequence = true
+            let currentSequence = []
+            let beforeLast = false;
 
             // nested loop to count for the requested sequence length
             for (let j = i; j < (length + i); j++) {
 
-                  if (+array[j] === +array[j+1] || 
+                  if (beforeLast) {
+
+                        currentSequence.push(array[j])
+                        continue;
+
+                  } else if (+array[j] === +array[j+1] || 
                         (+array[j] - +array[j+1] === 1) ||
                         (+array[j] - +array[j+1] === -1)
                   ) {
+
+                        // special case for the last member
+                        if ((j + 2 === length + i)) {
+                              // console.log("turning before last true")
+                              beforeLast = true
+                        } 
                         
-                  }
+                        currentSequence.push(array[j])
+                        continue;
+                  } 
+
+                  adjSequence = false
+                  break;
 
             }
 
+            if (adjSequence) sequences.push(currentSequence)
+
       }
       
+      console.log('sequences are ', sequences)
+
       // calculate their products
-      
+      const products = []
+      sequences.forEach(sequence => {
+            let product = sequence.reduce((arg, digit) => {
+                  return arg *= digit
+            }, 1)
+            products.push(product)
+      })
+
+      console.log(products)
+
       // choose the largest product
+      const largest = Math.max(...products)
+      return largest
 
 }
 
-largestProduct(10)
+// console.log(largestProduct(4))
+console.log(largestProduct(8))
