@@ -51,10 +51,61 @@ def grid_to_list():
             20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
             01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48'''
       
-      return grid.split()
+      grid_list = grid.split()
+
+      return [int(number) for number in grid_list]
 
 
-def product_in_grid(length, grid=grid_to_list()):
+def product_in_grid(length=4, grid_width=20, grid=grid_to_list()):
+
       print(grid)
+      products = []
+      row = grid_width # current row for range (row 1 is grid_width in list, row 2 is grid_width + grid_width, etc)
 
-product_in_grid(4)
+      # create a loop to calculate the largest product from the list
+      # for the horizontal length
+      
+      # horizontal products
+      for i in range(grid_width): # go through every row vertically
+            
+            for y in range(grid_width * i, row - length + 1, 1): # this designates a starting member of each product
+
+                  print('y start:', grid_width * i, 'y end:', row - length + 1)
+
+                  product = 1 # initialize a product
+                  
+                  # calculate product
+                  for z in range (length): # multiply by number of members in length
+
+                        print ('on this iteration i is ', i, 'y is', y, 'and z is', z)
+                        if y + z == 399:
+                              print('399 is here!')
+
+                        product *= grid[y + z] # need grid[23] or grid[25]
+                        if not product:
+                              break
+                  
+                  # append if not 0
+                  if product:
+                        products.append(product)
+                  
+            
+            # increment row in i loop
+            row += grid_width
+      
+
+      # print('products are', products)
+      print('product length is', len(products))
+      
+      # vertical products
+
+      # diagonal products
+
+      # find the largest number
+
+      # return the largest number
+
+
+
+
+product_in_grid()
