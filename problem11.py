@@ -95,9 +95,36 @@ def product_in_grid(length=4, grid_width=20, grid=grid_to_list()):
       
 
       # print('products are', products)
-      print('product length is', len(products))
+      print('product length after horizontal is', len(products))
       
+      last_row = grid_width * (grid_width - 1)
+      vertical_products = []
+
       # vertical products
+      for i in range(grid_width): # go through every column horizontally
+
+            end_y = last_row - ((length - 1) * grid_width) + i + 1
+            
+            for y in range(i, end_y, grid_width): # this designates a starting member of each product
+
+                  product = 1 # initialize a product
+                  
+                  # calculate product
+                  for z in range (length): # multiply by number of members in length
+
+                        print('i is ', i, 'y is ', y, 'grid number is ', y + (z * grid_width))
+
+                        product *= grid[y + (z * grid_width)] # need grid[320] or grid[321]
+                        if not product: # if ever at 0
+                              break
+                  
+                  # append if not 0
+                  if product:
+                        products.append(product)
+                        vertical_products.append(product)
+                  
+      print('vertical products are ', vertical_products)
+      print('length of vertical products is', len(vertical_products))
 
       # diagonal products
 
