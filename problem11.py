@@ -58,29 +58,21 @@ def grid_to_list():
 
 def product_in_grid(length=4, grid_width=20, grid=grid_to_list()):
 
-      # print(grid)
       products = []
       row = grid_width # current row for range (row 1 is grid_width in list, row 2 is grid_width + grid_width, etc)
-
-      # create a loop to calculate the largest product from the list
-      # for the horizontal length
       
       # horizontal products
       for i in range(grid_width): # go through every row vertically
             
             for y in range(grid_width * i, row - length + 1, 1): # this designates a starting member of each product
 
-                  # print('y start:', grid_width * i, 'y end:', row - length + 1)
-
                   product = 1 # initialize a product
                   
                   # calculate product
                   for z in range (length): # multiply by number of members in length
 
-                        # print ('on this iteration i is ', i, 'y is', y, 'and z is', z)
-                        
+                        product *= grid[y + z] 
 
-                        product *= grid[y + z] # need grid[23] or grid[25]
                         if not product:
                               break
                   
@@ -91,13 +83,9 @@ def product_in_grid(length=4, grid_width=20, grid=grid_to_list()):
             
             # increment row in i loop
             row += grid_width
-      
 
-      # print('products are', products)
-      print('product length after horizontal is', len(products))
       
       last_row = grid_width * (grid_width - 1)
-      vertical_products = []
 
       # vertical products
       for i in range(grid_width): # go through every column horizontally
@@ -111,101 +99,60 @@ def product_in_grid(length=4, grid_width=20, grid=grid_to_list()):
                   # calculate product
                   for z in range (length): # multiply by number of members in length
 
-                        # print('i is ', i, 'y is ', y, 'grid number is ', y + (z * grid_width))
-
-                        product *= grid[y + (z * grid_width)] # need grid[320] or grid[321]
+                        product *= grid[y + (z * grid_width)]
                         if not product: # if ever at 0
                               break
                   
                   # append if not 0
                   if product:
                         products.append(product)
-                        vertical_products.append(product)
                   
-      # print('vertical products are ', vertical_products)
-      print('length of vertical products is', len(vertical_products))
-
-      diag_right_products = []
 
       # diagonal products (left to right)
-      for i in range(grid_width - length + 1): # go through every column horizontally
+      for i in range(grid_width - length + 1): 
 
             end_y = last_row - ((length - 1) * grid_width) + i + 1
             
-            for y in range(i, end_y, grid_width): # this designates a starting member of each product
+            for y in range(i, end_y, grid_width):
 
                   product = 1 # initialize a product
-                  # watching = False
-                  # if grid[y] == 40:
-                  #       print('watching for 40')
-                  #       watching = True
                   
                   # calculate product
-                  for z in range (length): # multiply by number of members in length
+                  for z in range (length): 
 
-                        # if watching:
-                        #       print("y is ", y, "z is ", z, "z * grid_width is ", (z * grid_width), "total is ", y + z + (z * grid_width))
-                        #       # print("y + z + (z*grid_width)", y + z + (z * grid_width))
-                        #       print("watching for start 40, the number is", grid[y + z + (z * grid_width)])
+                        product *= grid[y + z + (z * grid_width)]
 
-                        product *= grid[y + z + (z * grid_width)] # need grid[320] or grid[321]
                         if not product: # if ever at 0
                               break
-                        
-                  # if watching:
-                  #       print ('product for start 40 is ', product)
                   
                   # append if not 0
                   if product:
                         products.append(product)
-                        diag_right_products.append(product)
 
-      # print('diagonal products are ', diag_right_products)
-
-      diag_left_products = []
 
       # diagonal products (right to left)
-      for i in range(length - 1, grid_width, 1): # go through every column horizontally
+      for i in range(length - 1, grid_width, 1):
 
             end_y = last_row - ((length - 1) * grid_width) + i + 1
             
-            for y in range(i, end_y, grid_width): # this designates a starting member of each product
+            for y in range(i, end_y, grid_width): 
 
-                  product = 1 # initialize a product
-                  # watching = False
-                  # if grid[y] == 40:
-                  #       print('watching for 40')
-                  #       watching = True
-                  
-                  # calculate product
-                  for z in range (length): # multiply by number of members in length
+                  product = 1
 
-                        # if watching:
-                        #       print("y is ", y, "z is ", z, "z * grid_width is ", (z * grid_width), "total is ", y - z + (z * grid_width))
-                        #       # print("y + z + (z*grid_width)", y + z + (z * grid_width))
-                        #       print("watching for start 40, the number is", grid[y - z + (z * grid_width)])
+                  for z in range (length):
 
-                        product *= grid[y - z + (z * grid_width)] # need grid[320] or grid[321]
-                        if not product: # if ever at 0
-                              break
+                        product *= grid[y - z + (z * grid_width)] 
                         
-                  # if watching:
-                  #       print ('product for start 40 is ', product)
+                        if not product:
+                              break
                   
                   # append if not 0
                   if product:
                         products.append(product)
-                        diag_left_products.append(product)
 
-      # print("diag left products are ", diag_left_products)
-
-      # find the largest number
-      largest = max(products)
-      print('largest product is ', largest)
 
       # return the largest number
-      return largest
+      return max(products)
 
 
-
-product_in_grid()
+print("Answer to problem 11: ", product_in_grid())
