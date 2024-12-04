@@ -17,34 +17,53 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 
 '''
+import math
+
+# extra function
+def is_prime(number):
+
+    if number <= 1:
+        return False 
+
+    divisorFound = False
+    for i in range(2, int(math.sqrt(number)) + 1):
+        if number % i == 0:
+            divisorFound = True
+            break
+
+    if divisorFound:  
+        # not a prime number
+        return False
+
+    return True
+
 
 def divisible_triangle(divisors_num):
 
     triangles = []
     answer = False
     order = 1
+    prev_triangle = 0
 
     # create a while loop for answer being False
     while not answer:
 
-        current_triangle = 0
-
-        # create a for loop to add to the current_triangle
-        for i in range(1, order + 1):
-            current_triangle += i
+        current_triangle = prev_triangle + order
         
+        prev_triangle = current_triangle
         order += 1
-        triangles.append(current_triangle)
-        print('current triangle is ', current_triangle)
 
+        triangles.append(current_triangle)
+        
         # loop through natural numbers, find divisors of current_triangle
         divisors = []
-        for i in range(1, current_triangle + 1):
+
+        for i in range(1, int(math.sqrt(current_triangle + 1)) + 1):
             if current_triangle % i == 0:
                 divisors.append(i)
 
         # if divisors == divisors_num or larger
-        if len(divisors) >= divisors_num:
+        if (len(divisors) * 2) >= divisors_num:
 
             # assign answer to current_triangle
             answer = current_triangle
@@ -52,5 +71,4 @@ def divisible_triangle(divisors_num):
     # return answer
     return answer
 
-# print(divisible_triangle(5))
-print(divisible_triangle(500))
+print("Answer to problem 12: ", divisible_triangle(500))
