@@ -22,5 +22,4 @@ def find_routes(size):
 
     return paths
 
-print(find_routes(4))
-
+print("Answer to problem 15: ", find_routes(20))
