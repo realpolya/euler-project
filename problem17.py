@@ -27,7 +27,6 @@ def write_nums(limit):
 
         # filter list
         filtered_chars = [char for char in chars if not ("," in char or '-' in char or ' ' in char)]
-        print("filtered chars are ", filtered_chars)
 
         # calculate the sum of the letters, exclude commas, spaces and hyphens
         sum += len(filtered_chars)
@@ -35,5 +34,4 @@ def write_nums(limit):
     # return the sum
     return sum
 
-print(write_nums(5))
-print(write_nums(1000))
+print("Answer to problem 16: ", write_nums(1000))
