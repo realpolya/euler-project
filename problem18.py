@@ -63,7 +63,65 @@ def pyramid_to_list(str=pyramid):
         pyra_dict[key] = nums
         key += 1
     
-    print(pyra_dict)
+    return pyra_dict
 
-pyramid_to_list()
-pyramid_to_list(long_pyramid)
+def max_in_row(dict):
+    max_value_path = True
+    prev_i = 0
+    max_values = []
+
+    # loop through dict
+    for i in dict:
+        
+        # find a maximum value in each list
+        max_value = max(dict[i])
+        print("max value is ", max_value)
+
+        # note the index of the max value
+        max_i = dict[i].index(max(dict[i]))
+        print("max i is ", max_i)
+
+        # if it is NOT equal to prev_i or prev_i + 1
+        if max_i != prev_i and max_i != (prev_i + 1):
+            max_value_path = False
+            break
+    
+    return max_value_path
+
+
+# always pick the larger of the two at the bottom
+def max_sum(dict):
+
+    if max_in_row(dict):
+        print("Found a super path")
+    else:
+        print("no super path")
+
+    # create a max_sum variable
+    sum = 0
+    prev_i = 0
+
+    # create a for loop for the keys of the dict
+    for i in dict:
+        # print('currently at ', dict[i])
+        # start at the top 0[0]
+        if i == 0:
+            sum += dict[i][0]
+        else:
+            # pick the larger of the following two options (either 1[0] or 1[1] - which is larger)
+            if dict[i][prev_i] >= dict[i][prev_i + 1]:
+                # print("adding ", dict[i][prev_i])
+                sum += dict[i][prev_i]
+            elif dict[i][prev_i] < dict[i][prev_i + 1]:
+                # print("adding ", dict[i][prev_i + 1])
+                sum += dict[i][prev_i + 1]
+                prev_i += 1
+    
+    # return the max sum
+    return sum
+
+
+
+
+print(max_sum(pyramid_to_list()))
+print(max_sum(pyramid_to_list(long_pyramid)))
