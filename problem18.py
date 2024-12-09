@@ -52,7 +52,7 @@ long_pyramid = '''75
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 '''
 
-def pyramid_to_list(str=pyramid):
+def pyramid_to_dict(str=pyramid):
     pyra_dict = {}
     lines = str.splitlines()
     key = 0
@@ -65,6 +65,46 @@ def pyramid_to_list(str=pyramid):
     
     return pyra_dict
 
+def max_sum(dict):
+
+    # create a copy of dictionary
+    new_dict =  dict.copy()
+
+    for i in range(len(new_dict.keys()) - 2, -1, -1): # start at row second to last, end at 0
+        
+        # interior loop for every row
+        for index, num in enumerate(new_dict[i]):
+
+            # compare the options below
+            if new_dict[i+1][index] >= new_dict[i+1][index+1]:
+
+                new_dict[i][index] += new_dict[i+1][index]
+            
+            elif new_dict[i+1][index] < new_dict[i+1][index+1]:
+
+                new_dict[i][index] += new_dict[i+1][index+1]
+                
+    return new_dict[0][0]
+
+
+print(max_sum(pyramid_to_dict()))
+print(max_sum(pyramid_to_dict(long_pyramid)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+OLD SOLUTIONS
+'''
 def max_in_row(dict):
     max_value_path = True
     prev_i = 0
@@ -90,7 +130,7 @@ def max_in_row(dict):
 
 
 # always pick the larger of the two at the bottom
-def max_sum(dict):
+def larger_of_two(dict):
 
     if max_in_row(dict):
         print("Found a super path")
@@ -149,47 +189,3 @@ def max_sum(dict):
 
     # return the max top_sum
     return top_sum
-
-
-
-
-
-
-
-
-
-def start_bottom(dict):
-
-    # create a copy of dictionary
-    new_dict =  dict.copy()
-    print("new dict is ", new_dict)
-
-    for i in range(len(new_dict.keys()) - 2, -1, -1): # start at row second to last
-        print("current row is ", new_dict[i])
-        
-        # interior loop for every row
-        for index, num in enumerate(new_dict[i]):
-
-            # compare the options below
-            if new_dict[i+1][index] >= new_dict[i+1][index+1]:
-
-                new_dict[i][index] += new_dict[i+1][index]
-            
-            elif new_dict[i+1][index] < new_dict[i+1][index+1]:
-
-                new_dict[i][index] += new_dict[i+1][index+1]
-        
-        print("row after transformation ", new_dict[i])
-        
-    return new_dict[0][0]
-
-
-
-
-
-        
-
-# print(max_sum(pyramid_to_list()))
-# print(max_sum(pyramid_to_list(long_pyramid)))
-print(start_bottom(pyramid_to_list()))
-print(start_bottom(pyramid_to_list(long_pyramid)))
