@@ -151,8 +151,45 @@ def max_sum(dict):
     return top_sum
 
 
-def brute_force(dict):
-    sums = []
 
-print(max_sum(pyramid_to_list()))
-print(max_sum(pyramid_to_list(long_pyramid)))
+
+
+
+
+
+
+def start_bottom(dict):
+
+    # create a copy of dictionary
+    new_dict =  dict.copy()
+    print("new dict is ", new_dict)
+
+    for i in range(len(new_dict.keys()) - 2, -1, -1): # start at row second to last
+        print("current row is ", new_dict[i])
+        
+        # interior loop for every row
+        for index, num in enumerate(new_dict[i]):
+
+            # compare the options below
+            if new_dict[i+1][index] >= new_dict[i+1][index+1]:
+
+                new_dict[i][index] += new_dict[i+1][index]
+            
+            elif new_dict[i+1][index] < new_dict[i+1][index+1]:
+
+                new_dict[i][index] += new_dict[i+1][index+1]
+        
+        print("row after transformation ", new_dict[i])
+        
+    return new_dict[0][0]
+
+
+
+
+
+        
+
+# print(max_sum(pyramid_to_list()))
+# print(max_sum(pyramid_to_list(long_pyramid)))
+print(start_bottom(pyramid_to_list()))
+print(start_bottom(pyramid_to_list(long_pyramid)))
