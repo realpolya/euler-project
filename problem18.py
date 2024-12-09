@@ -98,7 +98,7 @@ def max_sum(dict):
         print("no super path")
 
     # create a max_sum variable
-    sum = 0
+    top_sum = 0
     prev_i = 0
 
     # create a for loop for the keys of the dict
@@ -106,22 +106,53 @@ def max_sum(dict):
         # print('currently at ', dict[i])
         # start at the top 0[0]
         if i == 0:
-            sum += dict[i][0]
+            top_sum += dict[i][0]
         else:
             # pick the larger of the following two options (either 1[0] or 1[1] - which is larger)
             if dict[i][prev_i] >= dict[i][prev_i + 1]:
                 # print("adding ", dict[i][prev_i])
-                sum += dict[i][prev_i]
+                top_sum += dict[i][prev_i]
             elif dict[i][prev_i] < dict[i][prev_i + 1]:
                 # print("adding ", dict[i][prev_i + 1])
-                sum += dict[i][prev_i + 1]
+                top_sum += dict[i][prev_i + 1]
                 prev_i += 1
-    
-    # return the max sum
-    return sum
+
+    bottom_sum = 0
+    for i in range(len(dict.keys()) - 1, 0, -1):
+        
+        if i == len(dict.keys()) - 1:
+            max_value = max(dict[i])
+            max_i = dict[i].index(max(dict[i]))
+            prev_i = max_i
+            bottom_sum += max_value
+            print("max value is ", max_value)
+        else:
+            print("prev i is ", prev_i)
+            # edge cases
+            if prev_i == 0:
+                bottom_sum += dict[i][prev_i]
+                print("adding ", dict[i][prev_i])
+            elif prev_i == i:
+                bottom_sum += dict[i][prev_i]
+                print("adding ", dict[i][prev_i])
+                prev_i -= 1
+
+            elif dict[i][prev_i] >= dict[i][prev_i - 1]:
+                print("adding ", dict[i][prev_i])
+                bottom_sum += dict[i][prev_i]
+            elif dict[i][prev_i] < dict[i][prev_i - 1]:
+                # print("adding ", dict[i][prev_i + 1])
+                bottom_sum += dict[i][prev_i - 1]
+                prev_i -= 1
+
+    print("bottom sum is ", bottom_sum)
+
+    # return the max top_sum
+    return top_sum
 
 
-
+def brute_force(dict):
+    sums = []
 
 print(max_sum(pyramid_to_list()))
 print(max_sum(pyramid_to_list(long_pyramid)))
