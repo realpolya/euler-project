@@ -209,8 +209,8 @@ largeNum = '''37107287533902102798797998220837590246510135740250
 '''
 
 def split_nums(num=largeNum):
-    num_list = num.splitlines()
-    return [int(number) for number in num_list]
+    num_list = num.splitlines()[int(number) for number in num_list]
+    return 
 
 def large_sum(nums=split_nums()):
     sum = 0
