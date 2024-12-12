@@ -61,7 +61,7 @@ def amicable_sums(limit):
 
     # nested loops
     for i in range(limit):
-        for j in range(i):
+        for j in range(int(i/2), i):
 
             if i == j:
                 continue
@@ -72,5 +72,4 @@ def amicable_sums(limit):
     
     return total_sum
 
-# amicable_pair(220, 284)
-print(amicable_sums(10000))
+print(amicable_sums(10000)) # the solution is not efficient and takes a while
