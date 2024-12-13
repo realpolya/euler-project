@@ -16,7 +16,10 @@ Wikipedia: 20161 is the limit
 
 '''
 
+from extras.abu_sums import ABU_SUMS
+
 def is_abundant(num):
+    '''Check if number is abundant'''
 
     divisors = []
     sum = 0
@@ -29,7 +32,56 @@ def is_abundant(num):
             sum += i
     
     return sum > num
+
+
+def abundant_nums(limit=20161):
+    '''Find all of the abundant numbers below the limit'''
+
+    abundant = [] # list of abundant numbers
+    abu_sums = set()
+
+    for i in range(12, limit - 11):
+        if is_abundant(i):
+            abundant.append(i)
+
+    for n in abundant:
+
+        if n > limit / 2:
+            break
+        
+        above_limit = False
+
+        for m in abundant:
+
+            if m < n:
+                continue
+
+            sum = n + m
+            if (sum) >= limit:
+                above_limit = True
+                break
+            
+            if sum not in abu_sums:
+                abu_sums.add(sum)
+
+        if above_limit:
+            continue
     
 
+    return abu_sums
 
-print(is_abundant(12))
+
+def non_abu_sum(limit=20162, abu_sums=ABU_SUMS):
+    '''Find the sum of all non-abundant integers'''
+
+    non_abu_sums = set()
+    sum = 0
+
+    for i in range(1, limit):
+        if i not in abu_sums:
+            non_abu_sums.add(i)
+            sum += i
+
+    return sum
+
+print("Answer to problem 23: ", non_abu_sum())
