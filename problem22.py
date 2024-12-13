@@ -10,8 +10,8 @@ What is the total of all the name scores in the file?
 
 '''
 
-from names import NAMES
-from alphabet import ALPHABET
+from extras.names import NAMES
+from extras.alphabet import ALPHABET
 
 def names_sum(names=NAMES):
 
