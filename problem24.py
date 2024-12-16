@@ -11,3 +11,13 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 
 
 '''
 
+def lexi_perm(limit):
+
+    digits = []
+
+    for i in range(limit+1):
+        digits.append(i)
+    
+    print(digits)
+
+lexi_perm(9)
