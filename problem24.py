@@ -14,7 +14,8 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 
 import math
 # from itertools import permutations
 
-def permutate(array):
+def permutate(array, limit=1000000):
+    '''Find all of the permutations of the set below a limit'''
 
     if len(array) == 1:
         print("Base case reached: ", array)
@@ -44,7 +45,7 @@ def permutate(array):
             permutations.append(string)
 
     
-            if len(permutations) >= 1000000:
+            if len(permutations) >= limit:
 
                 too_long = True
                 break
@@ -59,7 +60,8 @@ def permutate(array):
 
 
 
-def lexi_perm(limit):
+def lexi_perm(limit, requested=999999):
+    '''Find the requested permutation'''
 
     digits = []
     permutations = []
@@ -73,10 +75,9 @@ def lexi_perm(limit):
 
     # print(perms)
 
-    return perms[999999]
+    return perms[requested]
 
 
 
 
-
-print("answer is", lexi_perm(9))
+print("Answer to problem 24: ", lexi_perm(9))
