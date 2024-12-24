@@ -22,18 +22,69 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 def find_cycle(limit):
 
     repeat_floats = []
+    winner = False
+    max_len = 0
 
     # for loop
-    for n in range(1, limit + 1):
+    for n in range(2, limit+1):
 
         # calculate float
         current = 1 / int(n)
 
         # in recurring cycles remainders in decimal start to repeat
-        # if 
+        quotient = "0."
 
-        # if remainder is 0, skip iteration
+        infinite = True
+        first = True
+        remainders = set()
+        remainder = 1
+        len = 0
 
+        while remainder not in remainders and infinite:
+
+            # print("1.remainder is ", remainder, "n is ", n)
+
+            digit = (10 * remainder) // n
+            quotient += str(digit)
+            len += 1
+
+            # if remainder is 0, skip iteration
+            if remainder == 0:
+                # print("reached 0")
+                infinite = False
+                break
+
+            # add current remainder
+            if first:
+                first = False
+            else:
+                remainders.add(remainder)
+                # print("2.remainders are ", remainders)
+
+            # calculate the next remainder
+            remainder = ((remainder * 10) % n)
+
+            # print("3.new remainder is ", remainder)
+        
+            # if remainder in remainders:
+            #     print("4.STOP: remainders are ", remainders)
+
+            if len > max_len:
+                max_len = len
+                winner = n
+
+        if infinite:
+            repeat_floats.append(quotient)
+
+        # print("for 1/", n, "the quotient is ", quotient)
+        
         # create a set of remainders
 
-        # while remainder keeps changing, keep going
+        # while remainder keeps changing, keep going adding numbers to the sequence
+    
+    
+    return winner
+    
+print("Answer to problem 26: ", find_cycle(1000))
+    
+
