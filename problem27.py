@@ -20,3 +20,8 @@ Find the product of the coefficients, a and b, for the quadratic expression that
 
 '''
 
+from extras.utils import is_prime
+
+# print(is_prime(3))
+
+
