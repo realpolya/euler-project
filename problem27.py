@@ -12,7 +12,7 @@ The product of the coefficients, -79 and 1601, is -126479.
 
 Considering quadratics of the form:
 
-n^2 + an + b, where |a| &lt; 1000 and |b| <= 1000 
+n^2 + an + b, where |a| < 1000 and |b| <= 1000 
 where |n| is the modulus/absolute value of n 
 e.g. |11| = 11 and |-4| = 4
 
@@ -24,4 +24,19 @@ from extras.utils import is_prime
 
 # print(is_prime(3))
 
+def quad_primes(limit):
 
+    # longest chain variable
+    max_chain = 0
+    win_a = False
+    win_b = False
+
+    # for loop for a
+
+        # for loop for b
+
+            # start sequence
+
+            # check if is_prime
+
+            # if not prime, break out
