@@ -13,6 +13,7 @@ The product of the coefficients, -79 and 1601, is -126479.
 Considering quadratics of the form:
 
 n^2 + an + b, where |a| < 1000 and |b| <= 1000 
+
 where |n| is the modulus/absolute value of n 
 e.g. |11| = 11 and |-4| = 4
 
@@ -22,7 +23,6 @@ Find the product of the coefficients, a and b, for the quadratic expression that
 
 from extras.utils import is_prime
 
-# print(is_prime(3))
 
 def quad_primes(limit):
 
@@ -32,11 +32,36 @@ def quad_primes(limit):
     win_b = False
 
     # for loop for a
+    for a in range(-int(limit), int(limit)):
 
         # for loop for b
+        for b in range(-int(limit), int(limit) + 1):
 
-            # start sequence
+            n = 0
+            broken = False
+            current_chain = 0
 
-            # check if is_prime
+            # consecutive values of n
+            while not broken:
 
-            # if not prime, break out
+                candidate = n ** 2 + (a * n) + b # n^2 + an + b
+
+                if not is_prime(candidate):
+                    broken = True
+                else:
+                    current_chain += 1
+                    n += 1
+
+            if current_chain > max_chain:
+                max_chain = current_chain
+                win_a = a
+                win_b = b
+        
+    # calculate product of the coefficients
+    if win_a and win_b:
+
+        return (win_a * win_b)
+    
+    return "not found"
+
+print("Answer to problem 26: ", quad_primes(1000))
