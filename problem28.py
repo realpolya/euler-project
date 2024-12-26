@@ -38,8 +38,7 @@ def spiral(size=int(5)):
 
     matrix = build_matrix(size)
     mid = int(size/2)
-    
-    spiral_count = 8 # permanent
+
     r = mid - 1 # start position for r
     i = mid + 1 # start position for i
     n = 1
@@ -49,59 +48,39 @@ def spiral(size=int(5)):
 
     for s in range(mid): # for every spiral
 
-        # print("r is ", r, "i is ", i)
-        # print("matrix is ", matrix)
-        # print("current spiral is ", current)
-
         for _ in range(current): # down
             n += 1
             r += 1
-            # print("DOWN: r is ", r, "i is ", i)
             matrix[r][i] = n
 
         final_sum += n
-        print("adding", n, "to final sum", final_sum)
 
         for _ in range(current): # left
             n += 1
             i -= 1
-            # print("LEFT: r is ", r, "i is ", i)
             matrix[r][i] = n
 
         final_sum += n
-        print("adding", n, "to final sum", final_sum)
 
         for _ in range(current):
             n += 1
             r -= 1
-            # print("UP: r is ", r, "i is ", i)
             matrix[r][i] = n
         
         final_sum += n
-        print("adding", n, "to final sum", final_sum)
 
         for _ in range(current):
             n += 1
             i += 1
-            # print("RIGHT: r is ", r, "i is ", i)
             matrix[r][i] = n
         
         final_sum += n
-        print("adding", n, "to final sum", final_sum)
 
         # spiral ended
         current += 2
         i += 1 # move onto a new spiral
         r -= 1 # move onto a new spiral
-        # print("after spiral ended r is ", r, "i is ", i)
-    
-    for key, value in matrix.items():
-
-        print(value)
     
     return final_sum
 
-
-print(spiral(1001))
-
-
+print("Answer to problem 28: ", spiral(1001))
