@@ -14,3 +14,27 @@ The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 
 '''
+
+def digit_powers(digits=4):
+
+    qualifying = []
+    max_limit = (9 ** int(digits)) * int(digits)
+    print("max limit is ", max_limit)
+
+    for i in range(1, max_limit + 1):
+
+        i_str = str(i)
+        current_sum = 0
+
+        for c in i_str:
+
+            powered = int(c) ** int(digits)
+            current_sum += powered
+
+        if current_sum == i and i != 1:
+
+            qualifying.append(i)
+        
+    print(qualifying)
+
+digit_powers(5)
