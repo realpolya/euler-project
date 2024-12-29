@@ -18,8 +18,8 @@ Find the sum of all the numbers that can be written as the sum of fifth powers o
 def digit_powers(digits=4):
 
     qualifying = []
+    sum = 0
     max_limit = (9 ** int(digits)) * int(digits)
-    print("max limit is ", max_limit)
 
     for i in range(1, max_limit + 1):
 
@@ -34,7 +34,8 @@ def digit_powers(digits=4):
         if current_sum == i and i != 1:
 
             qualifying.append(i)
+            sum += i
         
-    print(qualifying)
+    return sum
 
-digit_powers(5)
+print("Answer to problem 30: ", digit_powers(5))

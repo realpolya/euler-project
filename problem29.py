@@ -33,4 +33,4 @@ def distinct_powers(limit=5):
     
     return len(distinct)
 
-print(distinct_powers(100))
+print("Answer to problem 29: ", distinct_powers(100))
