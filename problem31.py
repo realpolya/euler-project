@@ -12,3 +12,12 @@ How many different ways can £2 be made using any number of coins?
 
 '''
 
+COINS = [1, 2, 5, 10, 20, 50, 100, 200]
+
+def coin_sums(coins=COINS, goal=200):
+
+    sum = 0
+
+    # how many sum permutations can be completed to get to 200
+    for coin in coins:
+        
