@@ -16,8 +16,44 @@ COINS = [1, 2, 5, 10, 20, 50, 100, 200]
 
 def coin_sums(coins=COINS, goal=200):
 
-    sum = 0
-
     # how many sum permutations can be completed to get to 200
-    for coin in coins:
+    results = []
+
+    # recursive function
+    def backtrack(start, current_combo, current_sum):
+
+        # base case
+        if current_sum == goal:
+
+            print("found a combo")
+
+            # append the list to results
+            results.append(list(current_combo))
+            return
         
+        # if exceeded the needed sum
+        if current_sum > goal:
+            print("exceeded")
+            return
+        
+        for i in range(start, len(coins)):
+
+            print("current combo is ", current_combo, "current sum is ", current_sum, "coins[i] is ", coins[i])
+
+            # include coins[i] in current combination
+            current_combo.append(coins[i])
+
+            # recurse with the updated sum, keep the same index
+            backtrack(i, current_combo, current_sum + coins[i])
+
+            # remove the last added number
+            current_combo.pop()
+
+    # start the recursive cycle
+    backtrack(0, [], 0)
+
+    return len(results)
+
+
+# print("Answer to problem 31: ", coin_sums())
+coin_sums([2, 3, 4], 8)
