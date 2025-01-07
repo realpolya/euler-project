@@ -9,31 +9,36 @@ How many circular primes are there below one million?
 
 '''
 
+import math
 from extras.utils import is_prime
 
 def permutate(array):
-    '''Find all of the permutations of the set'''
+    '''Recursive function to find all of the circular permutations of the set'''
+    # print("array is ", array)
 
     if len(array) == 1:
-        return str(array[0])
+        return [array]
 
     permutations = []
-    answer = False
+    first_element = array[0]
+    remaining = array[1:]
+    # print("remaining is ", remaining)
 
-    # number of permutations equals to factorial of length
-    perm_num = math.factorial(len(array))
+    for p in permutate(remaining):
 
-    for n in range(len(array)):
+        if not isinstance(p, list):
+            # print("ERROR: `p` is not a list. Value:", p)
+            p = list(p)
 
-        perm_start = array[n]
+        for i in range(len(p) + 1):
+            # print("Slice before:", p[:i])
+            # print("First element to insert:", [first_element])
+            # print("Slice after:", p[i:])
+            new_perm = p[:i] + [first_element] + p[i:]
+            print(new_perm)
+            permutations.append("".join(map(str, new_perm)))
 
-        remaining = array[:n] + array[n+1:]
-
-        for p in permutate(remaining):
-
-            string = "".join(str(perm_start) + str(p))
-            permutations.append(string)
-
+    print("permutations are ", permutations)
     return permutations
 
 
@@ -42,22 +47,27 @@ def circular_primes(limit=100):
 
     circ_primes = []
 
-    for n in range(1, limit):
+    for n in range(195, limit):
 
         if is_prime(n):
 
-            is_curious = True
+            is_circular = True
+            print("n is ", n)
 
             for permutation in permutate(list(str(n))):
 
-                if not is_prime(permutation):
-                    is_curious = False
+                if not is_prime(int(permutation)):
+                    print("permutation", permutation, "is not prime")
+                    is_circular = False
                     break
             
-            if is_curious:
+            if is_circular:
                 circ_primes.append(n)
     
+    print(circ_primes)
+
     return len(circ_primes)
 
 
-print(circular_primes())
+# print(circular_primes(1000000))
+print(circular_primes(200))
