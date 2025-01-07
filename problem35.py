@@ -10,35 +10,26 @@ How many circular primes are there below one million?
 '''
 
 import math
+from collections import deque
 from extras.utils import is_prime
 
-def permutate(array):
-    '''Recursive function to find all of the circular permutations of the set'''
-    # print("array is ", array)
-
-    if len(array) == 1:
-        return [array]
+def circ_permutate(array):
 
     permutations = []
-    first_element = array[0]
-    remaining = array[1:]
-    # print("remaining is ", remaining)
 
-    for p in permutate(remaining):
+    # establish number of permutations
+    perm_num = len(array)
+    copied = deque(array) # from collections
 
-        if not isinstance(p, list):
-            # print("ERROR: `p` is not a list. Value:", p)
-            p = list(p)
+    for _ in range(perm_num):   
 
-        for i in range(len(p) + 1):
-            # print("Slice before:", p[:i])
-            # print("First element to insert:", [first_element])
-            # print("Slice after:", p[i:])
-            new_perm = p[:i] + [first_element] + p[i:]
-            print(new_perm)
-            permutations.append("".join(map(str, new_perm)))
+        # add permutation
+        permutations.append("".join(map(str, copied)))
 
-    print("permutations are ", permutations)
+        copied.rotate(1)
+
+    # print(permutations)
+
     return permutations
 
 
@@ -47,17 +38,18 @@ def circular_primes(limit=100):
 
     circ_primes = []
 
-    for n in range(195, limit):
+    for n in range(1, limit):
 
         if is_prime(n):
 
             is_circular = True
-            print("n is ", n)
+            # print("n is ", n)
+            # permutations = circ_permutate(list(str(n)))
+            # print("permutations are", permutations)
 
-            for permutation in permutate(list(str(n))):
+            for permutation in circ_permutate(list(str(n))):
 
                 if not is_prime(int(permutation)):
-                    print("permutation", permutation, "is not prime")
                     is_circular = False
                     break
             
@@ -69,5 +61,40 @@ def circular_primes(limit=100):
     return len(circ_primes)
 
 
-# print(circular_primes(1000000))
-print(circular_primes(200))
+print(circular_primes(1000000))
+# print(circular_primes(200))
+
+
+# ---------------------------------------------------------------------------
+
+# def permutate(array):
+#     '''Recursive function to find all of the circular permutations of the set'''
+#     print("array is ", array)
+
+#     if len(array) == 1:
+#         print("reached end of recursion, returning", array)
+#         return array
+
+#     permutations = []
+#     first_element = array[0]
+#     print("first element is ", first_element)
+#     remaining = array[1:]
+#     # print("remaining is ", remaining)
+
+#     for p in permutate(remaining):
+
+#         if not isinstance(p, list):
+#             p = list(p)
+#             print("ERROR: `p` is not a list. Value:", p)
+
+#         for i in range(len(p) + 1):
+#             # print("Slice before:", p[:i])
+#             # print("First element to insert:", [first_element])
+#             # print("Slice after:", p[i:])
+#             print("adding now ", p[:i] + [first_element] + p[i:])
+#             new_perm = p[:i] + [first_element] + p[i:]
+#             print(new_perm)
+#             permutations.append("".join(map(str, new_perm)))
+
+#     print("permutations are ", permutations)
+#     return permutations
