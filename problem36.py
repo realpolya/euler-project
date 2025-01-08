@@ -11,16 +11,17 @@ import math
 
 
 def is_palindromic(num):
+    '''Check if the number is palindromic'''
 
     string = str(num)
+
+    if len(string) == 0:
+        return False
 
     if len(string) == 1:
         return True
 
-    midpoint = False
-    first_half = False
-    second_half = False
-
+    # handle odd and even cases
     if len(string) % 2 == 0:
         midpoint = len(string) // 2
         first_half = string[:midpoint]
@@ -30,8 +31,8 @@ def is_palindromic(num):
         first_half = string[:midpoint]
         second_half = string[midpoint + 1:]
 
-    # print ("first half is ", first_half, "second half is ", second_half)
     reverse_second = ''.join(reversed(second_half))
+
     if first_half == reverse_second:
         return True
 
@@ -39,6 +40,7 @@ def is_palindromic(num):
 
 
 def base_palindromes(limit=1000000):
+    '''Calculate the sum of all the numbers up to to the limit that are palindromic in 2-base and 10-base'''
 
     sum = 0
 
@@ -51,10 +53,10 @@ def base_palindromes(limit=1000000):
 
             if is_palindromic(binary_n):
 
-                print("n", n, "is palindromic. binary n is ", binary_n)
-
+                # print("n", n, "is palindromic. binary n is ", binary_n)
                 sum += n
     
     return sum
 
-print(base_palindromes())
+
+print("Answer to problem 36: ", base_palindromes())
