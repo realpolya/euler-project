@@ -38,7 +38,48 @@ const isPrimeNum = (num: number): boolean => {
 const findTruncatables = (): number => {
 
     let sum: number = 0;
+    let limit: number = 11;
+    let currentFinds: number = 0;
+    let n: number = 11;
+
+    // create a while loop iterating over numbers
+    // while (n < 4000) {
+    while (currentFinds < limit) {
+
+        if (isPrimeNum(n)) {
+
+            let isTruncatable: boolean = true;
+
+            let nArr: number[] = n.toString().split('').map(Number);
+            let arr: number[] = n.toString().split('').map(Number);
+            let reverseArr: number[] = n.toString().split('').map(Number);
+            
+            for (let i: number = 0; i < nArr.length - 1; i++) {
+
+                arr.pop()
+                reverseArr.shift()
+
+                if (!isPrimeNum(Number(arr.join(''))) || !isPrimeNum(Number(reverseArr.join('')))) {
+                    isTruncatable = false
+                    break
+                }
+
+            }
+
+            if (isTruncatable) {
+                console.log("n is truncatable prime ", n)
+                sum += n
+                currentFinds += 1
+            }
+
+        }
+
+        n += 2
+
+    }
 
     return sum
 
 }
+
+console.log(findTruncatables())
