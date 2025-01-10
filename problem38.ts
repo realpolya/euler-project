@@ -17,54 +17,74 @@ What is the largest 1 to 9 pandigital 9-digit number that can be formed as the c
 
 */
 
+const isPandigital = (n: number): boolean => {
+
+    
+
+}
+
 const findLargest = (n: number, limit: number): number => {
 
     let exceeded: boolean = false;
     let largest: number = 0;
+    console.log("current n is ", n)
 
-    while (!exceeded) {
+    let iArray: number[] = [1] 
 
-        let iArray: number[] = [] 
+    for (let i: number = 2; i <= 9; i++) {
 
-        for (let i: number = 1; i <= 9; i++) {
+        iArray.push(i)
+        console.log("current iArray is ", iArray)
 
-            iArray.push(i)
+        let products: string = iArray.map(member => {
+            return member * n;
+        }).join('')
 
-            let products: string = iArray.map(member => {
-                return member * n;
-            }).join('')
+        console.log("current product is ", products)
 
-            if (products.length > 9) {
-                exceeded = true
-                break
-            } else if (products.length < 9) {
-                continue
-            }
-
-            if (Number(products) > largest) {
-                largest = Number(products)
-            }
-
+        if (products.length > limit) {
+            console.log("EXCEEDED")
+            break
         }
 
+        console.log("products made it through barrier ", products)
+
+        if (Number(products) > largest) {
+            largest = Number(products)
+        }
+
+    }
+
+
+    console.log("largest is ", largest)
+    return largest
+
+}
+
+
+
+const panMultiples = (limit: number=9): number => {
+
+    let oLimit: number = Math.floor((limit / 3)) // number of 0s
+    const str: string = "1" + Array(oLimit + 2).join("0");
+    const nLimit: number = Number(str)
+
+    console.log(nLimit)
+
+    let largest: number = 0;
+
+    for (let n: number = 1; n < nLimit; n++) {
+        let current: number = findLargest(n, limit)
+        if (current === 0) {
+            break
+        }
+        if (current > largest) {
+            largest = current
+        }
     }
 
     return largest
 
 }
 
-
-
-const panMultiples = (limit: number): number => {
-
-    let largest: number = 0;
-
-    // unknown n: integer
-    // unknown set with unknown number of members: consecutive 1 through n
-    // limit 999 999 999 - 9 digits
-
-    
-
-    return largest
-
-}
+console.log(panMultiples(9))
