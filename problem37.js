@@ -57,4 +57,4 @@ var findTruncatables = function () {
     }
     return sum;
 };
-console.log(findTruncatables());
+console.log("Answer to problem 38: ", findTruncatables());

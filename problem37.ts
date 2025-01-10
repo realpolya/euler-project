@@ -82,4 +82,4 @@ const findTruncatables = (): number => {
 
 }
 
-console.log(findTruncatables())
+console.log("Answer to problem 38: ", findTruncatables())

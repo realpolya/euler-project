@@ -19,35 +19,36 @@ What is the largest 1 to 9 pandigital 9-digit number that can be formed as the c
 
 const isPandigital = (n: number): boolean => {
 
-    
+    let unique: number[] = []
+    let notPanny: boolean = n.toString().split('').some(digit => {
+
+        let num: number = Number(digit)
+        if (unique.includes(num) || num === 0) return true
+        unique.push(num)
+        return false
+
+    })
+
+    return !notPanny
 
 }
 
 const findLargest = (n: number, limit: number): number => {
 
-    let exceeded: boolean = false;
+    const iArray: number[] = [1] 
     let largest: number = 0;
-    console.log("current n is ", n)
-
-    let iArray: number[] = [1] 
 
     for (let i: number = 2; i <= 9; i++) {
 
         iArray.push(i)
-        console.log("current iArray is ", iArray)
 
         let products: string = iArray.map(member => {
             return member * n;
         }).join('')
 
-        console.log("current product is ", products)
-
         if (products.length > limit) {
-            console.log("EXCEEDED")
             break
         }
-
-        console.log("products made it through barrier ", products)
 
         if (Number(products) > largest) {
             largest = Number(products)
@@ -55,8 +56,6 @@ const findLargest = (n: number, limit: number): number => {
 
     }
 
-
-    console.log("largest is ", largest)
     return largest
 
 }
@@ -65,11 +64,9 @@ const findLargest = (n: number, limit: number): number => {
 
 const panMultiples = (limit: number=9): number => {
 
-    let oLimit: number = Math.floor((limit / 3)) // number of 0s
+    const oLimit: number = Math.floor((limit / 3)) // number of 0s
     const str: string = "1" + Array(oLimit + 2).join("0");
     const nLimit: number = Number(str)
-
-    console.log(nLimit)
 
     let largest: number = 0;
 
@@ -78,7 +75,7 @@ const panMultiples = (limit: number=9): number => {
         if (current === 0) {
             break
         }
-        if (current > largest) {
+        if (current > largest && isPandigital(current)) {
             largest = current
         }
     }
@@ -87,4 +84,4 @@ const panMultiples = (limit: number=9): number => {
 
 }
 
-console.log(panMultiples(9))
+console.log("Answer to problem 38: ", panMultiples())

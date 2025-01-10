@@ -16,49 +16,48 @@ giving the pandigital, 918273645, which is the concatenated product of 9 and (1,
 What is the largest 1 to 9 pandigital 9-digit number that can be formed as the concatenated product of an integer with (1,2, ..., n) where n > 1?
 
 */
-var findLargest = function (n, limit) {
-    var exceeded = false;
-    var largest = 0;
-    console.log("current n is ", n);
-    var iArray = [1, 2];
-    for (var i = 3; i <= 9; i++) {
+const isPandigital = (n) => {
+    let unique = [];
+    let notPanny = n.toString().split('').some(digit => {
+        let num = Number(digit);
+        if (unique.includes(num) || num === 0)
+            return true;
+        unique.push(num);
+        return false;
+    });
+    return !notPanny;
+};
+const findLargest = (n, limit) => {
+    const iArray = [1];
+    let largest = 0;
+    for (let i = 2; i <= 9; i++) {
         iArray.push(i);
-        console.log("current iArray is ", iArray);
-        var products = iArray.map(function (member) {
+        let products = iArray.map(member => {
             return member * n;
         }).join('');
-        console.log("current product is ", products);
         if (products.length > limit) {
-            console.log("EXCEEDED");
             break;
         }
-        console.log("products made it through barrier ", products);
         if (Number(products) > largest) {
             largest = Number(products);
         }
     }
-    console.log("largest is ", largest);
     return largest;
 };
-var panMultiples = function (limit) {
-    if (limit === void 0) { limit = 9; }
-    var oLimit = Math.floor((limit / 3)); // number of 0s
-    var str = "1" + Array(oLimit + 2).join("0");
-    var nLimit = Number(str);
-    console.log(nLimit);
-    var largest = 0;
-    // unknown n: integer
-    // unknown set with unknown number of members: consecutive 1 through n
-    // limit 999 999 999 - 9 digits
-    for (var n = 1; n < nLimit; n++) {
-        var current = findLargest(n, limit);
+const panMultiples = (limit = 9) => {
+    const oLimit = Math.floor((limit / 3)); // number of 0s
+    const str = "1" + Array(oLimit + 2).join("0");
+    const nLimit = Number(str);
+    let largest = 0;
+    for (let n = 1; n < nLimit; n++) {
+        let current = findLargest(n, limit);
         if (current === 0) {
             break;
         }
-        if (current > largest) {
+        if (current > largest && isPandigital(current)) {
             largest = current;
         }
     }
     return largest;
 };
-console.log(panMultiples(9));
+console.log("Answer to problem 38: ", panMultiples());
