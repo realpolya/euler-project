@@ -69,11 +69,7 @@ def lexi_perm(limit, requested=999999):
     for i in range(limit+1):
         digits.append(i)
     
-    # print(digits)
-
     perms = permutate(digits)
-
-    # print(perms)
 
     return perms[requested]
 

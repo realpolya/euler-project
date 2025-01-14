@@ -77,12 +77,6 @@ def find_cycle(limit=10):
 
         if infinite:
             repeat_floats.append(quotient)
-
-        # print("for 1/", n, "the quotient is ", quotient)
-        
-        # create a set of remainders
-
-        # while remainder keeps changing, keep going adding numbers to the sequence
     
     
     return winner

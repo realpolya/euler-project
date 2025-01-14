@@ -8,10 +8,40 @@ What is the largest n-digit pandigital prime that exists?
 
 '''
 
-from extras.utils import is_prime, is_pandigital
+from extras.utils import is_prime, permutate
 
-def pandigital_prime():
+
+def find_max_prime_in_perm(perms):
 
     max_prime = 0
 
-    for n in range(1, )
+    for perm in perms:
+        if is_prime(int(perm)) and int(perm) > max_prime:
+            max_prime = int(perm)
+    
+    if max_prime != 0:
+        return max_prime
+    
+    return False
+
+
+def pandigital_prime():
+
+    max_prime = False
+    required_set = []
+
+    for n in range(1, 10):
+        required_set.append(n)
+    
+    for n in range (9, 0, -1):
+        max_prime = find_max_prime_in_perm(permutate(required_set))
+
+        if max_prime:
+            break
+        
+        required_set.pop()
+
+    return max_prime
+
+
+print("Answer to problem 41: ", pandigital_prime())

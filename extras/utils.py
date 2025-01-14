@@ -2,6 +2,7 @@ import math
 
 # extra function
 def is_prime(number):
+    '''Check if the number is prime'''
 
     if number <= 1:
         return False 
@@ -19,8 +20,8 @@ def is_prime(number):
     return True
 
 
-# version for without 0
 def is_pandigital(n, required_set):
+    '''Check if the number is pandigital from 1 to n'''
 
     unique = set()
     not_pan = False
@@ -37,3 +38,24 @@ def is_pandigital(n, required_set):
         not_pan = True
     
     return not not_pan
+
+
+def permutate(array):
+    '''Find all of the permutations of the set'''
+
+    if len(array) == 1:
+        return str(array[0])
+
+    permutations = []
+
+    for n in range(len(array)):
+
+        perm_start = array[n]
+        remaining = array[:n] + array[n+1:]
+
+        for p in permutate(remaining):
+
+            string = "".join(str(perm_start) + str(p))
+            permutations.append(string)
+
+    return permutations
