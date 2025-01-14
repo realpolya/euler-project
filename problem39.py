@@ -45,4 +45,4 @@ def max_solutions(limit=150):
     return winner_p
 
 
-print(max_solutions(1000))
+print("Answer to problem 39: ", max_solutions(1000))
