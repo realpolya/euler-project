@@ -1,6 +1,5 @@
 import math
 
-# extra function
 def is_prime(number):
     '''Check if the number is prime'''
 
