@@ -7,3 +7,11 @@ For example, 2143 is a 4-digit pandigital and is also prime.
 What is the largest n-digit pandigital prime that exists?
 
 '''
+
+from extras.utils import is_prime, is_pandigital
+
+def pandigital_prime():
+
+    max_prime = 0
+
+    for n in range(1, )
