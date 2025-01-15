@@ -26,6 +26,7 @@ how many are triangle words?
 from extras.words42 import WORDS
 from extras.alphabet import ALPHABET
 
+
 def calculate_value(word, alphabet):
 
     value = 0
@@ -38,9 +39,6 @@ def calculate_value(word, alphabet):
 
 
 def coded_triange_numbers(words=WORDS):
-
-    # formula for triangle
-    # 1/2 * n * (n + 1)
 
     word_count = 0
     max_value = 0
@@ -65,5 +63,6 @@ def coded_triange_numbers(words=WORDS):
             word_count += 1
 
     return word_count
+
 
 print("Answer to problem 42: ", coded_triange_numbers())
