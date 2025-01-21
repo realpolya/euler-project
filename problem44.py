@@ -12,3 +12,28 @@ and D = |P_k - P_j| is minimised;
 what is the value of D?
 
 '''
+
+import math
+
+def is_pentagonal(num):
+
+    # quadratic formula
+    n = (1 + math.sqrt(1 + (24 * num))) / 6
+
+    if n.is_integer():
+        return True
+    
+    return False
+
+
+
+def pentagon_pair():
+
+    # formula n * (3n - 1) / 2
+    found = False
+
+    while not found:
+
+        if 
+
+    
