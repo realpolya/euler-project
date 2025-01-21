@@ -15,6 +15,7 @@ what is the value of D?
 
 import math
 
+
 def is_pentagonal(num):
 
     # quadratic formula
@@ -31,9 +32,30 @@ def pentagon_pair():
 
     # formula n * (3n - 1) / 2
     found = False
+    d = 0
+
+    pentagonal_nums = []
+    n = 1
 
     while not found:
 
-        if 
+        p = int((n * (3 * n - 1)) / 2)
+        pentagonal_nums.append(p)
 
-    
+        for num in pentagonal_nums:
+
+            sum = int(p + num)
+            if is_pentagonal(sum):
+
+                diff = int(p - num)
+                if is_pentagonal(diff):
+
+                    d = diff
+                    found = True
+        
+        n += 1
+
+    return d
+
+
+print("Answer to problem 44: ", pentagon_pair())
