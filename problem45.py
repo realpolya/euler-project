@@ -30,7 +30,24 @@ Find the next triangle number that is also pentagonal and hexagonal.
 
 '''
 
-from extras.utils import is_pentagonal
+from extras.utils import is_pentagonal, is_hexagonal
 
 def tri_pen_hex():
+
+    n = 286
+    answer = False
+
+    while not answer:
+
+        t = int(n * (n + 1) / 2)
+
+        if is_pentagonal(t) and is_hexagonal(t):
+            answer = t
+        
+        n += 1
+    
+    return answer
+
+print(tri_pen_hex())
+
 
