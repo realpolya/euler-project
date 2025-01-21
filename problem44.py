@@ -14,18 +14,7 @@ what is the value of D?
 '''
 
 import math
-
-
-def is_pentagonal(num):
-
-    # quadratic formula
-    n = (1 + math.sqrt(1 + (24 * num))) / 6
-
-    if n.is_integer():
-        return True
-    
-    return False
-
+from extras.utils import is_pentagonal
 
 
 def pentagon_pair():

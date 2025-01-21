@@ -58,3 +58,27 @@ def permutate(array):
             permutations.append(string)
 
     return permutations
+
+
+def is_pentagonal(num):
+    '''is number pentagonal'''
+
+    # quadratic formula
+    n = (1 + math.sqrt(1 + (24 * num))) / 6
+
+    if n.is_integer():
+        return True
+    
+    return False
+
+
+def is_hexagonal(num):
+    '''is number hexagonal'''
+
+    # 2n^2 - 1n - H
+    n = (1 + math.sqrt(1 + (8 * num))) / 4
+
+    if n.is_integer():
+        return True
+    
+    return False

@@ -29,3 +29,8 @@ It can be verified that T_{285} = P_{165} = H_{143} = 40755.
 Find the next triangle number that is also pentagonal and hexagonal.
 
 '''
+
+from extras.utils import is_pentagonal
+
+def tri_pen_hex():
+
