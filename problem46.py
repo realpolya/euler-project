@@ -17,3 +17,40 @@ What is the smallest odd composite that cannot
 be written as the sum of a prime and twice a square?
 
 '''
+
+import math
+from extras.utils import is_prime
+
+def find_fault():
+
+    # sum of a prime and twice a square
+    answer = False
+    n = 3
+    primes = [2]
+
+    while not answer:
+
+        if not is_prime(n):
+
+            composite_clear = False
+
+            for prime in primes:
+
+                remainder = int((n - prime) / 2)
+
+                if math.sqrt(remainder).is_integer() or remainder == 1:
+                    composite_clear = True
+                    break
+            
+            if not composite_clear:
+                answer = n
+        
+        else:
+            primes.append(n)
+
+        n += 2
+    
+    return answer
+
+
+print("Answer to problem 46: ", find_fault())

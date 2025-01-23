@@ -48,6 +48,6 @@ def tri_pen_hex():
     
     return answer
 
-print(tri_pen_hex())
+print("Answer to problem 45: ", tri_pen_hex())
 
 
