@@ -19,6 +19,18 @@ def is_prime(number):
     return True
 
 
+def prime_factorization(number, prime):
+    '''Recursive function to get the prime factorization of a number'''
+
+    if number == 1:
+        return []
+    
+    if number % prime == 0:
+        return [prime] + prime_factorization(number // prime, prime)
+
+    return []
+
+
 def is_pandigital(n, required_set):
     '''Check if the number is pandigital from 1 to n'''
 
