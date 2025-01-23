@@ -19,6 +19,7 @@ What is the first of these numbers?
 
 from extras.utils import is_prime, prime_factorization
 
+
 def distinct_factors(consecutive=2):
 
     primes = []
@@ -36,39 +37,37 @@ def distinct_factors(consecutive=2):
 
             for prime in primes:
                 all_factors = prime_factorization(n, prime) + all_factors
-            
-            print("for n", n, all_factors)
 
             if len(set(all_factors)) == consecutive: # need number of distinct factors
                 
                 if len(winning_sequence) == 0:
                     sequence += 1
                     winning_sequence.append(n)
-                
-                if len(winning_sequence) > 0:
+                elif len(winning_sequence) > 0:
                     if n - 1 == winning_sequence[-1]:
                         sequence += 1
                         winning_sequence.append(n)
+                    # lose a streak
+                    else:
+                        sequence = 0
+                        winning_sequence.clear()
+
+                        # new sequence
+                        sequence += 1
+                        winning_sequence.append(n) 
 
             # lose a streak
-            if sequence > 0 and len(set(all_factors)) != consecutive:
-
+            else:
+            
                 sequence = 0
                 winning_sequence.clear()
 
-            if len(winning_sequence) > 0:
-                
-                if sequence > 0 and n - 1 != winning_sequence[-1]:
-                    
-                    sequence = 0
-                    winning_sequence.clear()
-
         n += 1
     
-    return winning_sequence
+    return winning_sequence[0]
             
 
-print(distinct_factors())
+print("Answer to problem 47: ", distinct_factors(4))
 
 
 
