@@ -1,7 +1,8 @@
 '''
 Coin Sums
 
-In the United Kingdom the currency is made up of pound (£) and pence (p). There are eight coins in general circulation:
+In the United Kingdom the currency is made up of pound (£) and 
+pence (p). There are eight coins in general circulation:
 
 1p, 2p, 5p, 10p, 20p, 50p, £1 (100p), and £2 (200p).
 
@@ -25,7 +26,7 @@ def coin_sums(coins=COINS, goal=200):
         # base case
         if current_sum == goal:
 
-            print("found a combo")
+            # print("found a combo")
 
             # append the list to results
             results.append(list(current_combo))
@@ -33,12 +34,12 @@ def coin_sums(coins=COINS, goal=200):
         
         # if exceeded the needed sum
         if current_sum > goal:
-            print("exceeded")
+            # print("exceeded")
             return
         
         for i in range(start, len(coins)):
 
-            print("current combo is ", current_combo, "current sum is ", current_sum, "coins[i] is ", coins[i])
+            # print("current combo is ", current_combo, "current sum is ", current_sum, "coins[i] is ", coins[i])
 
             # include coins[i] in current combination
             current_combo.append(coins[i])
@@ -55,5 +56,5 @@ def coin_sums(coins=COINS, goal=200):
     return len(results)
 
 
-# print("Answer to problem 31: ", coin_sums())
-coin_sums([2, 3, 4], 8)
+print("Answer to problem 31: ", coin_sums())
+# coin_sums([2, 3, 4], 8)

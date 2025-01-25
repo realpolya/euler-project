@@ -16,4 +16,38 @@ three terms in this sequence?
 
 '''
 
+from extras.utils import is_prime, permutate
+
+def find_permutations():
+
+    final_sequence = ""
+
+    for n in range(1000, 9999):
+
+        if is_prime(n):
+
+            # check if there are at least two other 
+            # prime permutations
+            # in the set
+
+            n_permutations = permutate(list(str(n)))
+            prime_perms = [n]
+            counter = 0
+
+            for perm in n_permutations:
+
+                if is_prime(perm):
+
+                    prime_perms.append(perm)
+                    counter += 1
+            
+            if counter < 2:
+
+                continue
+            
+            prime_perms.sort()
+
+            if 
+
+
 
