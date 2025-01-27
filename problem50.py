@@ -17,14 +17,11 @@ from extras.utils import is_prime
 
 def consecutive_prime_sum(limit=100):
     
-    primes = [2] # in reversed order
+    primes = [2]
 
     max_sum = 0 # answer
-    current_additives = [2]
+    max_cons_primes = 0
 
-    max_cons_primes = 0 # max so far
-
-    # add primes to the list
     for n in range(3, limit, +2):
 
         # if prime, add to primes
@@ -33,140 +30,24 @@ def consecutive_prime_sum(limit=100):
             primes.append(n)
     
 
-    # print(primes)
     for i, prime in enumerate(primes):
 
-        # create a list of summary subsets with n number of members
-
-        # if current subset ended and it is lower than the longest one so far, disregard it
-
-        # chain that starts with prime
-
         current_sum = prime
-        chain = [prime]
         chain_length = 1
 
         for prime_two in primes[i+1:]:
 
             current_sum += prime_two
             chain_length += 1 # counter increases even if the intermediate step is not a prime
-            chain.append(prime_two)
 
             if current_sum > limit:
                 break
 
             if is_prime(current_sum) and chain_length > max_cons_primes:
-                # print("sum is ", current_sum, "chain is ", chain, "chain length is", chain_length, "max_con")
                 max_cons_primes = chain_length
                 max_sum = current_sum
 
 
     return max_sum
 
-# print(consecutive_prime_sum(1000))
-print(consecutive_prime_sum(1000000))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # add to current sum
-#         current_sum += n
-
-#         # if sum is not prime, break the sequence ?
-#         if not is_prime(current_sum):
-#             print("current sum is not prime", current_sum)
-#             current_additives.clear()
-#             current_sum = 0
-#             continue
-        
-#         consecutive_primes += 1
-#         current_additives.append(n)
-#         print("for current sum", current_sum, "current additives are ", current_additives)
-
-#         # if current_sum surpasses max_sum, reassign
-#         if consecutive_primes > max_cons_primes:
-#             max_cons_primes = consecutive_primes
-#             max_sum = current_sum
-
-# for i, prime in enumerate(primes):
-
-#         remaining = primes[i+1:]
-#         # chain that starts with prime
-#         current_sum = prime
-#         chain_length = 1
-
-#         for prime_two in primes:
-
-#             current_sum += prime_two
-#             if is_prime(current_sum) and :
-
-
-# # old inefficient solution with n cubed complexity
-# def consecutive_prime_sum(limit=100):
-    
-#     primes = [] # in reversed order
-
-#     max_sum = 0 # answer
-#     # current_sum = 2
-#     current_additives = [2]
-
-#     max_cons_primes = 0 # max so far
-
-#     # add primes to the list
-#     for n in range(limit, 1, -1):
-
-#         # if prime, add to primes
-#         if is_prime(n):
-
-#             primes.append(n)
-    
-#     # print(primes)
-
-#     for i, prime in enumerate(primes):
-
-#         # current = prime
-#         starting_point = 0
-#         leftover = primes[i+1:]
-#         # print("leftover are ", leftover)
-
-#         for _ in range(len(primes[i+1:])):
-
-#             current = prime # reset the prime every round
-#             counter = 0
-#             remaining = primes[i+1+starting_point:]
-#             # print("remaining for this round for this prime", prime, "are" ,remaining)
-#             starting_point += 1
-
-#             for prime_two in leftover[starting_point:]:
-
-#                 current -= prime_two
-
-#                 if current < 0:
-#                     break
-#                 elif current == 0 and counter > max_cons_primes:
-#                     max_cons_primes = counter
-#                     max_sum = prime
-                    
-#                 counter += 1
-
-#     return max_sum
+print("Answer to problem 50: ", consecutive_prime_sum(1000000))
