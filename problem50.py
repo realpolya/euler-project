@@ -16,6 +16,7 @@ from extras.utils import is_prime
 
 
 def consecutive_prime_sum(limit=100):
+    '''Find a prime under the limit that can be represented as a summary of the longest chain of consecutive primes'''
     
     primes = [2]
 
