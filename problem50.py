@@ -18,9 +18,11 @@ from extras.utils import is_prime
 def consecutive_prime_sum(limit=100):
     
     primes = [2]
-    
+
     max_sum = 2 # answer
     current_sum = 2
+    current_additives = [2]
+    max_cons_primes = 0 # max so far
     consecutive_primes = 0 # number of consecutive primes
 
     # cycle through numbers up to limit
@@ -28,17 +30,28 @@ def consecutive_prime_sum(limit=100):
 
         # if prime, add to primes
         if is_prime(n):
-            primes.add(n)
+
+            primes.append(n)
 
             # add to current sum
             current_sum += n
 
             # if sum is not prime, break the sequence ?
             if not is_prime(current_sum):
+                print("current sum is not prime", current_sum)
+                current_additives.clear()
                 current_sum = 0
+                continue
+            
+            consecutive_primes += 1
+            current_additives.append(n)
+            print("for current sum", current_sum, "current additives are ", current_additives)
 
             # if current_sum surpasses max_sum, reassign
-            if current_sum > max_sum:
+            if consecutive_primes > max_cons_primes:
+                max_cons_primes = consecutive_primes
+                max_sum = current_sum
 
-    
     return max_sum
+
+print(consecutive_prime_sum())
