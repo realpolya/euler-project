@@ -16,3 +16,36 @@ Find the smallest prime which, by replacing part of the number
 eight prime value family.
 
 '''
+
+from extras.utils import is_prime
+
+def digit_replacement(quantity):
+
+    # find the first primes from the permutations
+    # if multiple spaces are occupied, they are occupied with the same digit
+    answer_sequence = []
+
+    # while loop
+    
+        # loop through numbers
+
+        # if is_prime
+
+            # establish a number of variations
+
+            # start replacing digits with digits from 0 to 9
+
+                # count primes
+
+                # if number of primes is not meeting the quantity as compared to number of variations
+
+                    # abandon this route
+
+                # if quantity is met
+
+                    # assign to winning sequence
+
+    # return member 0 of winning sequence
+    return answer_sequence
+
+                
