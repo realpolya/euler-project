@@ -18,6 +18,7 @@ eight prime value family.
 '''
 
 import math
+from itertools import combinations
 from extras.utils import is_prime
 
 
@@ -61,6 +62,8 @@ def digit_replacement(quantity=6):
 
     # variations are based on number of digits and repeating digits
     variations_num = digit_num # base (nmx, nxm, xnm)
+    variations = []
+    combo_indices_list = []
     
     if digit_num != len(set(str(n))) and digit_num > 2:
 
@@ -76,22 +79,24 @@ def digit_replacement(quantity=6):
         repeating_digits = {digit: indices for digit, indices in digit_indices.items() if len(indices) > 1}
 
         for digit, indices in repeating_digits.items():
+
             set_size = len(indices) # how many times does this digit repeat
             subset_size = set_size
+
             for _ in range(set_size - 1): # exclude cases where subset equals 1, they are already account for above
+
                 special_vars_num += binomial_coefficient(set_size, subset_size)
                 # print("set size is ", set_size, "subset_size is ", subset_size, "binomial coefficient is ", binomial_coefficient(set_size, subset_size))
+                for subset in combinations(indices, subset_size):
+                    combo_indices_list.append(subset)
+
                 subset_size -= 1
-
-
-                # variations ?
 
     total_variations = variations_num + special_vars_num
     print("total variations ", total_variations, "special", special_vars_num)
 
 
     # for every variations generate a variation where the digit is replaced by i
-    variations = []
 
     for i in range(variations_num):
         variation_list = list(str(n))
@@ -99,7 +104,19 @@ def digit_replacement(quantity=6):
         variation = "".join(variation_list)
         variations.append(variation)
     
-    print(variations)
+    if special_case:
+        for subset in combo_indices_list:
+            variation_list = list(str(n))
+            for i in subset:
+                variation_list[i] = "i"
+            variation = "".join(variation_list)
+            variations.append(variation)
+        
+    print(len(variations))
+
+    # special cases
+    # if special_case:
+
             
 
 
