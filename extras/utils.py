@@ -94,3 +94,14 @@ def is_hexagonal(num):
         return True
     
     return False
+
+
+def binomial_coefficient(m, n):
+    '''Calculate number of subsets of size n from the set of size m'''
+
+    if n > m:
+        return
+    
+    coefficient = int(math.factorial(m) / (math.factorial(n) * math.factorial(m - n)))
+
+    return coefficient
