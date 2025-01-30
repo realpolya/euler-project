@@ -31,7 +31,7 @@ def binomial_coefficient(m, n):
 
     return coefficient
     
-    
+
 def digit_replacement(quantity=6):
 
     # find the first primes from the permutations
@@ -47,79 +47,93 @@ def digit_replacement(quantity=6):
 
     # cycle through primes
 
-    while not found:
-    # while n < 10:
-        if is_prime(n):
+    # while not found:
+    # # while n < 10:
 
-            # count digits
-            digit_num = len(str(n))
-            digit_indices = {}
-            special_case = False # numbers with repeating digits
+    #     if is_prime(n):
+    n = 56000223200
+    # count digits
+    digit_num = len(str(n))
+    digit_indices = {}
+    special_case = False # numbers with repeating digits
+    special_variations = 0
 
-            # variations are based on number of digits and repeating digits
-            variations = digit_num # base (nmx, nxm, xnm)
-            
-            if digit_num != len(set(str(n))) and digit_num > 2:
+    # variations are based on number of digits and repeating digits
+    variations = digit_num # base (nmx, nxm, xnm)
+    
+    if digit_num != len(set(str(n))) and digit_num > 2:
 
-                special_case = True
+        special_case = True
 
-                for i, char in enumerate(str(n)):
+        for i, char in enumerate(str(n)):
 
-                    if char in digit_indices:
-                        digit_indices[char].append(i)
-                    else:
-                        digit_indices[char] = [i]
-                
-                repeating_digits = {digit: indices for digit, indices in digit_indices.items() if len(indices) > 1}
+            if char in digit_indices:
+                digit_indices[char].append(i)
+            else:
+                digit_indices[char] = [i]
+        
+        repeating_digits = {digit: indices for digit, indices in digit_indices.items() if len(indices) > 1}
+
+        for digit, indices in repeating_digits.items():
+            set_size = len(indices) # how many times does this digit repeat
+            subset_size = set_size
+            for _ in range(set_size - 1): # exclude cases where subset equals 1, they are already account for above
+                special_variations += binomial_coefficient(set_size, subset_size)
+                print("set size is ", set_size, "subset_size is ", subset_size, "binomial coefficient is ", binomial_coefficient(set_size, subset_size))
+                subset_size -= 1
+
 
                 # variations ?
+        total_variations = variations + special_variations
+        print("total variations ", total_variations, "special", special_variations)
 
-            # FIXME: below
-            # every constant number is labeled anything but x (i.e. n, m, j....)
-            for front_back in range(2):
+        #     # FIXME: below
+        #     # every constant number is labeled anything but x (i.e. n, m, j....)
+        #     for front_back in range(2):
 
-                prime_count = 0
-                non_prime_count = 0
+        #         prime_count = 0
+        #         non_prime_count = 0
                 
-                sequence = []
+        #         sequence = []
 
-                for i in range(10):
+        #         for i in range(10):
 
-                    # print("")
+        #             # print("")
                     
-                    if front_back == 0: # first iteration
-                        current = int(str(n) + str(i))
-                    else: # second iteration
-                        if i == 0:
-                            continue
-                        current = int(str(i) + str(n))
+        #             if front_back == 0: # first iteration
+        #                 current = int(str(n) + str(i))
+        #             else: # second iteration
+        #                 if i == 0:
+        #                     continue
+        #                 current = int(str(i) + str(n))
 
-                    # count primes
-                    if is_prime(current):
-                        prime_count += 1
-                        sequence.append(current)
-                    else:
-                        non_prime_count += 1
+        #             # count primes
+        #             if is_prime(current):
+        #                 prime_count += 1
+        #                 sequence.append(current)
+        #             else:
+        #                 non_prime_count += 1
 
-                    # if number of primes is not meeting the quantity as compared to number of variations
-                    if non_prime_count > cutoff:
-                        # abandon this route
-                        break
+        #             # if number of primes is not meeting the quantity as compared to number of variations
+        #             if non_prime_count > cutoff:
+        #                 # abandon this route
+        #                 break
 
-                    # if quantity is met - the first instance
-                    if prime_count == quantity:
+        #             # if quantity is met - the first instance
+        #             if prime_count == quantity:
                         
-                        # assign to winning sequence
-                        answer_sequence = sequence
-                        found = True
+        #                 # assign to winning sequence
+        #                 answer_sequence = sequence
+        #                 found = True
                         
         
-        n += 1
+        # n += 1
 
     # return member 0 of winning sequence
     return answer_sequence
 
 # print(digit_replacement())
+digit_replacement()
 
 
 # OLD SOLUTION
