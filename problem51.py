@@ -148,8 +148,7 @@ def digit_replacement(quantity=6):
     # return member 0 of winning sequence
     return answer_sequence
 
-# print(digit_replacement())
-print(digit_replacement(7))
+print(digit_replacement(8))
 
 
 
