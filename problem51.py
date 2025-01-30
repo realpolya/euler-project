@@ -17,9 +17,21 @@ eight prime value family.
 
 '''
 
+import math
 from extras.utils import is_prime
 
 
+def binomial_coefficient(m, n):
+    '''Calculate number of subsets of size n from the set of size m'''
+
+    if n > m:
+        return
+    
+    coefficient = int(math.factorial(m) / (math.factorial(n) * math.factorial(m - n)))
+
+    return coefficient
+    
+    
 def digit_replacement(quantity=6):
 
     # find the first primes from the permutations
@@ -59,6 +71,8 @@ def digit_replacement(quantity=6):
                         digit_indices[char] = [i]
                 
                 repeating_digits = {digit: indices for digit, indices in digit_indices.items() if len(indices) > 1}
+
+                # variations ?
 
             # FIXME: below
             # every constant number is labeled anything but x (i.e. n, m, j....)
@@ -105,7 +119,7 @@ def digit_replacement(quantity=6):
     # return member 0 of winning sequence
     return answer_sequence
 
-print(digit_replacement())
+# print(digit_replacement())
 
 
 # OLD SOLUTION
