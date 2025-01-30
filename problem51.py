@@ -48,18 +48,19 @@ def digit_replacement(quantity=6):
     # cycle through primes
 
     # while not found:
-    # # while n < 10:
 
     #     if is_prime(n):
-    n = 56000223200
+            
+    n = 56000223200 # example number
+
     # count digits
     digit_num = len(str(n))
     digit_indices = {}
     special_case = False # numbers with repeating digits
-    special_variations = 0
+    special_vars_num = 0
 
     # variations are based on number of digits and repeating digits
-    variations = digit_num # base (nmx, nxm, xnm)
+    variations_num = digit_num # base (nmx, nxm, xnm)
     
     if digit_num != len(set(str(n))) and digit_num > 2:
 
@@ -78,14 +79,29 @@ def digit_replacement(quantity=6):
             set_size = len(indices) # how many times does this digit repeat
             subset_size = set_size
             for _ in range(set_size - 1): # exclude cases where subset equals 1, they are already account for above
-                special_variations += binomial_coefficient(set_size, subset_size)
-                print("set size is ", set_size, "subset_size is ", subset_size, "binomial coefficient is ", binomial_coefficient(set_size, subset_size))
+                special_vars_num += binomial_coefficient(set_size, subset_size)
+                # print("set size is ", set_size, "subset_size is ", subset_size, "binomial coefficient is ", binomial_coefficient(set_size, subset_size))
                 subset_size -= 1
 
 
                 # variations ?
-        total_variations = variations + special_variations
-        print("total variations ", total_variations, "special", special_variations)
+
+    total_variations = variations_num + special_vars_num
+    print("total variations ", total_variations, "special", special_vars_num)
+
+
+    # for every variations generate a variation where the digit is replaced by i
+    variations = []
+
+    for i in range(variations_num):
+        variation_list = list(str(n))
+        variation_list[i] = "i"
+        variation = "".join(variation_list)
+        variations.append(variation)
+    
+    print(variations)
+            
+
 
         #     # FIXME: below
         #     # every constant number is labeled anything but x (i.e. n, m, j....)
