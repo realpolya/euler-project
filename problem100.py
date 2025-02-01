@@ -15,32 +15,32 @@ discs in total, determine the number of blue discs that the box would contain.
 
 '''
 
-# 0.33, 0.4, 0.411
+# the solution is about generating the next one, not cycling over
+# the numbers are too large to cycle over
+# quadratic Diophantine equation
 
 import math
-from decimal import Decimal, ROUND_HALF_EVEN
+from fractions import Fraction
 
 
+def find_probability(b, total, repeat_times=2):
 
-# the ratio of red to blue seems to be 0.414
-# the ratio of blue to total is 0.70711
-
-def find_probability(item_quantity, total_quantity, repeat_times=2):
-
-    probability = 1
-
-    for _ in range(repeat_times):
-
-        # print(item_quantity, total_quantity)
-        probability *= item_quantity / total_quantity
-        item_quantity -= 1
-        total_quantity -= 1
+    probability = Fraction(b, total) * Fraction(b - 1, total - 1)
 
     return probability
 
-# print(find_probability(85, 120))
 
+# print("15/21 = ", Fraction(15, 21), "and 14/20 = ", Fraction(14, 20))
+# print("85/120 = ", Fraction(85, 120), "and 84/119 = ", Fraction(84, 119))
+# print(Fraction(5, 7) * Fraction(7, 10))
+# print(Fraction(17, 24) * Fraction(12, 17))
+# print(float(find_probability(85, 120)))
 
+# one of the numerators and denominators have to be the same number
+
+# def diopantine_equation():
+
+#     Fraction(b, total) * Fraction(b - 1, total - 1) = 1/2
 
 def arranged_probability():
 
@@ -56,7 +56,7 @@ def arranged_probability():
 
     while not answer:
 
-        for red in range (int(0.4 * blue), int(0.42 * blue)):
+        for red in range (int(0.3 * blue), int(0.5 * blue)):
 
             # print("blue", blue, "red", red)
 
@@ -66,11 +66,14 @@ def arranged_probability():
             # probability = Decimal(find_probability(blue, total_quantity))
             # rounded_p = probability.quantize(Decimal('0.1'), rounding=ROUND_HALF_EVEN)
 
-            if math.isclose(probability, 0.5, rel_tol=1e-11):
+            if float(probability) == 0.5:
+                print("blue are ", blue)
+                print("B/N = ", Fraction(blue, total_quantity), "and B-1/N-1 = ", Fraction(blue - 1, total_quantity - 1))
 
                 # answer = blue
-                print("blue discs:", blue, "red discs:", red, "total: ", total_quantity, "probability is ", probability)
-                print("ratio of blue to total quantity is ", round(blue / total_quantity, 5))
+                # print("blue discs:", blue, "red discs:", red, "total: ", total_quantity, "probability is ", probability)
+                # print("ratio of blue to total quantity is ", round(blue / total_quantity, 5))
+
             
             # elif probability < 0.5: # means that red already grew too much
 
@@ -84,8 +87,29 @@ def arranged_probability():
     return answer
 
 print(arranged_probability())
-# print(int(1000000000000 * 0.70711))
 
-total = 1000000000000
 
-# print(find_probability(int(total * 0.70711), total))
+''' 
+blue are  15
+B/N =  5/7 and B-1/N-1 =  7/10
+blue are  85
+B/N =  17/24 and B-1/N-1 =  12/17
+blue are  493
+B/N =  29/41 and B-1/N-1 =  41/58
+blue are  2871
+B/N =  99/140 and B-1/N-1 =  70/99
+blue are  16731
+B/N =  169/239 and B-1/N-1 =  239/338
+
+
+
+12, 12, 70, 70
+
+17, 17, 99, 99
+
+5, 29, 29, 169
+
+7, 41, 41, 99
+
+
+'''
