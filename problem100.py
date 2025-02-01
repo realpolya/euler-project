@@ -14,18 +14,26 @@ discs in total, determine the number of blue discs that the box would contain.
 
 '''
 
+# 0.33, 0.4, 0.411
+
+import math
+from decimal import Decimal, ROUND_HALF_EVEN
+
 def find_probability(item_quantity, total_quantity, repeat_times=2):
 
     probability = 1
 
     for _ in range(repeat_times):
+
+        # print(item_quantity, total_quantity)
         probability *= item_quantity / total_quantity
         item_quantity -= 1
         total_quantity -= 1
 
+
     return probability
 
-
+# print(find_probability(85, 120))
 
 def arranged_probability():
 
@@ -36,8 +44,29 @@ def arranged_probability():
     # nested loops of blue and red, until the answer is found
 
     answer = False
-    blue = 1
+    blue = 500000000000
 
     while not answer:
 
+        for red in range (int(0.33 * blue), blue):
 
+            total_quantity = red + blue
+            probability = find_probability(blue, total_quantity)
+
+            # probability = Decimal(find_probability(blue, total_quantity))
+            # rounded_p = probability.quantize(Decimal('0.1'), rounding=ROUND_HALF_EVEN)
+
+            if math.isclose(probability, 0.5, rel_tol=1e-9):
+
+                answer = blue
+                print("blue discs:", blue, "red discs:", red, "total: ", total_quantity, "probability is ", probability)
+            
+            # elif probability < 0.5: # means that red already grew too much
+
+            #     break
+        
+        blue += 1
+    
+    return answer
+
+print(arranged_probability())
