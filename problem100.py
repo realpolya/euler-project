@@ -3,7 +3,8 @@ Arranged Probability
 
 If a box contains twenty-one coloured discs, composed of 
 fifteen blue discs and six red discs, and two discs were taken at random, 
-it can be seen that the probability of taking two blue discs, P(BB) = (15/21) * (14/20) = 1/2.
+it can be seen that the probability of taking two blue discs, P(BB) = (15/21) * 
+(14/20) = 1/2.
 
 The next such arrangement, for which there is exactly 50% chance 
 of taking two blue discs at random, is a box containing eighty-five blue 
@@ -19,6 +20,11 @@ discs in total, determine the number of blue discs that the box would contain.
 import math
 from decimal import Decimal, ROUND_HALF_EVEN
 
+
+
+# the ratio of red to blue seems to be 0.414
+# the ratio of blue to total is 0.70711
+
 def find_probability(item_quantity, total_quantity, repeat_times=2):
 
     probability = 1
@@ -30,10 +36,11 @@ def find_probability(item_quantity, total_quantity, repeat_times=2):
         item_quantity -= 1
         total_quantity -= 1
 
-
     return probability
 
 # print(find_probability(85, 120))
+
+
 
 def arranged_probability():
 
@@ -44,11 +51,14 @@ def arranged_probability():
     # nested loops of blue and red, until the answer is found
 
     answer = False
-    blue = 500000000000
+    # blue = 500000000000
+    blue = 10
 
     while not answer:
 
-        for red in range (int(0.33 * blue), blue):
+        for red in range (int(0.4 * blue), int(0.42 * blue)):
+
+            # print("blue", blue, "red", red)
 
             total_quantity = red + blue
             probability = find_probability(blue, total_quantity)
@@ -56,17 +66,26 @@ def arranged_probability():
             # probability = Decimal(find_probability(blue, total_quantity))
             # rounded_p = probability.quantize(Decimal('0.1'), rounding=ROUND_HALF_EVEN)
 
-            if math.isclose(probability, 0.5, rel_tol=1e-9):
+            if math.isclose(probability, 0.5, rel_tol=1e-11):
 
-                answer = blue
+                # answer = blue
                 print("blue discs:", blue, "red discs:", red, "total: ", total_quantity, "probability is ", probability)
+                print("ratio of blue to total quantity is ", round(blue / total_quantity, 5))
             
             # elif probability < 0.5: # means that red already grew too much
 
             #     break
+
+        if blue == 100000:
+            answer = True
         
         blue += 1
     
     return answer
 
 print(arranged_probability())
+# print(int(1000000000000 * 0.70711))
+
+total = 1000000000000
+
+# print(find_probability(int(total * 0.70711), total))
