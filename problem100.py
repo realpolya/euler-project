@@ -86,7 +86,7 @@ def arranged_probability():
     
     return answer
 
-print(arranged_probability())
+# print(arranged_probability())
 
 
 ''' 
@@ -102,14 +102,117 @@ blue are  16731
 B/N =  169/239 and B-1/N-1 =  239/338
 
 
-
+differences in numerators and denominators
 12, 12, 70, 70
-
 17, 17, 99, 99
 
 5, 29, 29, 169
+7, 41, 41, 239
 
-7, 41, 41, 99
+sequence = 
+
+B / N
+numerators
+B1num + B2 - 1num = B2num
+B2num + B2 - 1num = B3num
+B3num + B4 - 1num = B4num
+B4num + B4 - 1num = B5num
+
+denominators
+N1den + N2 - 1den = N2den
+N2den + N2 - 1den = N3den
+N3den + N4 - 1den = N4den
+N4den + N4 - 1den = N5den
+
+B - 1 / N - 1
+numerators
+B1 - 1num + B1num = B2 - 1num
+B2 - 1num + B3num = B3 - 1num
+B3 - 1num + B3num = B4 - 1num
+B4 - 1num + B5num = B5 - 1num
+
+denominators
+N1 - 1den + N1den = N2 - 1den
+N2 - 1num + N3num = N3 - 1num
+N3 - 1num + N3num = N4 - 1num
+N4 - 1num + N5num = N5 - 1num
 
 
 '''
+
+def create_sequence(b1, n1, b1s, n1s): #s for smaller
+
+    b_list = [b1]
+    n_list = [n1]
+    bs_list = [b1s, b1 + b1s]
+    ns_list = [n1s, n1 + n1s]
+
+    alternate = True
+    counter = 0
+    i = 0
+
+    while i < 20:
+
+        if alternate:
+
+            if counter == 0:
+
+                # print("b list is ", b_list, "index is ", i)
+                next_b = b_list[i] + bs_list[i+1]
+                b_list.append(next_b)
+                next_n = n_list[i] + ns_list[i+1]
+                n_list.append(next_n)
+                counter += 1
+            
+            elif counter == 1:
+
+                next_b = b_list[i] + bs_list[i]
+                b_list.append(next_b)
+                next_n = n_list[i] + ns_list[i]
+                n_list.append(next_n)
+                counter = 0
+
+                alternate = False
+
+        else:
+            
+            if counter == 0:
+
+                next_bs = b_list[i] + bs_list[i-1]
+                bs_list.append(next_bs)
+                next_ns = n_list[i] + ns_list[i-1]
+                ns_list.append(next_ns)
+                counter += 1
+            
+            elif counter == 1:
+
+                i -= 2
+                next_bs = b_list[i+1] + bs_list[i+1]
+                bs_list.append(next_bs)
+                next_ns = n_list[i+1] + ns_list[i+1]
+                ns_list.append(next_ns)
+                counter = 0
+
+                alternate = True
+        
+        i += 1
+    
+    sequence = []
+    sequence_s = []
+
+    for i in range(len(b_list)):
+        sequence.append(Fraction(b_list[i], n_list[i]))
+
+    for i in range(len(bs_list)):
+        sequence_s.append(Fraction(bs_list[i], ns_list[i]))
+
+    print("b/n sequence")
+    for frac in sequence:
+        print(frac)
+    
+    print("b-1/n-1 sequence")
+    for frac in sequence_s:
+        print(frac)
+    
+
+create_sequence(5, 7, 7, 10)
