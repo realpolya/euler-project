@@ -74,6 +74,36 @@ N4 - 1num + N5num = N5 - 1num
 
 '''
 
+def number_of_blues(frac_b, frac_n, frac_bs, frac_ns):
+    '''get two fractions, find the smallest integer values of B and N'''
+    # B = frac_b * k
+    # N = frac_n * k
+
+    # B - 1 = frac_bs * m
+    # N - 1 = frac_ns * m
+
+    # k = (frac_bs * m + 1) / frac_b
+    # k = (frac_ns * m + 1) / frac_n
+
+    # frac_b * (frac_ns * m + 1) = (frac_bs * m + 1) * frac_n
+    # frac_b * frac_ns * m + frac_b = frac_bs * m * frac_n + frac_n
+    # frac_b * frac_ns * m - frac_bs * m * frac_n = frac_n - frac_b
+    # m = (frac_n - frac_b) / (frac_b * frac_ns - frac_bs * frac_n)
+
+    m = (frac_n - frac_b) / (frac_b * frac_ns - frac_bs * frac_n)
+    k = (frac_bs * m + 1) / frac_b
+
+    B = frac_b * k
+    N = frac_n * k
+
+    Bs = frac_bs * m
+    Ns = frac_ns * m
+
+    print("B/N", B, "/", N)
+    print("B-1/N-1", Bs, "/", Ns)
+
+
+
 def create_sequence(b1, n1, b1s, n1s): #s for smaller
 
     b_list = [b1]
@@ -85,7 +115,7 @@ def create_sequence(b1, n1, b1s, n1s): #s for smaller
     counter = 0
     i = 0
 
-    while i < 20:
+    while i < 6:
 
         if alternate:
 
@@ -139,14 +169,21 @@ def create_sequence(b1, n1, b1s, n1s): #s for smaller
 
     for i in range(len(bs_list)):
         sequence_s.append(Fraction(bs_list[i], ns_list[i]))
-
-    print("b/n sequence")
-    for frac in sequence:
-        print(frac)
     
-    print("b-1/n-1 sequence")
-    for frac in sequence_s:
-        print(frac)
+    if len(b_list) > len(bs_list):
+        for i in range(len(bs_list)):
+            number_of_blues(b_list[i], n_list[i], bs_list[i], ns_list[i])
+    else:
+        for i in range(len(b_list)):
+            number_of_blues(b_list[i], n_list[i], bs_list[i], ns_list[i])
+
+    # print("b/n sequence")
+    # for frac in sequence:
+    #     print(frac)
+    
+    # print("b-1/n-1 sequence")
+    # for frac in sequence_s:
+    #     print(frac)
     
 
 create_sequence(5, 7, 7, 10)
