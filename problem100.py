@@ -102,9 +102,14 @@ def number_of_blues(frac_b, frac_n, frac_bs, frac_ns):
     print("B/N", B, "/", N)
     print("B-1/N-1", Bs, "/", Ns)
 
+    if N > 1000000000000:
+        return B
+
+    return False
 
 
-def create_sequence(b1, n1, b1s, n1s): #s for smaller
+
+def create_sequence(b1, n1, b1s, n1s, limit): #s for smaller
 
     b_list = [b1]
     n_list = [n1]
@@ -115,7 +120,7 @@ def create_sequence(b1, n1, b1s, n1s): #s for smaller
     counter = 0
     i = 0
 
-    while i < 6:
+    while i < limit:
 
         if alternate:
 
@@ -171,12 +176,17 @@ def create_sequence(b1, n1, b1s, n1s): #s for smaller
         sequence_s.append(Fraction(bs_list[i], ns_list[i]))
     
     if len(b_list) > len(bs_list):
-        for i in range(len(bs_list)):
-            number_of_blues(b_list[i], n_list[i], bs_list[i], ns_list[i])
+        length = len(bs_list)
     else:
-        for i in range(len(b_list)):
-            number_of_blues(b_list[i], n_list[i], bs_list[i], ns_list[i])
+        length = len(b_list)
 
+    for i in range(length):
+        B = number_of_blues(b_list[i], n_list[i], bs_list[i], ns_list[i])
+        if B:
+            return B
+    
+    return False
+    
     # print("b/n sequence")
     # for frac in sequence:
     #     print(frac)
@@ -184,9 +194,20 @@ def create_sequence(b1, n1, b1s, n1s): #s for smaller
     # print("b-1/n-1 sequence")
     # for frac in sequence_s:
     #     print(frac)
-    
 
-create_sequence(5, 7, 7, 10)
+
+def arranged_probability():
+
+    answer = False
+    i = 2
+
+    while not answer:
+        answer = create_sequence(5, 7, 7, 10, i)
+        i += 1
+    
+    return answer
+
+print(int(arranged_probability()))
 
 
 
