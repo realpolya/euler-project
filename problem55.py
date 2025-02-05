@@ -30,18 +30,32 @@ NOTE: Wording was modified slightly on 24 April 2007 to emphasise the theoretica
 from extras.utils import is_palindromic
 
 
-def is_lychrel(num):
+def is_lychrel(num, counter):
+
+    if counter >= 50:
+        return True
 
     reverse_num = int(''.join(reversed(str(num))))
-
     new_sum = num + reverse_num
 
     if is_palindromic(new_sum):
         return False
     
-    return True
+    counter += 1
+    return is_lychrel(new_sum, counter)
+
 
 
 def lychrel_numbers(limit=10000):
 
+    lychrel_count = 0
+
+    for n in range(limit):
+
+        if is_lychrel(n, 0):
+            lychrel_count += 1
     
+    return lychrel_count
+
+
+print("Answer to problem 55: ", lychrel_numbers())
