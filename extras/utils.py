@@ -105,3 +105,32 @@ def binomial_coefficient(m, n):
     coefficient = int(math.factorial(m) / (math.factorial(n) * math.factorial(m - n)))
 
     return coefficient
+
+
+def is_palindromic(num):
+    '''Check if the number is palindromic'''
+
+    string = str(num)
+
+    if len(string) == 0:
+        return False
+
+    if len(string) == 1:
+        return True
+
+    # handle odd and even cases
+    if len(string) % 2 == 0:
+        midpoint = len(string) // 2
+        first_half = string[:midpoint]
+        second_half = string[midpoint:]
+    else:
+        midpoint = math.ceil(len(string) / 2) - 1
+        first_half = string[:midpoint]
+        second_half = string[midpoint + 1:]
+
+    reverse_second = ''.join(reversed(second_half))
+
+    if first_half == reverse_second:
+        return True
+
+    return False
