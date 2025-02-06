@@ -26,6 +26,7 @@ both players have a pair of queens, then highest cards in each hand are compared
 (see example 4 below); if the highest cards tie then the next highest cards are compared, 
 and so on.
 Consider the following five hands dealt to two players:
+H - Hearts, C - Clubs, S - Spades, D - Diamonds
 
 Hand   Player 1                                            Player 2                                              Winner
 1      5H 5C 6S 7S KD(Pair of Fives)                       2C 3S 8S 8D TD(Pair of Eights)                       Player 2
@@ -33,13 +34,39 @@ Hand   Player 1                                            Player 2             
 3      2D 9C AS AH AC(Three Aces)                          3D 6D 7D TD QD(Flush  with Diamonds)                 Player 2
 4      4D 6S 9H QH QC(Pair of Queens, Highest card Nine)   3D 6D 7H QD QS(Pair of Queens, Highest card Seven)   Player 1
 5      2H 2D 4C 4D 4S(Full House, With Three Fours)        3C 3D 3S 9S 9D(Full House, with Three Threes)        Player 1
-</table>
 
 The file, poker.txt, contains one-thousand random hands dealt to two players. 
 Each line of the file contains ten cards (separated by a single space): 
 the first five are Player 1's cards and the last five are Player 2's cards. 
 You can assume that all hands are valid (no invalid characters or repeated cards), 
 each player's hand is in no specific order, and in each hand there is a clear winner.
+
 How many hands does Player 1 win?
 
 '''
+
+from extras.poker54 import CARDS
+
+# separate cards by line, then by space to see all of the combinations
+
+class Poker():
+
+    def __init__(self, hand1, hand2):
+        self.hand1 = hand1.split() # list format
+        self.hand2 = hand2.split() # list format
+        self.winner = False
+        # self.combo1 = self.identify_combo(1)
+        # self.combo2 = self.identify_combo(2)
+    
+    def is_royal_flush(self):
+        '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
+        for char in self.hand1:
+            if "T" or "J" or "Q" or "K" or "A" in char:
+                print("found a letter in ", self.hand1)
+
+    
+    # def identify_combo(self):
+
+
+first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
+first_game.is_royal_flush()
