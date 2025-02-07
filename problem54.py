@@ -55,18 +55,39 @@ class Poker():
         self.hand1 = hand1.split() # list format
         self.hand2 = hand2.split() # list format
         self.winner = False
-        # self.combo1 = self.identify_combo(1)
+        self.combo1 = self.identify_combo(1)
         # self.combo2 = self.identify_combo(2)
     
-    def is_royal_flush(self):
+    def is_royal_flush(self, combo):
         '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
-        for char in self.hand1:
-            if "T" or "J" or "Q" or "K" or "A" in char:
-                print("found a letter in ", self.hand1)
+
+        necessary = sorted(["T", "J", "Q", "K", "A"])
+        values = []
+        first = True
+
+        for char in combo:
+            values.append(char[0])
+            if first:
+                first_suit = char[1]
+                first = False
+            if char[1] != first_suit:
+                return False
+
+        return sorted(values) == necessary
 
     
-    # def identify_combo(self):
+    def identify_combo(self, number):
+
+        if number == 1:
+            print(self.is_royal_flush(self.hand1))
+            return self.is_royal_flush(self.hand1)
+
+
 
 
 first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
-first_game.is_royal_flush()
+second_game = Poker("QH KH JH TH AH", "5D 8C 9S JS AC")
+# first_game.is_royal_flush()
+
+# separate by line
+# first 5 are first player, second 5 are second player
