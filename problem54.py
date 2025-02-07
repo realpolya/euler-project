@@ -100,6 +100,28 @@ class Poker():
                     return True
         return False
 
+    def is_full_house(self, combo):
+        '''Full House: Three of a kind and a pair.'''
+        values_count = {}
+        three = False
+        pair = False
+
+        for char in combo:
+            if len(values_count) > 2:
+                return False
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+
+        for key, value in values_count.items():
+            if value == 2:
+                pair = True
+            elif value == 3:
+                three = True
+        
+        return (three and pair)
+
 
     def is_same_suit(self, combo):
         '''Are all cards of the same suit?'''
@@ -123,9 +145,12 @@ class Poker():
             if self.is_same_suit(self.hand1):
                 if self.is_royal_flush(self.hand1):
                     return "royal_flush"
-                elif self.is_straight_flush(self.hand1):
+                if self.is_straight_flush(self.hand1):
                     return "straight_flush"
-            print(self.is_four_kind(self.hand1))
+            if self.is_four_kind(self.hand1):
+                return "four_kind"
+            if self.is_full_house(self.hand1):
+                return "full_house"
 
 
             
@@ -136,6 +161,7 @@ class Poker():
 first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
 second_game = Poker("QH KH JH TH 3H", "5D 8C 9S JS AC")
 third_game = Poker("QH QH QH TH QH", "5D 8C 9S JS AC")
+third_game = Poker("QH QH TH TH QH", "5D 8C 9S JS AC")
 # first_game.is_royal_flush()
 
 # separate by line
