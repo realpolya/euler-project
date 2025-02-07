@@ -1,5 +1,4 @@
 '''
-
 Poker Hands
 
 In the card game poker, a hand consists of five cards and are ranked, 
@@ -51,36 +50,58 @@ from extras.poker54 import CARDS
 
 class Poker():
 
+
     def __init__(self, hand1, hand2):
         self.hand1 = hand1.split() # list format
         self.hand2 = hand2.split() # list format
         self.winner = False
+        self.cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+        self.ace = "A"
         self.combo1 = self.identify_combo(1)
         # self.combo2 = self.identify_combo(2)
     
+
     def is_royal_flush(self, combo):
         '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
 
         necessary = sorted(["T", "J", "Q", "K", "A"])
         values = []
-        first = True
 
         for char in combo:
             values.append(char[0])
+
+        return sorted(values) == necessary
+
+    def is_straight_flush(self, combo):
+        '''Are all cards are consecutive values of same suit?'''
+        
+
+    def is_same_suit(self, combo):
+
+        first = True
+        for char in combo:
             if first:
                 first_suit = char[1]
                 first = False
             if char[1] != first_suit:
                 return False
-
-        return sorted(values) == necessary
+        
+        return True
 
     
     def identify_combo(self, number):
 
+        # only do flushes if same suit check has passed
+
         if number == 1:
-            print(self.is_royal_flush(self.hand1))
-            return self.is_royal_flush(self.hand1)
+            if is_same_suit(self.hand1):
+                if self.is_royal_flush(self.hand1):
+                    return "royal_flush"
+                elif self.is_straight_flush(self.hand1):
+                    return "straight_flush"
+
+
+            
 
 
 
