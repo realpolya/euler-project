@@ -50,13 +50,12 @@ from extras.poker54 import CARDS
 
 class Poker():
 
+    cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 
     def __init__(self, hand1, hand2):
         self.hand1 = hand1.split() # list format
         self.hand2 = hand2.split() # list format
         self.winner = False
-        self.cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-        self.ace = "A"
         self.combo1 = self.identify_combo(1)
         # self.combo2 = self.identify_combo(2)
     
@@ -75,11 +74,31 @@ class Poker():
 
     def is_straight_flush(self, combo):
         '''Are all cards are consecutive values of same suit?'''
+
         values = []
         for char in combo:
             values.append(char[0])
-        sorted_values = sorted(values, key=lambda x: self.cards.index(x))
-        print(sorted_values)
+        sorted_values = sorted(values, key=lambda x: self.__class__.cards.index(x))
+
+        if "".join(sorted_values) == "A2345": # special case
+            return True
+
+        return "".join(sorted_values) in "".join(self.__class__.cards)
+
+
+    def is_four_kind(self, combo):
+        '''Is there four cards of the same value?'''
+        values_count = {}
+        for char in combo:
+            if len(values_count) > 2:
+                return False
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+                if values_count[char[0]] == 4:
+                    return True
+        return False
 
 
     def is_same_suit(self, combo):
@@ -106,6 +125,7 @@ class Poker():
                     return "royal_flush"
                 elif self.is_straight_flush(self.hand1):
                     return "straight_flush"
+            print(self.is_four_kind(self.hand1))
 
 
             
@@ -115,6 +135,7 @@ class Poker():
 
 first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
 second_game = Poker("QH KH JH TH 3H", "5D 8C 9S JS AC")
+third_game = Poker("QH QH QH TH QH", "5D 8C 9S JS AC")
 # first_game.is_royal_flush()
 
 # separate by line
