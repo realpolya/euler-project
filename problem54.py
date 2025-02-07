@@ -72,11 +72,18 @@ class Poker():
 
         return sorted(values) == necessary
 
+
     def is_straight_flush(self, combo):
         '''Are all cards are consecutive values of same suit?'''
-        
+        values = []
+        for char in combo:
+            values.append(char[0])
+        sorted_values = sorted(values, key=lambda x: self.cards.index(x))
+        print(sorted_values)
+
 
     def is_same_suit(self, combo):
+        '''Are all cards of the same suit?'''
 
         first = True
         for char in combo:
@@ -94,7 +101,7 @@ class Poker():
         # only do flushes if same suit check has passed
 
         if number == 1:
-            if is_same_suit(self.hand1):
+            if self.is_same_suit(self.hand1):
                 if self.is_royal_flush(self.hand1):
                     return "royal_flush"
                 elif self.is_straight_flush(self.hand1):
@@ -107,7 +114,7 @@ class Poker():
 
 
 first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
-second_game = Poker("QH KH JH TH AH", "5D 8C 9S JS AC")
+second_game = Poker("QH KH JH TH 3H", "5D 8C 9S JS AC")
 # first_game.is_royal_flush()
 
 # separate by line
