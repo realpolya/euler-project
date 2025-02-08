@@ -145,7 +145,7 @@ class Poker():
                     return True
         return False
     
-    
+
     def is_two_pairs(self, combo):
         '''Two Pairs: Two different pairs.'''
 
@@ -241,6 +241,7 @@ class Poker():
                 return "royal_flush"
             if self.is_straight(combo):
                 return "straight_flush"
+
             return "flush"
 
         if self.is_four_kind(combo):
@@ -249,25 +250,34 @@ class Poker():
             return "full_house"
         if self.is_straight(combo):
             return "straight"
+        if self.is_three_kind(combo):
+            return "three_kind"
+        if self.is_two_pairs(combo):
+            return "two_pairs"
+        if self.is_one_pair(combo):
+            return "one_pair"
         
+        return "high_card"
+    
+    def print_combo(self):
+        print("combo for 1 is ", self.combo1)
+        print("combo for 2 is ", self.combo2)
 
 
-            
+first_game = Poker("5H 5C 6S 7S KD", "2C 3S 8S 8D TD")
+first_game.print_combo()
 
+second_game = Poker("5D 8C 9S JS AC", "2C 5C 7D 8S QH")
+second_game.print_combo()
 
+third_game = Poker("2D 9C AS AH AC", "3D 6D 7D TD QD")
+third_game.print_combo()
 
+fourth_game = Poker("4D 6S 9H QH QC", "3D 6D 7H QD QS")
+fourth_game.print_combo()
 
-first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
-print(first_game.highest_value())
-second_game = Poker("QH AH JH TH 3H", "5D 8C 9S JS AC")
-print(second_game.highest_value())
-
-third_game = Poker("QH QH QH TH QH", "5D 8C 9S JS AC")
-third_game.highest_value()
-
-fourth_game = Poker("QH QH TH TH QH", "QH QH TH TH QH")
-print(fourth_game.highest_value())
-# first_game.is_royal_flush()
+fifth_game = Poker("2H 2D 4C 4D 4S", "3C 3D 3S 9S 9D")
+fifth_game.print_combo()
 
 # separate by line
 # first 5 are first player, second 5 are second player
