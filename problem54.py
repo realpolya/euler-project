@@ -72,8 +72,8 @@ class Poker():
         return sorted(values) == necessary
 
 
-    def is_straight_flush(self, combo):
-        '''Are all cards are consecutive values of same suit?'''
+    def is_straight(self, combo):
+        '''Are all cards are consecutive values?'''
 
         values = []
         for char in combo:
@@ -121,10 +121,60 @@ class Poker():
                 three = True
         
         return (three and pair)
+    
+    def is_three_kind(self, combo):
+        '''Three of a Kind: Three cards of the same value.'''
+
+        values_count = {}
+        for char in combo:
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+                if values_count[char[0]] == 3:
+                    return True
+        return False
+    
+    def is_two_pairs(self, combo):
+        '''Two Pairs: Two different pairs.'''
+
+        values_count = {}
+        pair1 = False
+        pair2 = False
+
+        for char in combo:
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+
+        for key, value in values_count.items():
+            if pair1 == True and value == 2:
+                pair2 = True
+            elif value == 2:
+                pair1 = True
+        
+        return (pair1 and pair2)
+
+    def is_one_pair(self, combo):
+        '''Two cards of the same value.'''
+
+        values_count = {}
+        for char in combo:
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+                if values_count[char[0]] == 2:
+                    return True
+        return False
+
+    def highest_value(self, combo1, combo2):
+        '''Compares two combos to see which one has the highest value card'''
 
 
     def is_same_suit(self, combo):
-        '''Are all cards of the same suit?'''
+        '''Are all cards of the same suit? Flush'''
 
         first = True
         for char in combo:
@@ -142,15 +192,21 @@ class Poker():
         # only do flushes if same suit check has passed
 
         if number == 1:
+
             if self.is_same_suit(self.hand1):
+                '''all cards of the same suit'''
                 if self.is_royal_flush(self.hand1):
                     return "royal_flush"
-                if self.is_straight_flush(self.hand1):
+                if self.is_straight(self.hand1):
                     return "straight_flush"
+                return "flush"
+
             if self.is_four_kind(self.hand1):
                 return "four_kind"
             if self.is_full_house(self.hand1):
                 return "full_house"
+            if self.is_straight(self.hand1):
+                return "straight"
 
 
             
