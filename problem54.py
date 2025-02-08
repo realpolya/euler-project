@@ -55,10 +55,20 @@ class Poker():
     def __init__(self, hand1, hand2):
         self.hand1 = hand1.split() # list format
         self.hand2 = hand2.split() # list format
-        self.winner = False
-        self.combo1 = self.identify_combo(1)
-        # self.combo2 = self.identify_combo(2)
+        self.combo1 = self.identify_combo(self.hand1)
+        self.combo2 = self.identify_combo(self.hand2)
+        self.winner = self.identify_winner()
     
+
+    def identify_winner(self):
+        '''Compare the combos'''
+        return "hi"
+
+
+    def deal_with_ties(self):
+        '''Resolve any tie issues'''
+        return "hi"
+
 
     def is_royal_flush(self, combo):
         '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
@@ -134,6 +144,7 @@ class Poker():
                 if values_count[char[0]] == 3:
                     return True
         return False
+    
     
     def is_two_pairs(self, combo):
         '''Two Pairs: Two different pairs.'''
@@ -221,26 +232,24 @@ class Poker():
         return True
 
     
-    def identify_combo(self, number):
+    def identify_combo(self, combo):
 
         # only do flushes if same suit check has passed
+        if self.is_same_suit(combo):
+            '''all cards of the same suit'''
+            if self.is_royal_flush(combo):
+                return "royal_flush"
+            if self.is_straight(combo):
+                return "straight_flush"
+            return "flush"
 
-        if number == 1:
-
-            if self.is_same_suit(self.hand1):
-                '''all cards of the same suit'''
-                if self.is_royal_flush(self.hand1):
-                    return "royal_flush"
-                if self.is_straight(self.hand1):
-                    return "straight_flush"
-                return "flush"
-
-            if self.is_four_kind(self.hand1):
-                return "four_kind"
-            if self.is_full_house(self.hand1):
-                return "full_house"
-            if self.is_straight(self.hand1):
-                return "straight"
+        if self.is_four_kind(combo):
+            return "four_kind"
+        if self.is_full_house(combo):
+            return "full_house"
+        if self.is_straight(combo):
+            return "straight"
+        
 
 
             
