@@ -156,6 +156,7 @@ class Poker():
         
         return (pair1 and pair2)
 
+
     def is_one_pair(self, combo):
         '''Two cards of the same value.'''
 
@@ -169,8 +170,41 @@ class Poker():
                     return True
         return False
 
-    def highest_value(self, combo1, combo2):
+
+    def highest_value(self, combo1=None, combo2=None):
         '''Compares two combos to see which one has the highest value card'''
+
+        max1 = 0
+        max2 = 0
+
+        if combo1 is None and combo2 is None:
+            combo1 = list(self.hand1)
+            combo2 = list(self.hand2)
+        
+        #base case
+        if len(combo1) == 0 and len(combo2) == 0:
+            return "Tie"
+        
+        for i, card in enumerate(self.__class__.cards):
+
+            for combo_card in combo1:
+                if combo_card[0] == card and i > max1:
+                    max1 = i
+            
+            for combo_card in combo2:
+                if combo_card[0] == card and i > max2:
+                    max2 = i
+        
+        # print("max for 1 is ", self.__class__.cards[max1], "max for 2 is ", self.__class__.cards[max2])
+
+        if max1 > max2:
+            return "1"
+        elif max2 > max1:
+            return "2"
+        elif max1 == max2:
+            reduced1 = [card for card in combo1 if self.__class__.cards[max1] not in card]
+            reduced2 = [card for card in combo2 if self.__class__.cards[max1] not in card]
+            return self.highest_value(reduced1, reduced2)
 
 
     def is_same_suit(self, combo):
@@ -215,9 +249,15 @@ class Poker():
 
 
 first_game = Poker("5H 5C 6S 7S KD", "5D 8C 9S JS AC")
-second_game = Poker("QH KH JH TH 3H", "5D 8C 9S JS AC")
+print(first_game.highest_value())
+second_game = Poker("QH AH JH TH 3H", "5D 8C 9S JS AC")
+print(second_game.highest_value())
+
 third_game = Poker("QH QH QH TH QH", "5D 8C 9S JS AC")
-third_game = Poker("QH QH TH TH QH", "5D 8C 9S JS AC")
+third_game.highest_value()
+
+fourth_game = Poker("QH QH TH TH QH", "QH QH TH TH QH")
+print(fourth_game.highest_value())
 # first_game.is_royal_flush()
 
 # separate by line
