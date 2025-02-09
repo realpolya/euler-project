@@ -51,6 +51,18 @@ from extras.poker54 import CARDS
 class Poker():
 
     cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+    combos = [
+        "high_card", 
+        "one_pair", 
+        "two_pairs",
+        "three_kind",
+        "straight",
+        "flush",
+        "full_house",
+        "four_kind",
+        "straight_flush",
+        "royal_flush"
+    ]
 
     def __init__(self, hand1, hand2):
         self.hand1 = hand1.split() # list format
@@ -59,16 +71,28 @@ class Poker():
         self.combo2 = self.identify_combo(self.hand2)
         self.winner = self.identify_winner()
     
-
     def identify_winner(self):
         '''Compare the combos'''
-        return "hi"
+        for i, combo in enumerate(self.__class__.combos):
+            if combo == self.combo1:
+                score1 = i
+            if combo == self.combo2:
+                score2 = i
 
+        if score1 > score2:
+            return "player1"
+        elif score1 < score2:
+            return "player2"
+
+        return self.deal_with_ties()
 
     def deal_with_ties(self):
         '''Resolve any tie issues'''
-        return "hi"
-
+        winner = self.highest_value()
+        if winner == "1":
+            return "player1"
+        elif winner == "2":
+            return "player2"
 
     def is_royal_flush(self, combo):
         '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
@@ -80,7 +104,6 @@ class Poker():
             values.append(char[0])
 
         return sorted(values) == necessary
-
 
     def is_straight(self, combo):
         '''Are all cards are consecutive values?'''
@@ -94,7 +117,6 @@ class Poker():
             return True
 
         return "".join(sorted_values) in "".join(self.__class__.cards)
-
 
     def is_four_kind(self, combo):
         '''Is there four cards of the same value?'''
@@ -145,7 +167,6 @@ class Poker():
                     return True
         return False
     
-
     def is_two_pairs(self, combo):
         '''Two Pairs: Two different pairs.'''
 
@@ -167,7 +188,6 @@ class Poker():
         
         return (pair1 and pair2)
 
-
     def is_one_pair(self, combo):
         '''Two cards of the same value.'''
 
@@ -180,7 +200,6 @@ class Poker():
                 if values_count[char[0]] == 2:
                     return True
         return False
-
 
     def highest_value(self, combo1=None, combo2=None):
         '''Compares two combos to see which one has the highest value card'''
@@ -217,7 +236,6 @@ class Poker():
             reduced2 = [card for card in combo2 if self.__class__.cards[max1] not in card]
             return self.highest_value(reduced1, reduced2)
 
-
     def is_same_suit(self, combo):
         '''Are all cards of the same suit? Flush'''
 
@@ -230,7 +248,6 @@ class Poker():
                 return False
         
         return True
-
     
     def identify_combo(self, combo):
 
@@ -262,6 +279,7 @@ class Poker():
     def print_combo(self):
         print("combo for 1 is ", self.combo1)
         print("combo for 2 is ", self.combo2)
+        print("winner is ", self.winner)
 
 
 first_game = Poker("5H 5C 6S 7S KD", "2C 3S 8S 8D TD")
