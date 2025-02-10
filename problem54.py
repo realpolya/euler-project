@@ -102,29 +102,22 @@ class Poker():
 
     def deal_with_ties(self):
         '''Resolve any tie issues'''
-        if self.combo1 in ["one_pair", "two_pairs", "three_kind", "four_kind"]:
-            max1 = 0
-            max2 = 0
-            
-            #base case
-            if len(combo1) == 0 and len(combo2) == 0:
-                return "Tie"
-            
-            for i, card in enumerate(self.__class__.cards):
+        winner = False
 
-                for combo_card in combo1:
-                    if combo_card[0] == card and i > max1:
-                        max1 = i
-                
-                for combo_card in combo2:
-                    if combo_card[0] == card and i > max2:
-                        max2 = i
+        if self.combo1 in ["one_pair", "three_kind", "four_kind"]:
+            max_1 = max(self.count1, key=self.count1.get)
+            max_2 = max(self.count2, key=self.count2.get)
 
-        winner = self.highest_value()
+            winner = self.highest_value([max_1], [max_2])
+
+        if winner == "Tie" or not winner:
+            winner = self.highest_value()
+        
         if winner == "1":
             return "player1"
         elif winner == "2":
             return "player2"
+
 
     def is_royal_flush(self, combo):
         '''Ten, Jack, Queen, King, Ace, in same suit. T J Q K A + same letter'''
