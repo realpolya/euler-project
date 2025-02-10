@@ -46,7 +46,6 @@ How many hands does Player 1 win?
 
 from extras.poker54 import CARDS
 
-# separate cards by line, then by space to see all of the combinations
 
 class Poker():
 
@@ -236,7 +235,7 @@ class Poker():
         return False
 
     def highest_value(self, combo1=None, combo2=None):
-        '''Compares two combos to see which one has the highest value card'''
+        '''Recursive function that compares two combos to see which one has the highest value card'''
 
         max1 = 0
         max2 = 0
@@ -259,8 +258,6 @@ class Poker():
                 if combo_card[0] == card and i > max2:
                     max2 = i
         
-        # print("max for 1 is ", self.__class__.cards[max1], "max for 2 is ", self.__class__.cards[max2])
-
         if max1 > max2:
             return "1"
         elif max2 > max1:
@@ -284,8 +281,9 @@ class Poker():
         return True
     
     def identify_combo(self, combo):
+        '''Identify combo for each hand'''
 
-        # only do flushes if same suit check has passed
+        
         if self.is_same_suit(combo):
             '''all cards of the same suit'''
             if self.is_royal_flush(combo):
@@ -311,28 +309,10 @@ class Poker():
         return "high_card"
     
     def print_combo(self):
-        # print("combo for 1 is ", self.combo1)
-        # print("combo for 2 is ", self.combo2)
+        print("combo for 1 is ", self.combo1)
+        print("combo for 2 is ", self.combo2)
         print("winner is ", self.winner)
 
-
-# first_game = Poker("5H 5C 6S 7S KD", "2C 3S 8S 8D TD")
-# first_game.print_combo()
-
-# second_game = Poker("5D 8C 9S JS AC", "2C 5C 7D 8S QH")
-# second_game.print_combo()
-
-# third_game = Poker("2D 9C AS AH AC", "3D 6D 7D TD QD")
-# third_game.print_combo()
-
-# fourth_game = Poker("4D 6S 9H QH QC", "3D 6D 7H QD QS")
-# fourth_game.print_combo()
-
-# fifth_game = Poker("2H 2D 4C 4D 4S", "3C 3D 3S 9S 9D")
-# fifth_game.print_combo()
-
-# separate by line
-# first 5 are first player, second 5 are second player
 
 def poker_hands(cards=CARDS):
 
@@ -362,4 +342,4 @@ def poker_hands(cards=CARDS):
     return player1_wins
     
 
-print(poker_hands())
+print("Answer to problem 54:", poker_hands())
