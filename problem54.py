@@ -69,7 +69,21 @@ class Poker():
         self.hand2 = hand2.split() # list format
         self.combo1 = self.identify_combo(self.hand1)
         self.combo2 = self.identify_combo(self.hand2)
+        self.count1 = self.count_values(self.hand1) # dictionary with count
+        self.count2 = self.count_values(self.hand2) # dictionary with count
         self.winner = self.identify_winner()
+    
+    def count_values(self, combo):
+        '''Create a dictionary with count.'''
+
+        values_count = {}
+        for char in combo:
+            if char[0] not in values_count:
+                values_count[char[0]] = 1
+            elif char[0] in values_count:
+                values_count[char[0]] += 1
+
+        return values_count
     
     def identify_winner(self):
         '''Compare the combos'''
@@ -88,6 +102,24 @@ class Poker():
 
     def deal_with_ties(self):
         '''Resolve any tie issues'''
+        if self.combo1 in ["one_pair", "two_pairs", "three_kind", "four_kind"]:
+            max1 = 0
+            max2 = 0
+            
+            #base case
+            if len(combo1) == 0 and len(combo2) == 0:
+                return "Tie"
+            
+            for i, card in enumerate(self.__class__.cards):
+
+                for combo_card in combo1:
+                    if combo_card[0] == card and i > max1:
+                        max1 = i
+                
+                for combo_card in combo2:
+                    if combo_card[0] == card and i > max2:
+                        max2 = i
+
         winner = self.highest_value()
         if winner == "1":
             return "player1"
