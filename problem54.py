@@ -336,11 +336,15 @@ class Poker():
 
 def poker_hands(cards=CARDS):
 
+    player1_wins = 0
+
     games = cards.splitlines()
-    print(games)
+
+    # print(games)
+
     for game in games:
         current_cards = game.split()
-        print(current_cards)
+        # print(current_cards)
         str1 = ""
         for i in range(5):
             str1 += current_cards[i]
@@ -351,6 +355,11 @@ def poker_hands(cards=CARDS):
             str2 += current_cards[i]
             str2 += " "
 
-        print(str1)
+        game_analysis = Poker(str1, str2)
+        if game_analysis.winner == "player1":
+            player1_wins += 1
+        
+    return player1_wins
+    
 
 print(poker_hands())
