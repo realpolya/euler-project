@@ -104,11 +104,20 @@ class Poker():
         '''Resolve any tie issues'''
         winner = False
 
-        if self.combo1 in ["one_pair", "three_kind", "four_kind"]:
+        if self.combo1 in ["one_pair", "three_kind", "four_kind", "full_house"]:
             max_1 = max(self.count1, key=self.count1.get)
             max_2 = max(self.count2, key=self.count2.get)
 
             winner = self.highest_value([max_1], [max_2])
+        
+        elif self.combo1 == "two_pairs":
+            max1_value = max(self.count1.values())
+            max2_value = max(self.count2.values())
+
+            keys1 = [key for key, value in self.count1.items() if value == max1_value]
+            keys2 = [key for key, value in self.count2.items() if value == max2_value]
+
+            winner = self.highest_value(keys1, keys2)
 
         if winner == "Tie" or not winner:
             winner = self.highest_value()
@@ -302,25 +311,46 @@ class Poker():
         return "high_card"
     
     def print_combo(self):
-        print("combo for 1 is ", self.combo1)
-        print("combo for 2 is ", self.combo2)
+        # print("combo for 1 is ", self.combo1)
+        # print("combo for 2 is ", self.combo2)
         print("winner is ", self.winner)
 
 
-first_game = Poker("5H 5C 6S 7S KD", "2C 3S 8S 8D TD")
-first_game.print_combo()
+# first_game = Poker("5H 5C 6S 7S KD", "2C 3S 8S 8D TD")
+# first_game.print_combo()
 
-second_game = Poker("5D 8C 9S JS AC", "2C 5C 7D 8S QH")
-second_game.print_combo()
+# second_game = Poker("5D 8C 9S JS AC", "2C 5C 7D 8S QH")
+# second_game.print_combo()
 
-third_game = Poker("2D 9C AS AH AC", "3D 6D 7D TD QD")
-third_game.print_combo()
+# third_game = Poker("2D 9C AS AH AC", "3D 6D 7D TD QD")
+# third_game.print_combo()
 
-fourth_game = Poker("4D 6S 9H QH QC", "3D 6D 7H QD QS")
-fourth_game.print_combo()
+# fourth_game = Poker("4D 6S 9H QH QC", "3D 6D 7H QD QS")
+# fourth_game.print_combo()
 
-fifth_game = Poker("2H 2D 4C 4D 4S", "3C 3D 3S 9S 9D")
-fifth_game.print_combo()
+# fifth_game = Poker("2H 2D 4C 4D 4S", "3C 3D 3S 9S 9D")
+# fifth_game.print_combo()
 
 # separate by line
 # first 5 are first player, second 5 are second player
+
+def poker_hands(cards=CARDS):
+
+    games = cards.splitlines()
+    print(games)
+    for game in games:
+        current_cards = game.split()
+        print(current_cards)
+        str1 = ""
+        for i in range(5):
+            str1 += current_cards[i]
+            str1 += " "
+        
+        str2 = ""
+        for i in range (5, 10, 1):
+            str2 += current_cards[i]
+            str2 += " "
+
+        print(str1)
+
+print(poker_hands())
