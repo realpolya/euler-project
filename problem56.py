@@ -9,3 +9,25 @@ Considering natural numbers of the form, a^b, where a, b < 100, what is
 the maximum digital sum?
 
 '''
+
+def powerful_digit_sum(limit=100):
+
+    max_sum = 0
+
+    for a in range(limit):
+        for b in range(limit):
+
+            power_num = a ** b
+            digi_sum = 0
+
+            for char in str(power_num):
+
+                digi_sum += int(char)
+            
+            if digi_sum > max_sum:
+
+                max_sum = digi_sum
+    
+    return max_sum
+
+print(powerful_digit_sum())
