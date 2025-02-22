@@ -30,21 +30,17 @@ def square_root_conv(limit=1000):
 
     for _ in range(limit):
 
-        # current result
         iteration = Fraction(1) + current_fraction
 
-        # count the number of digits for both numerator and denominator
         numi = str(iteration.numerator)
         deno = str(iteration.denominator)
 
-        # if the numerator exceeds denominator, increase count
         if len(numi) > len(deno):
             count += 1
 
-        # update current fraction
         current_fraction = Fraction(1, 2 + current_fraction)
 
     return count
 
 
-print(square_root_conv())
+print("Answer to problem 57: ", square_root_conv())
