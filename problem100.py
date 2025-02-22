@@ -16,7 +16,6 @@ discs in total, determine the number of blue discs that the box would contain.
 '''
 
 import math
-from fractions import Fraction
 
 
 def number_of_blues(frac_b, frac_n, frac_bs, frac_ns):
