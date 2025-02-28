@@ -49,8 +49,9 @@ def spiral(size=int(5)):
 
     matrix = build_matrix(size)
     mid = int(size/2)
+    matrix[mid][mid] = 1
 
-    r = mid # start position for r
+    r = mid + 1 # start position for r
     i = mid + 1 # start position for i
     n = 1
     current = 2 # number of steps in each direction
@@ -58,7 +59,7 @@ def spiral(size=int(5)):
     for s in range(mid): # for every spiral
 
         for _ in range(current): # up
-            print("mid is ", mid, "r is ", r)
+            # print("mid is ", mid, "r is ", r)
             n += 1
             r -= 1
             matrix[r][i] = n
@@ -83,7 +84,8 @@ def spiral(size=int(5)):
         i += 1 # move onto a new spiral
         r += 1 # move onto a new spiral
     
-    print(matrix)
+    for key, value in matrix.items():
+        print(value)
 
 
 spiral()
