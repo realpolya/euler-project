@@ -61,36 +61,33 @@ def spiral(size=int(7)):
 
     for s in range(mid): # for every spiral
 
-        final_step = current - 1
+        final_step = [current - 1,
+        (current * 2) - 1, (current * 3) - 1, (current * 4) - 1]
 
-        for up in range(current): # up
+        for step in range(current * 4):
+
             # print("mid is ", mid, "r is ", r)
-            n += 1
-            r -= 1
+            if step < current: # up
+                n += 1
+                r -= 1
+            elif step < current * 2: # left
+                n += 1
+                i -= 1
+            elif step < current * 3: # down
+                n += 1
+                r += 1
+            else: # right
+                n += 1
+                i += 1
+
             matrix[r][i] = n
 
-            if up == final_step:
+            if step in final_step:
+                # print("yes!", n)
                 diagonal_count += 1
 
                 if is_prime(n):
                     prime_count += 1
-
-        for _ in range(current): # left
-            n += 1
-            i -= 1
-            matrix[r][i] = n
-
-            
-
-        for _ in range(current): # down
-            n += 1
-            r += 1
-            matrix[r][i] = n
-    
-        for _ in range(current):
-            n += 1
-            i += 1
-            matrix[r][i] = n
     
         # spiral ended
         current += 2
@@ -99,6 +96,8 @@ def spiral(size=int(7)):
     
     for key, value in matrix.items():
         print(value)
+    
+    print("ratio is ", prime_count / diagonal_count)
 
     # while loop (percentage dropping)
 
