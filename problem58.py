@@ -45,7 +45,7 @@ def build_matrix(size):
     return matrix
 
 
-def spiral(size=int(5)):
+def spiral(size=int(7)):
 
     matrix = build_matrix(size)
     mid = int(size/2)
@@ -56,18 +56,31 @@ def spiral(size=int(5)):
     n = 1
     current = 2 # number of steps in each direction
 
+    prime_count = 0
+    diagonal_count = 1
+
     for s in range(mid): # for every spiral
 
-        for _ in range(current): # up
+        final_step = current - 1
+
+        for up in range(current): # up
             # print("mid is ", mid, "r is ", r)
             n += 1
             r -= 1
             matrix[r][i] = n
 
+            if up == final_step:
+                diagonal_count += 1
+
+                if is_prime(n):
+                    prime_count += 1
+
         for _ in range(current): # left
             n += 1
             i -= 1
             matrix[r][i] = n
+
+            
 
         for _ in range(current): # down
             n += 1
@@ -86,6 +99,8 @@ def spiral(size=int(5)):
     
     for key, value in matrix.items():
         print(value)
+
+    # while loop (percentage dropping)
 
 
 spiral()
