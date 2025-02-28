@@ -25,3 +25,65 @@ first falls below 10%?
 '''
 
 from extras.utils import is_prime
+
+
+'''two functions are taken from problem 28'''
+def build_matrix(size):
+
+    matrix = {} # 5x5, each row is represented as a key
+    mid = int(size/2)
+
+    for r in range(size):
+
+        matrix[r] = [] # or set?
+
+        for i in range(size):
+            matrix[r].append("")
+    
+    matrix[mid][mid] = 1
+
+    return matrix
+
+
+def spiral(size=int(5)):
+
+    matrix = build_matrix(size)
+    mid = int(size/2)
+
+    r = mid # start position for r
+    i = mid + 1 # start position for i
+    n = 1
+    current = 2 # number of steps in each direction
+
+    for s in range(mid): # for every spiral
+
+        for _ in range(current): # up
+            print("mid is ", mid, "r is ", r)
+            n += 1
+            r -= 1
+            matrix[r][i] = n
+
+        for _ in range(current): # left
+            n += 1
+            i -= 1
+            matrix[r][i] = n
+
+        for _ in range(current): # down
+            n += 1
+            r += 1
+            matrix[r][i] = n
+    
+        for _ in range(current):
+            n += 1
+            i += 1
+            matrix[r][i] = n
+    
+        # spiral ended
+        current += 2
+        i += 1 # move onto a new spiral
+        r += 1 # move onto a new spiral
+    
+    print(matrix)
+
+
+spiral()
