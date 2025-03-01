@@ -27,6 +27,7 @@ first falls below 10%?
 from extras.utils import is_prime
 
 
+
 '''two functions are taken from problem 28'''
 def build_matrix(size):
 
@@ -45,11 +46,15 @@ def build_matrix(size):
     return matrix
 
 
-def spiral(size=int(7)):
 
+def spiral_primes(percentage=0.1):
+
+    size = 3
     matrix = build_matrix(size)
     mid = int(size/2)
     matrix[mid][mid] = 1
+    min_row = 0
+    max_row = size - 1
 
     r = mid + 1 # start position for r
     i = mid + 1 # start position for i
@@ -59,7 +64,9 @@ def spiral(size=int(7)):
     prime_count = 0
     diagonal_count = 1
 
-    for s in range(mid): # for every spiral
+    ratio = 1
+
+    while ratio > percentage:
 
         final_step = [current - 1,
         (current * 2) - 1, (current * 3) - 1, (current * 4) - 1]
@@ -83,23 +90,86 @@ def spiral(size=int(7)):
             matrix[r][i] = n
 
             if step in final_step:
-                # print("yes!", n)
                 diagonal_count += 1
 
                 if is_prime(n):
                     prime_count += 1
-    
-        # spiral ended
-        current += 2
-        i += 1 # move onto a new spiral
-        r += 1 # move onto a new spiral
-    
-    for key, value in matrix.items():
-        print(value)
-    
-    print("ratio is ", prime_count / diagonal_count)
+        
+        # calculate ratio
+        ratio = prime_count / diagonal_count
 
-    # while loop (percentage dropping)
+        if ratio < percentage:
+            answer_side = len(matrix)# number of rows
+        else:
+            # add new rows to the matrix
+            # print("ratio is ", ratio)
+            size += 2
+
+            for key in matrix:
+                matrix[key].insert(0, "")
+                matrix[key].append("")
+
+            min_row -= 1
+            max_row += 1
+            matrix = {min_row: [], **matrix, max_row: []}
+
+            for _ in range(size):
+                matrix[min_row].append("")
+                matrix[max_row].append("")
 
 
-spiral()
+            # spiral ended
+            current += 2
+            i += 1 # move onto a new spiral
+            r += 1 # move onto a new spiral
+    
+    return answer_side
+
+
+
+
+
+print(spiral_primes())
+
+
+
+
+# for s in range(mid): # for every spiral
+
+#     final_step = [current - 1,
+#     (current * 2) - 1, (current * 3) - 1, (current * 4) - 1]
+
+#     for step in range(current * 4):
+
+#         # print("mid is ", mid, "r is ", r)
+#         if step < current: # up
+#             n += 1
+#             r -= 1
+#         elif step < current * 2: # left
+#             n += 1
+#             i -= 1
+#         elif step < current * 3: # down
+#             n += 1
+#             r += 1
+#         else: # right
+#             n += 1
+#             i += 1
+
+#         matrix[r][i] = n
+
+#         if step in final_step:
+#             # print("yes!", n)
+#             diagonal_count += 1
+
+#             if is_prime(n):
+#                 prime_count += 1
+
+#     # spiral ended
+#     current += 2
+#     i += 1 # move onto a new spiral
+#     r += 1 # move onto a new spiral
+
+# for key, value in matrix.items():
+#     print(value)
+
+# print("ratio is ", prime_count / diagonal_count)
