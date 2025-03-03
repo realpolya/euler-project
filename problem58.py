@@ -50,11 +50,11 @@ def build_matrix(size):
 def spiral_primes(percentage=0.1):
 
     size = 3
-    matrix = build_matrix(size)
+    # matrix = build_matrix(size)
     mid = int(size/2)
-    matrix[mid][mid] = 1
-    min_row = 0
-    max_row = size - 1
+    # matrix[mid][mid] = 1
+    # min_row = 0
+    # max_row = size - 1
 
     r = mid + 1 # start position for r
     i = mid + 1 # start position for i
@@ -87,7 +87,7 @@ def spiral_primes(percentage=0.1):
                 n += 1
                 i += 1
 
-            matrix[r][i] = n
+            # matrix[r][i] = n
 
             if step in final_step:
                 diagonal_count += 1
@@ -99,23 +99,24 @@ def spiral_primes(percentage=0.1):
         ratio = prime_count / diagonal_count
 
         if ratio < percentage:
-            answer_side = len(matrix)# number of rows
+            # answer_side = len(matrix)# number of rows
+            answer_side = size
         else:
             # add new rows to the matrix
-            # print("ratio is ", ratio)
+            print("ratio is ", ratio)
             size += 2
 
-            for key in matrix:
-                matrix[key].insert(0, "")
-                matrix[key].append("")
+            # for key in matrix:
+            #     matrix[key].insert(0, "")
+            #     matrix[key].append("")
 
-            min_row -= 1
-            max_row += 1
-            matrix = {min_row: [], **matrix, max_row: []}
+            # min_row -= 1
+            # max_row += 1
+            # matrix = {min_row: [], **matrix, max_row: []}
 
-            for _ in range(size):
-                matrix[min_row].append("")
-                matrix[max_row].append("")
+            # for _ in range(size):
+            #     matrix[min_row].append("")
+            #     matrix[max_row].append("")
 
 
             # spiral ended
