@@ -28,14 +28,10 @@ ASCII codes, and the knowledge that the plain text must contain common English w
 decrypt the message and find the sum of the ASCII values in the original text.
 '''
 
-import string
-import time
-import enchant
 import nltk
 from nltk.corpus import words
 from extras.xor59 import CIPHER
 
-# print(enchant.list_dicts())
 nltk.download("words")
 
 
@@ -49,18 +45,8 @@ def xor_decryption():
 
     # find the sum of ASCII values in the original text
     ascii_sum = 0
-
     cipher_list = CIPHER.split(",")
-    # print(cipher_list)
-
-    # introduce spell-checking
-    dict = enchant.Dict("en_US-wo_accents")
-    # aspell_dict = enchant.DictWithPWL("en_US", "/Users/polinastepanova/.aspell.en.pws")
-    # print(dict.check("wonderful"))
-
-    english_words = set(words.words())
-    # print(english_words)
-    # print("l" in english_words)
+    english_words = set(words.words()) # dictionary setup
 
     # space is ascii 32, letters 65-122
     upper_range = range(65, 91)
@@ -85,7 +71,6 @@ def xor_decryption():
                 # apply the sequence over and over again
                 for char in cipher_list:
                     
-                    # print("i is", i)
                     decrypted_char = decrypt(char, keys[i])
 
                     if i == 2:
@@ -95,43 +80,30 @@ def xor_decryption():
 
                     # analyze the char
                     if decrypted_char in upper_range or decrypted_char in lower_range: # adding letters to the word
-                        # print("a letter now", chr(decrypted_char))
                         decrypted += chr(decrypted_char)
-                        # print(decrypted)
+
                     # signals break in a word
                     elif len(decrypted) != 0:
-                        # print("decrypted char is not a letter, break in letter", chr(decrypted_char))
 
                         # if single letter - only I and a are allowed
                         if len(decrypted) == 1 and decrypted_char in [65, 97, 73]: # single-letter word, a, A, I 
-                            # print("appending ", decrypted)
                             word_list.append(decrypted)
                             decrypted = ""
                         elif decrypted in english_words and len(decrypted) > 1:
-                            # print("i is", i, "key is", keys[i], "appending", decrypted)
                             word_list.append(decrypted)
                             decrypted = ""
                         else:
                             other_words.append(decrypted)
                             decrypted = ""
-                            # not_key = True
-                            # break # this key combo is not the answer
-                    # else:
-                    #     print("empty", chr(decrypted_char))
 
-                # if not_key:
-                #     continue
-                # print("this is done")
+                # more understandable words than gibberish
                 if len(word_list) > len(other_words):
-                    # print("possible keys ", keys, "word list is ", word_list)
                     correct_keys = [a, b, c]
-                    # print(correct_keys)
+
+
 
     final_text = ""
-
     i = 0
-    print(correct_keys)
-    # print("this later part is kicking in")
     for char in cipher_list:
 
         decrypted_char = decrypt(char, correct_keys[i])
@@ -143,15 +115,8 @@ def xor_decryption():
             i += 1
 
         final_text += chr(decrypted_char)
-    
-    # print(final_text)
 
     return ascii_sum
-        
 
 
-    # once it starts returning actual english words
-
-
-# print(CIPHER)
-print(xor_decryption())
+print("Answer to problem 59: ", xor_decryption())
