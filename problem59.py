@@ -1,4 +1,6 @@
 '''
+XOR Decryption
+
 Each character on a computer is assigned a unique code and the preferred standard is 
 ASCII (American Standard Code for Information Interchange). For example, uppercase 
 A = 65, asterisk (*) = 42, and lowercase k = 107.
@@ -25,3 +27,31 @@ case characters. Using 0059_cipher.txt
 ASCII codes, and the knowledge that the plain text must contain common English words, 
 decrypt the message and find the sum of the ASCII values in the original text.
 '''
+
+import string
+import enchant
+from extras.xor59 import CIPHER
+
+def decrypt(encrypted, key):
+
+    decrypted = encrypted ^ key # XOR operation
+    return chr(decrypted)
+
+
+def xor_decryption():
+
+    # find the sum of ASCII values in the original text
+    ascii_sum = 0
+
+    # introduce spell-checking
+    dict = enchant.Dict("en_US")
+    print(dict.check("hello"))
+
+    # loop through possible keys
+
+
+        # once it starts returning actual english words
+
+
+# print(CIPHER)
+xor_decryption()
