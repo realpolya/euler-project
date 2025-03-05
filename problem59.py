@@ -45,7 +45,7 @@ def xor_decryption():
 
     # introduce spell-checking
     dict = enchant.Dict("en_US")
-    print(dict.check("hello"))
+    print(dict.check("wonderful"))
 
     # loop through possible keys
 
