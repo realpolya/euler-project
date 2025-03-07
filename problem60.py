@@ -14,15 +14,13 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 from extras.utils import is_prime
 
 # find the lowest sum of the five primes for which any two primes concatenate to produce another prime
-
-
 def is_concat_prime(num_1, num_2):
 
     # try concatenating combinations within that set
     concat_1 = int(str(num_1) + str(num_2))
     concat_2 = int(str(num_2) + str(num_1))
 
-    if not is_prime(concat_1) and not is_prime(concat_2):
+    if not is_prime(concat_1) or not is_prime(concat_2):
         return False
     
     return True
@@ -33,12 +31,15 @@ def prime_pair_sets(quantity=4):
     lowest_sum = 0
     limit = 1000
     primes = [2]
+    answer_list = []
 
     # create a set of primes up to a certain number
     for i in range(3, limit, +2):
         if is_prime(i):
             primes.append(i)
     
+    print(len(primes))
+
     pairs = []
 
     # while loop
@@ -54,16 +55,35 @@ def prime_pair_sets(quantity=4):
 
                 pairs.append([prime, prime_2])
 
+        for pair in pairs:
+            for pair_2 in pairs:
+
                 # if a second pair is not working with first, find another larger pair
+                if (
+                    not is_concat_prime(pair[0], pair_2[0]) 
+                    or not is_concat_prime(pair[1], pair_2[0])
+                    or not is_concat_prime(pair[0], pair_2[1])
+                    or not is_concat_prime(pair[1], pair_2[1])
+                ):
+                    continue
+
+                print(pair, pair_2)
 
                 # keep track of pairs
+                answer_list.extend(pair)
+                answer_list.extend(pair_2)
+                print(answer_list)
 
-                # if for loops fail, increase the primes set
+                for num in answer_list:
+                    lowest_sum += num
 
-                # if pairs are found, assign the lowest sum
-        
-        lowest_sum = 2
+                break
+            
+            if lowest_sum > 0:
+                break
     
     print(len(pairs))
 
-prime_pair_sets()
+    return lowest_sum
+
+print(prime_pair_sets())
