@@ -15,6 +15,19 @@ from extras.utils import is_prime
 
 # find the lowest sum of the five primes for which any two primes concatenate to produce another prime
 
+
+def is_concat_prime(num_1, num_2):
+
+    # try concatenating combinations within that set
+    concat_1 = int(str(num_1) + str(num_2))
+    concat_2 = int(str(num_2) + str(num_1))
+
+    if not is_prime(concat_1) and not is_prime(concat_2):
+        return False
+    
+    return True
+
+
 def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
@@ -34,13 +47,9 @@ def prime_pair_sets(quantity=4):
         # work in pairs?
         for prime in primes:
             for prime_2 in primes:
-                
-                # try concatenating combinations within that set
-                concat_1 = int(str(prime) + str(prime_2))
-                concat_2 = int(str(prime_2) + str(prime))
 
                 # if a combination is not prime, discard that pair
-                if not is_prime(concat_1) and not is_prime(concat_2):
+                if not is_concat_prime(prime, prime_2):
                     continue
 
                 pairs.append([prime, prime_2])
@@ -55,6 +64,6 @@ def prime_pair_sets(quantity=4):
         
         lowest_sum = 2
     
-    print(pairs)
+    print(len(pairs))
 
 prime_pair_sets()
