@@ -41,6 +41,7 @@ def prime_pair_sets(quantity=4):
     print(len(primes))
 
     pairs = []
+    quadruples = []
 
     # while loop
     while lowest_sum == 0:
@@ -67,23 +68,38 @@ def prime_pair_sets(quantity=4):
                 ):
                     continue
 
-                print(pair, pair_2)
+                # print(pair, pair_2)
 
-                # keep track of pairs
-                answer_list.extend(pair)
-                answer_list.extend(pair_2)
-                print(answer_list)
+                if quantity == 4:
+                    answer_list.extend(pair)
+                    answer_list.extend(pair_2)
+                    print(answer_list)
 
-                for num in answer_list:
-                    lowest_sum += num
+                    for num in answer_list:
+                        lowest_sum += num
+                    
+                    break
 
-                break
+                # quadruple = [*pair, *pair_2]
+                # quadruples.append(quadruple)
+
+                quadruple = set()
+                quadruple.update(pair)
+                quadruple.update(pair_2)
+
+                if quadruple not in quadruples:
+                    quadruples.append(quadruple)
             
             if lowest_sum > 0:
                 break
+        
+        if quantity == 5:
+            
+        
+        lowest_sum = 2
     
-    print(len(pairs))
+    print(quadruples)
 
     return lowest_sum
 
-print(prime_pair_sets())
+print(prime_pair_sets(5))
