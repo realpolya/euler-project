@@ -30,7 +30,7 @@ def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
     start = 3
-    limit = 3999
+    limit = 499
     primes = [2]
     answer_list = []
     
@@ -70,74 +70,38 @@ def prime_pair_sets(quantity=4):
 
                     pairs.append(new_pair)
         
-        print(len(pairs))
+        print("number of pairs: ", len(pairs))
 
-        index = 0
+        first_member_quantity = quantity - 1
+        four_subsets = set()
 
         for pair in pairs:
 
-            pairs_cut = pairs[index+1:]
-            index += 1
+            # candidate number - is it found in 4 pairs? if not skip, if yes, go through each sets of 4
+            # TODO: do not repeat members
+            member_1 = list(pair)[0]
+            member_2 = list(pair)[1]
 
-            for pair_2 in pairs:
-
-                pair_list = list(pair)
-                pair_2_list = list(pair_2)
-
-                quadruple = set()
-                quadruple.update(pair)
-                quadruple.update(pair_2)
-
-                # print(pair_list[0], pair_2_list[0])
-
-                if quadruple not in quadruples:
-
-                    # if a second pair is not working with first, find another larger pair
-                    if (
-                        not is_concat_prime(pair_list[0], pair_2_list[0]) 
-                        or not is_concat_prime(pair_list[1], pair_2_list[0])
-                        or not is_concat_prime(pair_list[0], pair_2_list[1])
-                        or not is_concat_prime(pair_list[1], pair_2_list[1])
-                    ):
-                        continue
-
-                    # print(pair, pair_2)
-
-                    if quantity == 4:
-                        answer_list.extend(pair)
-                        answer_list.extend(pair_2)
-                        print(answer_list)
-
-                        for num in answer_list:
-                            lowest_sum += num
-                        
-                        break
-                        
-                    quadruples.append(quadruple)
+            if member_1 in four_subsets and member_2 in four_subsets:
+                continue
             
-            if lowest_sum > 0:
-                break
-        
-        print("quadruples are ", quadruples)
-        
-        if quantity == 5:
+            member_1_count = sum(1 for s in pairs if member_1 in s)
+            member_2_count = sum(1 for s in pairs if member_2 in s)
 
-            for prime in primes:
-                for quadruple in quadruples:
-                    not_this_match = False
-
-                    # checking every member of quadruple
-                    for member in quadruple:
-                        if not is_concat_prime(prime, member):
-                            not_this_match = True
-                            break
-
-                    if not not_this_match:
-                        answer_list = [*quadruple, prime]
-                        for n in answer_list:
-                            lowest_sum += n
-        
-        print("answer list is ", answer_list)
+            if member_1_count < first_member_quantity and member_2_count < first_member_quantity:
+                continue
+            elif member_1_count > first_member_quantity and member_2_count > first_member_quantity:
+                four_subsets.add(member_1)
+                four_subsets.add(member_2)
+                # print("these members are in more than 4 subsets", member_1, member_2)
+            elif member_1_count > first_member_quantity:
+                four_subsets.add(member_1)
+                # print("this member is in more than 4 subsets", member_1)
+            elif member_1_count > first_member_quantity:
+                four_subsets.add(member_2)
+                # print("this member is in more than 4 subsets", member_2)
+            
+        print("len of four subsets", len(four_subsets))
 
         if lowest_sum == 0:
             start = limit
@@ -151,3 +115,75 @@ def prime_pair_sets(quantity=4):
     return lowest_sum
 
 print(prime_pair_sets(5))
+
+
+
+
+
+
+        # index = 0
+
+        # for pair in pairs:
+
+        #     pairs_cut = pairs[index+1:]
+        #     index += 1
+
+        #     for pair_2 in pairs:
+
+        #         pair_list = list(pair)
+        #         pair_2_list = list(pair_2)
+
+        #         quadruple = set()
+        #         quadruple.update(pair)
+        #         quadruple.update(pair_2)
+
+        #         # print(pair_list[0], pair_2_list[0])
+
+        #         if quadruple not in quadruples:
+
+        #             # if a second pair is not working with first, find another larger pair
+        #             if (
+        #                 not is_concat_prime(pair_list[0], pair_2_list[0]) 
+        #                 or not is_concat_prime(pair_list[1], pair_2_list[0])
+        #                 or not is_concat_prime(pair_list[0], pair_2_list[1])
+        #                 or not is_concat_prime(pair_list[1], pair_2_list[1])
+        #             ):
+        #                 continue
+
+        #             # print(pair, pair_2)
+
+        #             if quantity == 4:
+        #                 answer_list.extend(pair)
+        #                 answer_list.extend(pair_2)
+        #                 print(answer_list)
+
+        #                 for num in answer_list:
+        #                     lowest_sum += num
+                        
+        #                 break
+                        
+        #             quadruples.append(quadruple)
+            
+        #     if lowest_sum > 0:
+        #         break
+        
+        # print("quadruples are ", quadruples)
+        
+        # if quantity == 5:
+
+        #     for prime in primes:
+        #         for quadruple in quadruples:
+        #             not_this_match = False
+
+        #             # checking every member of quadruple
+        #             for member in quadruple:
+        #                 if not is_concat_prime(prime, member):
+        #                     not_this_match = True
+        #                     break
+
+        #             if not not_this_match:
+        #                 answer_list = [*quadruple, prime]
+        #                 for n in answer_list:
+        #                     lowest_sum += n
+        
+        # print("answer list is ", answer_list)
