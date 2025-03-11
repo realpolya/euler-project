@@ -29,20 +29,19 @@ def find_candidates(member_1, member_2, sets_1, sets_2, pairs, four_subsets, lim
     if len(overlap) == 0:
         return candidates
 
-
     new_candidates = [num for s in overlap for num in s if num != member_1]
     new_candidates = [num for num in new_candidates if num in four_subsets]
-
-    final_candidates = candidates[:] 
     
-    for candidate in new_candidates:
+    for candidate in new_candidates[:]:
 
         sets_3 = [s for s in pairs if candidate in s]
         next_candidates = find_candidates(member_1, candidate, overlap, sets_3, pairs, four_subsets, limit - 1, new_candidates)
-        if next_candidates:
-            final_candidates.append(candidate)
+        
+        if not next_candidates:
+            new_candidates.remove(candidate)
 
-    return final_candidates
+    return new_candidates
+
 
 # find the lowest sum of the five primes for which any two primes concatenate to produce another prime
 def is_concat_prime(num_1, num_2):
@@ -61,7 +60,7 @@ def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
     start = 3
-    limit = 499
+    limit = 199
     primes = [2]
     answer_list = []
     
@@ -147,7 +146,7 @@ def prime_pair_sets(quantity=4):
             # bring subsets with member_2 in them
             member_2_subsets = [s for s in pairs if member_2 in s]
 
-            candidates = find_candidates(member_1, member_2, member_1_subsets, member_2_subsets, pairs, four_subsets, 3)
+            candidates = find_candidates(member_1, member_2, member_1_subsets, member_2_subsets, pairs, four_subsets, 2)
             print("for member_1", member_1, "and member_2", member_2, "candidates are", candidates)
 
             

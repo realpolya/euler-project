@@ -14,20 +14,18 @@ def find_candidates(member_1, member_2, sets_1, sets_2, pairs, four_subsets, lim
     if len(overlap) == 0:
         return candidates
 
-
     new_candidates = [num for s in overlap for num in s if num != member_1]
     new_candidates = [num for num in new_candidates if num in four_subsets]
-
-    final_candidates = candidates[:] 
     
-    for candidate in new_candidates:
+    for candidate in new_candidates[:]:
 
         sets_3 = [s for s in pairs if candidate in s]
         next_candidates = find_candidates(member_1, candidate, overlap, sets_3, pairs, four_subsets, limit - 1, new_candidates)
-        if next_candidates:
-            final_candidates.append(candidate)
+        
+        if not next_candidates:
+            new_candidates.remove(candidate)
 
-    return final_candidates
+    return new_candidates
 
 
 
