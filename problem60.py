@@ -13,6 +13,37 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 
 from extras.utils import is_prime
 
+def find_candidates(member_1, member_2, sets_1, sets_2, pairs, four_subsets, limit, candidates=None):
+
+    if candidates is None:
+        candidates = []
+
+    #base case
+    if limit == 0:
+        return candidates
+
+    # leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
+    overlap = [s1 for s1 in sets_1 if any(s1 & s2 for s2 in sets_2)]
+    overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
+
+    if len(overlap) == 0:
+        return candidates
+
+
+    new_candidates = [num for s in overlap for num in s if num != member_1]
+    new_candidates = [num for num in new_candidates if num in four_subsets]
+
+    final_candidates = candidates[:] 
+    
+    for candidate in new_candidates:
+
+        sets_3 = [s for s in pairs if candidate in s]
+        next_candidates = find_candidates(member_1, candidate, overlap, sets_3, pairs, four_subsets, limit - 1, new_candidates)
+        if next_candidates:
+            final_candidates.append(candidate)
+
+    return final_candidates
+
 # find the lowest sum of the five primes for which any two primes concatenate to produce another prime
 def is_concat_prime(num_1, num_2):
 
@@ -116,37 +147,12 @@ def prime_pair_sets(quantity=4):
             # bring subsets with member_2 in them
             member_2_subsets = [s for s in pairs if member_2 in s]
 
-            # leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
-            overlap = [s1 for s1 in member_1_subsets if any(s1 & s2 for s2 in member_2_subsets)]
-            overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
+            candidates = find_candidates(member_1, member_2, member_1_subsets, member_2_subsets, pairs, four_subsets, 3)
+            print("for member_1", member_1, "and member_2", member_2, "candidates are", candidates)
 
-            if len(overlap) == 0:
-                continue
-            elif len(overlap) > 0:
-                # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
-                candidates_3 = [num for s in overlap for num in s if num != member_1]
-                candidates_3 = [num for num in candidates_3 if num in four_subsets]
-                # print("for member_1 ", member_1, "and member_2", member_2, "candidates are ", candidates_3)
+            
 
-                for member_3 in candidates_3:
-                    
-                    member_3_subsets = [s for s in pairs if member_3 in s]
-                    overlap = [s3 for s3 in member_3_subsets if any(s3 & s for s in overlap)]
-                    overlap = [s for s in overlap if not (member_1 in s and member_3 in s)]
-
-                    if len(overlap) == 0:
-                        continue
-                    elif len(overlap) > 0:
-                        # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
-                        candidates_4 = [num for s in overlap for num in s if num != member_3]
-                        candidates_4 = [num for num in candidates_4 if num in four_subsets]
-                        if len(candidates_4) > 0:
-                            print("for member_1 ", member_1, "and member_2", member_2, "and member_3", member_3, "candidates are ", candidates_4)
-
-
-
-
-
+        # recursive function until the answer is found
 
         # if lowest_sum == 0:
         #     start = limit
@@ -161,6 +167,34 @@ def prime_pair_sets(quantity=4):
     return lowest_sum
 
 print(prime_pair_sets(5))
+
+
+# leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
+    # overlap = [s1 for s1 in member_1_subsets if any(s1 & s2 for s2 in member_2_subsets)]
+    # overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
+
+    # if len(overlap) == 0:
+    #     continue
+    # elif len(overlap) > 0:
+    #     # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
+    #     candidates_3 = [num for s in overlap for num in s if num != member_1]
+    #     candidates_3 = [num for num in candidates_3 if num in four_subsets]
+    #     # print("for member_1 ", member_1, "and member_2", member_2, "candidates are ", candidates_3)
+
+    #     for member_3 in candidates_3:
+            
+    #         member_3_subsets = [s for s in pairs if member_3 in s]
+    #         overlap = [s3 for s3 in member_3_subsets if any(s3 & s for s in overlap)]
+    #         overlap = [s for s in overlap if not (member_1 in s and member_3 in s)]
+
+    #         if len(overlap) == 0:
+    #             continue
+    #         elif len(overlap) > 0:
+    #             # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
+    #             candidates_4 = [num for s in overlap for num in s if num != member_3]
+    #             candidates_4 = [num for num in candidates_4 if num in four_subsets]
+    #             if len(candidates_4) > 0:
+    #                 print("for member_1 ", member_1, "and member_2", member_2, "and member_3", member_3, "candidates are ", candidates_4)
 
 
 
