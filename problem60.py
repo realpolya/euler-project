@@ -102,13 +102,59 @@ def prime_pair_sets(quantity=4):
                 # print("this member is in more than 4 subsets", member_2)
             
         print("len of four subsets", len(four_subsets))
+        
+        for pair in pairs:
 
-        if lowest_sum == 0:
-            start = limit
-            limit += 500
+            member_1 = list(pair)[0]
+            member_2 = list(pair)[1]
+
+            if member_1 not in four_subsets or member_2 not in four_subsets:
+                continue
+            
+            # bring subsets with member_1 in them
+            member_1_subsets = [s for s in pairs if member_1 in s]
+            # bring subsets with member_2 in them
+            member_2_subsets = [s for s in pairs if member_2 in s]
+
+            # leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
+            overlap = [s1 for s1 in member_1_subsets if any(s1 & s2 for s2 in member_2_subsets)]
+            overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
+
+            if len(overlap) == 0:
+                continue
+            elif len(overlap) > 0:
+                # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
+                candidates_3 = [num for s in overlap for num in s if num != member_1]
+                candidates_3 = [num for num in candidates_3 if num in four_subsets]
+                # print("for member_1 ", member_1, "and member_2", member_2, "candidates are ", candidates_3)
+
+                for member_3 in candidates_3:
+                    
+                    member_3_subsets = [s for s in pairs if member_3 in s]
+                    overlap = [s3 for s3 in member_3_subsets if any(s3 & s for s in overlap)]
+                    overlap = [s for s in overlap if not (member_1 in s and member_3 in s)]
+
+                    if len(overlap) == 0:
+                        continue
+                    elif len(overlap) > 0:
+                        # print("for member 1", member_1, "and member 2", member_2, "overlap pool is ", overlap)
+                        candidates_4 = [num for s in overlap for num in s if num != member_3]
+                        candidates_4 = [num for num in candidates_4 if num in four_subsets]
+                        if len(candidates_4) > 0:
+                            print("for member_1 ", member_1, "and member_2", member_2, "and member_3", member_3, "candidates are ", candidates_4)
+
+
+
+
+
+
+        # if lowest_sum == 0:
+        #     start = limit
+        #     limit += 500
 
         
-        # lowest_sum = 2
+
+        lowest_sum = 2
     
     print(quadruples)
 
