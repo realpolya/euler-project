@@ -11,9 +11,12 @@ Find the lowest sum for a set of five primes for which any two primes concatenat
 
 '''
 
+import math
 from extras.utils import is_prime
 
 def find_candidates(member_1, member_2, sets_1, sets_2, pairs, four_subsets, limit, candidates=None):
+
+    # print("dealing with set_1", sets_1, "and set_2", sets_2)
 
     if candidates is None:
         candidates = []
@@ -21,21 +24,27 @@ def find_candidates(member_1, member_2, sets_1, sets_2, pairs, four_subsets, lim
     #base case
     if limit == 0:
         return candidates
+    
+    current_members = {member_1, member_2}
 
     # leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
-    overlap = [s1 for s1 in sets_1 if any(s1 & s2 for s2 in sets_2)]
-    overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
+    overlap = [s1 for s1 in sets_1 if any((s1 & s2) - current_members for s2 in sets_2)]
+    # overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
 
     if len(overlap) == 0:
-        return candidates
+        # print("the overlap is 0")
+        return []
 
     new_candidates = [num for s in overlap for num in s if num != member_1]
     new_candidates = [num for num in new_candidates if num in four_subsets]
+
+    # print("new candidates now are ", new_candidates, "limit is ", limit)
     
     for candidate in new_candidates[:]:
 
         sets_3 = [s for s in pairs if candidate in s]
-        next_candidates = find_candidates(member_1, candidate, overlap, sets_3, pairs, four_subsets, limit - 1, new_candidates)
+        next_candidates = find_candidates(member_1, candidate, overlap, sets_3, pairs, 
+        four_subsets, limit - 1, new_candidates)
         
         if not next_candidates:
             new_candidates.remove(candidate)
@@ -60,7 +69,7 @@ def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
     start = 3
-    limit = 199
+    limit = 299
     primes = [2]
     answer_list = []
     
@@ -104,6 +113,7 @@ def prime_pair_sets(quantity=4):
 
         first_member_quantity = quantity - 1
         four_subsets = set()
+        four_subset_pairs = []
 
         for pair in pairs:
 
@@ -124,6 +134,8 @@ def prime_pair_sets(quantity=4):
                 four_subsets.add(member_1)
                 four_subsets.add(member_2)
                 # print("these members are in more than 4 subsets", member_1, member_2)
+                if pair not in four_subset_pairs:
+                    four_subset_pairs.append(pair)
             elif member_1_count > first_member_quantity:
                 four_subsets.add(member_1)
                 # print("this member is in more than 4 subsets", member_1)
@@ -131,37 +143,38 @@ def prime_pair_sets(quantity=4):
                 four_subsets.add(member_2)
                 # print("this member is in more than 4 subsets", member_2)
             
-        print("len of four subsets", len(four_subsets))
+        print("len of four subsets members", len(four_subsets))
+        print("len of four subset pairs", len(four_subset_pairs))
+
+        # all of numbers in the pair must be in 4 pairs
         
-        for pair in pairs:
+        for pair in four_subset_pairs:
 
             member_1 = list(pair)[0]
             member_2 = list(pair)[1]
 
-            if member_1 not in four_subsets or member_2 not in four_subsets:
-                continue
+            # if member_1 not in four_subsets or member_2 not in four_subsets:
+            #     continue
             
             # bring subsets with member_1 in them
             member_1_subsets = [s for s in pairs if member_1 in s]
             # bring subsets with member_2 in them
             member_2_subsets = [s for s in pairs if member_2 in s]
 
-            candidates = find_candidates(member_1, member_2, member_1_subsets, member_2_subsets, pairs, four_subsets, 2)
-            print("for member_1", member_1, "and member_2", member_2, "candidates are", candidates)
+            # if member_1 == 19 and member_2 == 31:
 
-            
+            candidates = find_candidates(member_1, member_2, member_1_subsets, member_2_subsets, pairs, four_subsets, 3)
+            if candidates:
+                print("for member_1", member_1, "and member_2", member_2, "candidates are", candidates)
+                lowest_sum = sum(candidates) + member_1 + member_2
+                break
 
         # recursive function until the answer is found
 
-        # if lowest_sum == 0:
-        #     start = limit
-        #     limit += 500
+        if lowest_sum == 0:
+            start = limit
+            limit += 500
 
-        
-
-        lowest_sum = 2
-    
-    print(quadruples)
 
     return lowest_sum
 
