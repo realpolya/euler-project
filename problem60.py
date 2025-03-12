@@ -31,24 +31,24 @@ def find_candidates(member_1, member_2, sets_1, sets_2, dict, limit, candidates=
     
     current_members = {member_1, member_2}
 
-    print("sets 1 is ", sets_1, "sets 2 is ", sets_2)
+    # print("sets 1 is ", sets_1, "sets 2 is ", sets_2)
 
     # leave only those sets that contain the same numbers in both sets (excluding the one with member 1 and 2)
-    overlap = [num for num in sets_1 if num in sets_2 and num not in current_members]
+    new_candidates = [num for num in sets_1 if num in sets_2 and num not in current_members]
     # overlap = [s for s in overlap if not (member_1 in s and member_2 in s)]
 
-    if len(overlap) == 0:
+    if len(new_candidates) == 0:
         # print("the overlap is 0")
         return []
 
-    new_candidates = [num for s in overlap for num in s if num != member_1]
+    # new_candidates = [num for s in overlap for num in s if num != member_1]
 
     # print("new candidates now are ", new_candidates, "limit is ", limit)
     
     for candidate in new_candidates[:]:
 
         sets_3 = dict[candidate]
-        next_candidates = find_candidates(member_1, candidate, overlap, sets_3, dict, limit - 1, new_candidates)
+        next_candidates = find_candidates(member_1, candidate, new_candidates, sets_3, dict, limit - 1, new_candidates)
         
         if not next_candidates:
             new_candidates.remove(candidate)
@@ -76,7 +76,7 @@ def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
     start = 3
-    limit = 100
+    limit = 5000
     # primes = [2]
 
     is_prime_cache = [True] * limit # Sieve of Eratosthenes
@@ -120,7 +120,7 @@ def prime_pair_sets(quantity=4):
     #     if is_prime(i):
     #         primes.append(i)
     
-    print("primes length is ", len(primes))
+    # print("primes length is ", len(primes))
     index = 0
 
     # work in pairs?
@@ -155,11 +155,11 @@ def prime_pair_sets(quantity=4):
 
     # first_member_quantity = quantity - 1
     four_subsets_dict = {p: candidates for p, candidates in pairs_dict.items() if len(candidates) >= 4}
-    print("four subsets now ", four_subsets_dict)
+    # print("four subsets now ", four_subsets_dict)
     valid_keys = set(four_subsets_dict.keys())
 
     four_subsets_dict = {p: {v for v in values if v in valid_keys} for p, values in four_subsets_dict.items()}  
-    print("four subsets AFTER", four_subsets_dict)  
+    # print("four subsets AFTER", four_subsets_dict)  
 
 
     four_subset_pairs = []
