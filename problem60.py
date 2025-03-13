@@ -16,8 +16,6 @@ import time
 
 from extras.utils import is_prime
 
-concat_prime_cache = {}
-
 def find_candidates(member_1, member_2, sets_1, sets_2, dict, limit, candidates=None):
 
     # print("dealing with set_1", sets_1, "and set_2", sets_2)
@@ -76,7 +74,7 @@ def prime_pair_sets(quantity=4):
 
     lowest_sum = 0
     start = 3
-    limit = 5000
+    limit = 100000
     # primes = [2]
 
     is_prime_cache = [True] * limit # Sieve of Eratosthenes
@@ -90,7 +88,7 @@ def prime_pair_sets(quantity=4):
     prime_set = {num for num, prime in enumerate(is_prime_cache) if prime}
     primes = sorted(prime_set)
 
-    large_limit = 1000000
+    large_limit = 10**8
     large_is_prime_cache = [True] * large_limit # Sieve of Eratosthenes
     large_is_prime_cache[0] = large_is_prime_cache[1] = False # 0 and 1 are not primes
 
@@ -107,7 +105,7 @@ def prime_pair_sets(quantity=4):
 
 
     answer_list = []
-    pairs = []
+    pairs = set()
     pairs_dict = {p: set() for p in primes}
     # quadruples = []
 
@@ -121,20 +119,16 @@ def prime_pair_sets(quantity=4):
     #         primes.append(i)
     
     # print("primes length is ", len(primes))
-    index = 0
 
     # work in pairs?
-    for prime in primes:
+    for i, prime in enumerate(primes):
 
-        primes_cut = primes[index+1:]
-        index += 1
+        for prime_2 in primes[i+1:]:
 
-        for prime_2 in primes_cut:
+            # if prime == prime_2:
+            #     continue
 
-            if prime == prime_2:
-                continue
-
-            new_pair = {prime, prime_2}
+            new_pair = (prime, prime_2)
 
             if new_pair not in pairs:
 
@@ -145,7 +139,7 @@ def prime_pair_sets(quantity=4):
                 # pairs.append(new_pair)
                 pairs_dict[prime].add(prime_2)
                 pairs_dict[prime_2].add(prime)
-                pairs.append(new_pair)
+                pairs.add(new_pair)
     
     print("number of pairs: ", len(pairs))
     print(f"2. Execution time: {time.time() - start_time:.2f} seconds")
@@ -165,7 +159,7 @@ def prime_pair_sets(quantity=4):
     four_subset_pairs = []
 
     for pair in pairs:
-        member_1, member_2 = tuple(pair)
+        member_1, member_2 = pair
 
         if member_1 in four_subsets_dict and member_2 in four_subsets_dict:
             if pair not in four_subset_pairs:
