@@ -55,10 +55,44 @@ and octagonal, is represented by a different number in the set.
 
 from extras.utils import generate_polygonal_set
 
+def triangular_formula(n):
+    return n * (n+1) / 2
+
+def square_formula(n):
+    return n ** 2
+
+def pentagonal_formula(n):
+    return n * (3 * n - 1)/2
+
 def hexagonal_formula(n):
     return n * (2 * n - 1)
 
-print(generate_polygonal_set(1, 1000, hexagonal_formula))
+def heptagonal_formula(n):
+    return n * (5 * n - 3) / 2
 
+def octagonal_formula(n):
+    return n * (3 * n - 2)
+
+
+def generate_sets():
+
+    start = 1000
+    limit = 10000
+
+    tri_set = generate_polygonal_set(start, limit, triangular_formula)
+    square_set = generate_polygonal_set(start, limit, square_formula)
+    penta_set = generate_polygonal_set(start, limit, pentagonal_formula)
+    hexa_set = generate_polygonal_set(start, limit, hexagonal_formula)
+    hepta_set = generate_polygonal_set(start, limit, heptagonal_formula)
+    octa_set = generate_polygonal_set(start, limit, octagonal_formula)
+
+    print(tri_set)
+    print(square_set)
+    print(penta_set)
+    print(hexa_set)
+    print(hepta_set)
+    print(octa_set)
+
+generate_sets()
 
 

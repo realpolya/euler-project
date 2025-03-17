@@ -106,7 +106,7 @@ def generate_polygonal_set(start, limit, formula):
 
     while current_num < limit:
 
-        current_num = formula(n)
+        current_num = int(formula(n))
         if current_num > start:
             result_set.add(current_num)
         
