@@ -74,6 +74,23 @@ def octagonal_formula(n):
     return n * (3 * n - 2)
 
 
+def find_overlap(chars, set, direction):
+
+    overlapping = []
+
+    for num in set:
+
+        first_two = str(num)[:2]
+        last_two = str(num)[-2:]
+
+        if direction == "last" and last_two == chars:
+            overlapping.append(num)
+        elif direction == "first" and first_two == chars:
+            overlapping.append(num)
+    
+    return overlapping
+
+
 def generate_sets():
 
     start = 1000
@@ -86,13 +103,98 @@ def generate_sets():
     hepta_set = generate_polygonal_set(start, limit, heptagonal_formula)
     octa_set = generate_polygonal_set(start, limit, octagonal_formula)
 
-    print(tri_set)
-    print(square_set)
-    print(penta_set)
-    print(hexa_set)
-    print(hepta_set)
-    print(octa_set)
+    list_of_sets = [square_set, penta_set, hexa_set, hepta_set, octa_set]
+
+    tri_dict_kl = {}
+    tri_dict_yr = {}
+    lm_dict = {}
+    xy_dict = {}
+
+    for tri in tri_set:
+
+        r = str(tri)[:2]
+        k = str(tri)[-2:]
+
+        plausible_kl = set()
+        plausible_yr = set()
+        set_num = 4
+
+        for other_set in list_of_sets:
+
+            plausible_first = find_overlap(r, other_set, "last") # yr
+            plausible_last = find_overlap(k, other_set, "first") # kl
+
+            if plausible_first:
+                plausible_yr.update(plausible_first)
+            if plausible_last:
+                plausible_kl.update(plausible_last)
+
+            # print("for set ", set_num, "the first overlap is ", plausible_first, "and the last overlap is ", plausible_last)
+
+            # plausible_members.update()
+
+            set_num += 1
+        
+        if plausible_kl:
+            tri_dict_kl[str(tri)] = plausible_kl
+        if plausible_yr:
+            tri_dict_yr[str(tri)] = plausible_yr
+        
+        # print("for num ", tri, "plausible kl are ", plausible_kl, "and plausible yr are ", plausible_yr)
+    
+    # print(tri_dict_kl)
+    # print(tri_dict_yr)
+
+    for key, value in tri_dict_kl.items():
+
+        for kl in value:
+
+            k = str(kl)[:2]
+            l = str(kl)[-2:]
+
+            plausible_lm = set()
+
+            for other_set in list_of_sets:
+
+                plausible_last = find_overlap(l, other_set, "first") # lm
+
+                if plausible_last:
+                    plausible_lm.update(plausible_last)
+
+                set_num += 1
+            
+            if plausible_lm:
+                lm_dict[str(kl)] = plausible_lm
+    
+    print("lm dict is ", lm_dict)
+
+    for key, value in tri_dict_yr.items():
+
+        for yr in value:
+
+            y = str(kl)[:2]
+            r = str(kl)[-2:]
+
+            plausible_xy = set()
+
+            for other_set in list_of_sets:
+
+                plausible_first = find_overlap(y, other_set, "last") # xy
+
+                if plausible_first:
+                    plausible_xy.update(plausible_first)
+
+                set_num += 1
+            
+            if plausible_xy:
+                xy_dict[str(yr)] = plausible_xy
+    
+    print("xy dict is ", lm_dict)
+
+
+
+
+
+
 
 generate_sets()
-
-
