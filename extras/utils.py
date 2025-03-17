@@ -96,6 +96,25 @@ def is_hexagonal(num):
     return False
 
 
+def generate_polygonal_set(start, limit, formula):
+    '''generate set of triangular numbers between start and limit'''
+
+    result_set = set()
+    n = 1
+
+    current_num = 0
+
+    while current_num < limit:
+
+        current_num = formula(n)
+        if current_num > start:
+            result_set.add(current_num)
+        
+        n += 1
+    
+    return result_set
+    
+
 def binomial_coefficient(m, n):
     '''Calculate number of subsets of size n from the set of size m'''
 

@@ -48,3 +48,17 @@ which each polygonal type: triangle, square, pentagonal, hexagonal, heptagonal,
 and octagonal, is represented by a different number in the set.
 
 '''
+
+# find 6 numbers (all 4 digits) – not nessecarily ascending or descending order
+
+# find all of the numbers up between 1000 and 10 000 in each set
+
+from extras.utils import generate_polygonal_set
+
+def hexagonal_formula(n):
+    return n * (2 * n - 1)
+
+print(generate_polygonal_set(1, 1000, hexagonal_formula))
+
+
+
