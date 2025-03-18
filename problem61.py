@@ -322,10 +322,47 @@ def generate_sets():
                             # l_set.add(l)
         
         return yr_possibilities
+    
+    def find_rk(all_sets, yr_possibilities):
+
+        rk_possibilities = {}
+
+        for key, other_set in all_sets.items():
+
+            if key == "tri":
+
+                rk_possibilities[key] = set()
+
+                # print("here", kl_possibilities[suspect[0]])
+
+                # print("suspect is", suspect, "kl possibilities are ", kl_possibilities[suspect])
+
+                # print("suspect is ", suspect, "mx possibilities are ", mx_possibilities)
+
+                for yr_key, yr_set in yr_possibilities.items():
+
+                    for yr in yr_set:
+
+                        y = str(yr)[:2]
+                        r = str(yr)[-2:]
+                        # print("l is ", l)
+
+                        plausible_last = find_overlap(r, other_set, "first") # yr
+                        # print("other set is ", other_set)
+
+
+                        if plausible_last:
+                            rk_possibilities[key].update(plausible_last)
+                            # print("for kl ", kl, "the overlap is ", plausible_last)
+                            # l_set.add(l)
+        
+        return rk_possibilities
+
 
     yr_confirmed = {}
     for suspect in suspect_list:
         yr_confirmed[suspect] = set()
+
 
     for suspect in suspect_list:
 
@@ -354,10 +391,11 @@ def generate_sets():
                             if last_suspect != suspect and last_suspect != next_suspect and last_suspect != super_suspect:
 
                                 yr_possibilities_local = find_yr(last_suspect, super_suspect, next_suspect, suspect, all_sets, xy_possibilities)
+                                yr_possibilities_local = {key: value for key, value in yr_possibilities_local.items() if value}
 
                                 # if len(yr_possibilities) > 0:
                                     
-                                #     print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "with last suspect", last_suspect, "yr possibilities are", yr_possibilities)
+                                # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "with last suspect", last_suspect, "yr possibilities are", yr_possibilities_local)
                                 
                                 for yr_local_key, yr_local_set in yr_possibilities_local.items():
 
@@ -374,15 +412,22 @@ def generate_sets():
                                                 
                                                 y = str(yr)[:2]
 
-                                                for xy_key, xy_set in xy_possibilities.items():
+                                rk_possibilities = find_rk(all_sets, yr_possibilities_local)
+                                rk_possibilities = {key: value for key, value in rk_possibilities.items() if value}
 
-                                                    for xy in xy_set:
+                                if rk_possibilities:
 
-                                                        xy_y = str(xy)[-2:]
+                                    for rk_key, rk_set in rk_possibilities.items():
 
-                                                        if xy_y == y:
+                                        if 8128 in rk_set:
 
-                                                            print('''analysis - yr: ''', yr, "clan:", yr_key, "xy is", xy, "clan:", xy_key)
+                                            print("rk possibilities are ", rk_possibilities, "for yr possibilities", yr_possibilities_local, "for xy possibilities",
+                                            xy_possibilities, "for mx possibilities", mx_possibilities, "for lm possibilities", lm_possibilities, "for kl possibilities", kl_possibilities, '''
+
+                                            
+                                            ''')
+
+
 
 
 
