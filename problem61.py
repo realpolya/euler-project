@@ -217,7 +217,7 @@ def generate_sets():
         
         return lm_possibilities
     
-    def find_mx(suspect, all_sets, lm_possibilities):
+    def find_mx(suspect, grand_suspect, all_sets, lm_possibilities):
 
         mx_possibilities = {}
 
@@ -225,7 +225,7 @@ def generate_sets():
 
             if key != "tri":
 
-                if key != suspect:
+                if key != suspect and key != grand_suspect:
 
                     mx_possibilities[key] = set()
 
@@ -250,19 +250,76 @@ def generate_sets():
         
         return mx_possibilities
     
+
+    def find_xy(suspect, prev_suspect, grand_suspect, all_sets, mx_possibilities):
+
+        xy_possibilities = {}
+
+        for key, other_set in all_sets.items():
+
+            if key != "tri":
+
+                if key != suspect and key != grand_suspect and key != prev_suspect:
+
+                    xy_possibilities[key] = set()
+
+                    # print("here", kl_possibilities[suspect[0]])
+
+                    # print("suspect is", suspect, "kl possibilities are ", kl_possibilities[suspect])
+
+                    # print("suspect is ", suspect, "mx possibilities are ", mx_possibilities)
+
+                    for mx in mx_possibilities[suspect]:
+
+                        m = str(mx)[:2]
+                        x = str(mx)[-2:]
+                        # print("l is ", l)
+
+                        plausible_last = find_overlap(x, other_set, "first") # xy
+                        # print("other set is ", other_set)
+
+
+                        if plausible_last:
+                            xy_possibilities[key].update(plausible_last)
+                            # print("for kl ", kl, "the overlap is ", plausible_last)
+                            # l_set.add(l)
+        
+        return xy_possibilities
+
+    
     for suspect in suspect_list:
 
         lm_possibilities = find_lm(suspect, all_sets, kl_possibilities)
         
-        print("for suspect ", suspect, "lm possibilities ", lm_possibilities)
+        # print("for suspect ", suspect, "lm possibilities ", lm_possibilities)
 
         for next_suspect in suspect_list:
 
             if next_suspect != suspect:
 
-                mx_possibilities = find_mx(next_suspect, all_sets, lm_possibilities)
+                mx_possibilities = find_mx(next_suspect, suspect, all_sets, lm_possibilities)
 
-                print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "mx possibilities are", mx_possibilities)
+                # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "mx possibilities are", mx_possibilities)
+
+                for super_suspect in suspect_list:
+
+                    if super_suspect != suspect and super_suspect != next_suspect:
+
+                        xy_possibilities = find_xy(super_suspect, next_suspect, suspect, all_sets, mx_possibilities)
+
+                        print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "xy possibilities are", xy_possibilities)
+
+                        for xy_key, xy_value in xy_possibilities.items():
+
+                            for yr_key, yr_value in yr_possibilities.items():
+
+                                for xy in xy_value:
+
+                                    if xy in yr_value and xy_key == yr_key:
+
+                                        print("match found. key xy: ", xy_key, "key yr:", yr_key, "xy_value set", xy_value, "yr_value set", yr_value, "overlap: ", xy)
+    
+    # print(yr_possibilities)
 
 
 
