@@ -74,24 +74,35 @@ def octagonal_formula(n):
     return n * (3 * n - 2)
 
 
-def find_overlap(chars, set, direction):
+def find_overlap(chars, set):
+    '''chars are y, checks for numbers that are yr'''
+
+    overlapping = []
+
+    for num in set:
+
+        first_two = str(num)[:2]
+
+        if first_two == chars:
+            overlapping.append(num)
+    
+    return overlapping
+
+
+def find_overlap_last(chars, set):
+    '''chars are y, checks for numbers that are xy'''
 
     overlapping = []
     # print(" the set is passed down ", set, "chars are passed down ", chars)
 
     for num in set:
 
-        first_two = str(num)[:2]
         last_two = str(num)[-2:]
 
-        if direction == "last" and last_two == chars:
-            overlapping.append(num)
-        elif direction == "first" and first_two == chars:
-            # print("first two ", first_two, "equals to chars ", chars)
+        if last_two == chars:
             overlapping.append(num)
     
     return overlapping
-
 
 
 def generate_sets():
@@ -149,7 +160,7 @@ def generate_sets():
                 rk_values.add(tri)
 
                 # print("for tri ", tri, "yr possibilities are ", plausible_first)
-                plausible_last = find_overlap(k, other_set, "first") # kl
+                plausible_last = find_overlap(k, other_set) # kl
 
                 if plausible_last:
                     kl_possibilities[key].update(plausible_last)
@@ -171,7 +182,7 @@ def generate_sets():
                 r = str(tri)[:2]
                 k = str(tri)[-2:]
 
-                plausible_first = find_overlap(r, other_set, "last") # yr
+                plausible_first = find_overlap_last(r, other_set) # yr
 
                 if plausible_first:
                     yr_possibilities[key].update(plausible_first)
@@ -185,6 +196,32 @@ def generate_sets():
     print("---------------")
 
     suspect_list = ["squ", "pen", "hex", "hep", "oct"]
+
+    def find_ab(suspect, all_sets, possibilities, removed=[]):
+        '''general function to start exploring the tree'''
+
+        ab_possibilities = {}
+
+        for key, other_set in all_sets.items():
+
+            if key != "tri" and key not in removed:
+
+                    ab_possibilities[key] = set()
+
+                    for za in possibilities[suspect]:
+
+                        z = str(za)[:2]
+                        a = str(za)[-2:]
+
+                        plausible = find_overlap(a, other_set) # ab
+
+
+                        if plausible:
+                            ab_possibilities[key].update(plausible)
+        
+        return ab_possibilities
+
+
 
     def find_lm(suspect, all_sets, kl_possibilities):
 
@@ -208,7 +245,7 @@ def generate_sets():
                         l = str(kl)[-2:]
                         # print("l is ", l)
 
-                        plausible_last = find_overlap(l, other_set, "first") # lm
+                        plausible_last = find_overlap(l, other_set) # lm
                         # print("other set is ", other_set)
 
 
@@ -241,7 +278,7 @@ def generate_sets():
                         m = str(lm)[-2:]
                         # print("l is ", l)
 
-                        plausible_last = find_overlap(m, other_set, "first") # lm
+                        plausible_last = find_overlap(m, other_set) # lm
                         # print("other set is ", other_set)
 
 
@@ -252,7 +289,6 @@ def generate_sets():
         
         return mx_possibilities
     
-
     def find_xy(suspect, prev_suspect, grand_suspect, all_sets, mx_possibilities):
 
         xy_possibilities = {}
@@ -277,7 +313,7 @@ def generate_sets():
                         x = str(mx)[-2:]
                         # print("l is ", l)
 
-                        plausible_last = find_overlap(x, other_set, "first") # xy
+                        plausible_last = find_overlap(x, other_set) # xy
                         # print("other set is ", other_set)
 
 
@@ -312,7 +348,7 @@ def generate_sets():
                         y = str(xy)[-2:]
                         # print("l is ", l)
 
-                        plausible_last = find_overlap(y, other_set, "first") # yr
+                        plausible_last = find_overlap(y, other_set) # yr
                         # print("other set is ", other_set)
 
 
@@ -347,7 +383,7 @@ def generate_sets():
                         r = str(yr)[-2:]
                         # print("l is ", l)
 
-                        plausible_last = find_overlap(r, other_set, "first") # yr
+                        plausible_last = find_overlap(r, other_set) # yr
                         # print("other set is ", other_set)
 
 
@@ -366,66 +402,69 @@ def generate_sets():
 
     for suspect in suspect_list:
 
-        lm_possibilities = find_lm(suspect, all_sets, kl_possibilities)
+        removed_suspects = [suspect]
+
+        # lm_possibilities = find_lm(suspect, all_sets, kl_possibilities)
+        lm_possibilities = find_ab(suspect, all_sets, kl_possibilities, removed_suspects)
         
-        # print("for suspect ", suspect, "lm possibilities ", lm_possibilities)
+        print("for suspect ", suspect, "lm possibilities ", lm_possibilities)
 
-        for next_suspect in suspect_list:
+        # for next_suspect in suspect_list:
 
-            if next_suspect != suspect:
+        #     if next_suspect != suspect:
 
-                mx_possibilities = find_mx(next_suspect, suspect, all_sets, lm_possibilities)
+        #         mx_possibilities = find_mx(next_suspect, suspect, all_sets, lm_possibilities)
 
-                # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "mx possibilities are", mx_possibilities)
+        #         # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "mx possibilities are", mx_possibilities)
 
-                for super_suspect in suspect_list:
+        #         for super_suspect in suspect_list:
 
-                    if super_suspect != suspect and super_suspect != next_suspect:
+        #             if super_suspect != suspect and super_suspect != next_suspect:
 
-                        xy_possibilities = find_xy(super_suspect, next_suspect, suspect, all_sets, mx_possibilities)
+        #                 xy_possibilities = find_xy(super_suspect, next_suspect, suspect, all_sets, mx_possibilities)
 
-                        # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "xy possibilities are", xy_possibilities)
+        #                 # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "xy possibilities are", xy_possibilities)
 
-                        for last_suspect in suspect_list:
+        #                 for last_suspect in suspect_list:
 
-                            if last_suspect != suspect and last_suspect != next_suspect and last_suspect != super_suspect:
+        #                     if last_suspect != suspect and last_suspect != next_suspect and last_suspect != super_suspect:
 
-                                yr_possibilities_local = find_yr(last_suspect, super_suspect, next_suspect, suspect, all_sets, xy_possibilities)
-                                yr_possibilities_local = {key: value for key, value in yr_possibilities_local.items() if value}
+        #                         yr_possibilities_local = find_yr(last_suspect, super_suspect, next_suspect, suspect, all_sets, xy_possibilities)
+        #                         yr_possibilities_local = {key: value for key, value in yr_possibilities_local.items() if value}
 
-                                # if len(yr_possibilities) > 0:
+        #                         # if len(yr_possibilities) > 0:
                                     
-                                # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "with last suspect", last_suspect, "yr possibilities are", yr_possibilities_local)
+        #                         # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "with last suspect", last_suspect, "yr possibilities are", yr_possibilities_local)
                                 
-                                for yr_local_key, yr_local_set in yr_possibilities_local.items():
+        #                         for yr_local_key, yr_local_set in yr_possibilities_local.items():
 
-                                    for yr_key, yr_set in yr_possibilities.items():
+        #                             for yr_key, yr_set in yr_possibilities.items():
 
-                                        for yr in yr_local_set:
+        #                                 for yr in yr_local_set:
 
-                                            if yr in yr_set and yr_local_key == yr_key:
+        #                                     if yr in yr_set and yr_local_key == yr_key:
 
-                                                # print("match found, yr = ", yr, "local key:", yr_local_key, "global key:", yr_key)
-                                                yr_confirmed[yr_key].add(yr)
-                                                # if yr == 1281:
-                                                #     print('''analysis - yr: ''', yr, "clan:", yr_key, "xy possibilities were ", xy_possibilities)
+        #                                         # print("match found, yr = ", yr, "local key:", yr_local_key, "global key:", yr_key)
+        #                                         yr_confirmed[yr_key].add(yr)
+        #                                         # if yr == 1281:
+        #                                         #     print('''analysis - yr: ''', yr, "clan:", yr_key, "xy possibilities were ", xy_possibilities)
                                                 
-                                                y = str(yr)[:2]
+        #                                         y = str(yr)[:2]
 
-                                rk_possibilities = find_rk(all_sets, yr_possibilities_local)
-                                rk_possibilities = {key: value for key, value in rk_possibilities.items() if value}
+        #                         rk_possibilities = find_rk(all_sets, yr_possibilities_local)
+        #                         rk_possibilities = {key: value for key, value in rk_possibilities.items() if value}
 
-                                if rk_possibilities:
+        #                         if rk_possibilities:
 
-                                    for rk_key, rk_set in rk_possibilities.items():
+        #                             for rk_key, rk_set in rk_possibilities.items():
 
-                                        if 8128 in rk_set:
+        #                                 if 8128 in rk_set:
 
-                                            print("rk possibilities are ", rk_possibilities, "for yr possibilities", yr_possibilities_local, "for xy possibilities",
-                                            xy_possibilities, "for mx possibilities", mx_possibilities, "for lm possibilities", lm_possibilities, "for kl possibilities", kl_possibilities, '''
+        #                                     print("rk possibilities are ", rk_possibilities, "for yr possibilities", yr_possibilities_local, "for xy possibilities",
+        #                                     xy_possibilities, "for mx possibilities", mx_possibilities, "for lm possibilities", lm_possibilities, "for kl possibilities", kl_possibilities, '''
 
-                                            
-                                            ''')
+
+        #                                     ''')
 
 
 
