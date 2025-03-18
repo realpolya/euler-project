@@ -249,6 +249,7 @@ def generate_sets():
         
         return ab_possibilities
 
+
     suspect_list = ["squ", "pen", "hex", "hep", "oct"]
 
     for rk in rk_values:
@@ -309,6 +310,11 @@ def generate_sets():
                                     if r == str(yr)[-2:]:
 
                                         print("match found, rk is ", rk, "yr is ", yr, "in set", yr_key, "")
+                                        print("yr possibilities are ", yr_possibilities)
+                                        print("xy possibilities are ", xy_possibilities)
+                                        print("mx possibilities are ", mx_possibilities)
+                                        print("lm possibilities are ", lm_possibilities)
+                                        print("kl possibilities are ", kl_possibilities)
 
                         # for rk in rk_values:
 
