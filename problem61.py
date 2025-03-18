@@ -50,7 +50,6 @@ and octagonal, is represented by a different number in the set.
 '''
 
 # find 6 numbers (all 4 digits) – not nessecarily ascending or descending order
-
 # find all of the numbers up between 1000 and 10 000 in each set
 
 from extras.utils import generate_polygonal_set
@@ -73,21 +72,6 @@ def heptagonal_formula(n):
 def octagonal_formula(n):
     return n * (3 * n - 2)
 
-def find_overlap_last(chars, set):
-    '''chars are y, checks for numbers that are xy'''
-
-    overlapping = []
-    # print(" the set is passed down ", set, "chars are passed down ", chars)
-
-    for num in set:
-
-        last_two = str(num)[-2:]
-
-        if last_two == chars:
-            overlapping.append(num)
-    
-    return overlapping
-
 def find_overlap(chars, set):
     '''chars are y, checks for numbers that are yr'''
 
@@ -103,21 +87,21 @@ def find_overlap(chars, set):
     return overlapping
 
 
-def generate_sets():
+def find_cyclical_sum():
 
     start = 1000
     limit = 10000
 
-    tri_set = generate_polygonal_set(start, limit, triangular_formula)
+    rk_values = generate_polygonal_set(start, limit, triangular_formula) # rk is in triangular numbers
+
     square_set = generate_polygonal_set(start, limit, square_formula)
     penta_set = generate_polygonal_set(start, limit, pentagonal_formula)
     hexa_set = generate_polygonal_set(start, limit, hexagonal_formula)
     hepta_set = generate_polygonal_set(start, limit, heptagonal_formula)
     octa_set = generate_polygonal_set(start, limit, octagonal_formula)
 
-    list_of_sets = [square_set, penta_set, hexa_set, hepta_set, octa_set]
     all_sets = {
-        'tri': tri_set, 
+        'tri': rk_values, 
         'squ': square_set, 
         'pen': penta_set, 
         'hex': hexa_set, 
@@ -125,78 +109,11 @@ def generate_sets():
         'oct': octa_set
     }
 
-    rk_values = set() # rk is in triangular numbers
-    kl_dict = {} # contains list of rk keys with kl possible candidates
-    yr_dict = {} # contains list of rk keys with yr possible candidates
-    lm_dict = {} # contains list of kl keys with lm possible candidates
-    xy_dict = {} # contains list of yr keys with xy possible candidates
-    mx_dict = {} # calculates overlap between lm and xy
-
-    m_set = set()
-    x_set = set()
-    l_set = set()
-    y_set = set()
-    r_set = set()
-    k_set = set()
-
-    # print(all_sets)
-
-    # kl_possibilities = {}
-    # # yr_possibilities = {}
-
-    # for key, other_set in all_sets.items():
-
-    #     if key != "tri":
-
-    for tri in tri_set:
-
-        # r = str(tri)[:2]
-        # k = str(tri)[-2:]
-
-        rk_values.add(tri)
-
-    #             # print("for tri ", tri, "yr possibilities are ", plausible_first)
-    #             plausible_last = find_overlap(k, other_set) # kl
-
-    #             if plausible_last:
-    #                 kl_possibilities[key].update(plausible_last)
-    #                 k_set.add(k)
-    #                 # plausible_kl.update(plausible_last)
-
-    # print("kl possibilities", kl_possibilities)
-    # print("---------------")
-    # print("k candidates ", k_set)
-
-    # for key, other_set in all_sets.items():
-
-    #     if key != "tri":
-
-    #         yr_possibilities[key] = set()
-
-    #         for tri in tri_set:
-
-    #             r = str(tri)[:2]
-    #             k = str(tri)[-2:]
-
-    #             plausible_first = find_overlap_last(r, other_set) # yr
-
-    #             if plausible_first:
-    #                 yr_possibilities[key].update(plausible_first)
-    #                 r_set.add(r)
-    
-    # print("---------------")
-
-    # print("yr possibilities ", yr_possibilities)
-    print("---------------")
-    # print("r candidates ", r_set)
-    print("---------------")
-
 
     def find_kl(rk, all_sets):
+        '''finding first kl set beyond "tri"'''
 
         kl_possibilities = {}
-
-        # print("rk is ", rk)
 
         for key, other_set in all_sets.items():
 
@@ -207,11 +124,10 @@ def generate_sets():
                 r = str(rk)[:2]
                 k = str(rk)[-2:]
 
-                # print("for tri ", tri, "yr possibilities are ", plausible_first)
-                plausible_last = find_overlap(k, other_set) # kl
+                plausible = find_overlap(k, other_set) # kl
 
-                if plausible_last:
-                    kl_possibilities[key].update(plausible_last)
+                if plausible:
+                    kl_possibilities[key].update(plausible)
         
         return kl_possibilities
 
@@ -220,10 +136,6 @@ def generate_sets():
         '''general function to start exploring the tree'''
 
         ab_possibilities = {}
-
-        # print("suspect is", suspect, "removed set is ", removed, "possibilities are", possibilities, '''
-        
-        # ''')
 
         for key, other_set in all_sets.items():
 
@@ -242,8 +154,6 @@ def generate_sets():
 
                             if plausible:
                                 ab_possibilities[key].update(plausible)
-
-                                # print("for za", za, "plausible possibilities for ab are ", plausible)
         
         ab_possibilities = {k: v for k, v in ab_possibilities.items() if v}
         
@@ -252,10 +162,11 @@ def generate_sets():
 
     suspect_list = ["squ", "pen", "hex", "hep", "oct"]
 
+
     for rk in rk_values:
 
         r = str(rk)[:2]
-        k = str(tri)[-2:]
+        k = str(rk)[-2:]
 
         kl_possibilities = find_kl(rk, all_sets)
         
@@ -263,23 +174,15 @@ def generate_sets():
 
             removed_suspects = [suspect_1]
 
-            # lm_possibilities = find_lm(suspect_1, all_sets, kl_possibilities)
             lm_possibilities = find_ab(suspect_1, all_sets, kl_possibilities, removed_suspects)
             
-            # print("for suspect_1 ", suspect_1, "lm possibilities ", lm_possibilities)
-
             for suspect_2 in suspect_list:
-
-                # print("suspect 1", suspect_1, "suspect 2", suspect_2)
 
                 if suspect_2 == suspect_1 or not lm_possibilities:
                     continue
                 
                 removed_suspects = [suspect_1, suspect_2]
-                # print("removed_suspects are ", removed_suspects)
                 mx_possibilities = find_ab(suspect_2, all_sets, lm_possibilities, removed_suspects)
-
-                # print("suspect 1: ", suspect_1, ". suspect 2: ", suspect_2, "mx possibilities are", mx_possibilities)
 
                 for suspect_3 in suspect_list:
 
@@ -289,11 +192,7 @@ def generate_sets():
                     removed_suspects = [suspect_1, suspect_2, suspect_3]
                     xy_possibilities = find_ab(suspect_3, all_sets, mx_possibilities, removed_suspects)
 
-                    # print("suspect_1: ", suspect_1, ". suspect_2 ", suspect_2, ". suspect_3", suspect_3, "xy possibilities are", xy_possibilities)
-
                     for suspect_4 in suspect_list:
-
-                        # print("suspect 4 is now: ", suspect_4)
 
                         if suspect_4 == suspect_1 or suspect_4 == suspect_2 or suspect_4 == suspect_3 or not xy_possibilities:
                             continue
@@ -301,7 +200,6 @@ def generate_sets():
                         removed_suspects = [suspect_1, suspect_2, suspect_3, suspect_4]
                         yr_possibilities = find_ab(suspect_4, all_sets, xy_possibilities, removed_suspects)
                         if yr_possibilities:
-                            # print("suspect_1: ", suspect_1, ". suspect_2 ", suspect_2, ". suspect_3", suspect_3, ". suspect_4", suspect_4, "yr possibilities are", yr_possibilities)
                         
                             for yr_key, yr_set in yr_possibilities.items():
 
@@ -309,559 +207,40 @@ def generate_sets():
 
                                     if r == str(yr)[-2:]:
 
-                                        print("match found, rk is ", rk, "yr is ", yr, "in set", yr_key, "")
-                                        print("yr possibilities are ", yr_possibilities)
-                                        print("xy possibilities are ", xy_possibilities)
-                                        print("mx possibilities are ", mx_possibilities)
-                                        print("lm possibilities are ", lm_possibilities)
-                                        print("kl possibilities are ", kl_possibilities)
-
-                        # for rk in rk_values:
-
-                        #     r = str(rk)[:2]
-
-                        #     for yr_key, yr_set in yr_possibilities.items():
-
-                        #         for yr in yr_set:
-
-                        #             if r == str(yr)[-2:]:
-
-                        #                 print("match found, rk is ", rk, "yr is ", yr, "in set", yr_key, "")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # print(rk_values)
-                    # for suspect_5 in suspect_list:
-
-                    #     # print("suspect 4 is now: ", suspect_4)
-
-                    #     if suspect_5 == suspect_1 or suspect_5 == suspect_2 or suspect_5 == suspect_3 or suspect_5 == suspect_4 or not yr_possibilities:
-                    #         continue
-                        
-                    #     removed_suspects = [suspect_1, suspect_2, suspect_3, suspect_4, suspect_5]
-                    #     rk_possibilities = find_ab(suspect_5, all_sets, yr_possibilities, removed_suspects)
-        
-                    #     print("suspect_1: ", suspect_1, ". suspect_2 ", suspect_2, ". suspect_3", suspect_3, ". suspect_4", suspect_4, ". suspect_5", suspect_5, "rk possibilities are", rk_possibilities)
-
-        #                         for yr_local_key, yr_local_set in yr_possibilities_local.items():
-
-        #                             for yr_key, yr_set in yr_possibilities.items():
-
-        #                                 for yr in yr_local_set:
-
-        #                                     if yr in yr_set and yr_local_key == yr_key:
-
-        #                                         # print("match found, yr = ", yr, "local key:", yr_local_key, "global key:", yr_key)
-        #                                         yr_confirmed[yr_key].add(yr)
-        #                                         # if yr == 1281:
-        #                                         #     print('''analysis - yr: ''', yr, "clan:", yr_key, "xy possibilities were ", xy_possibilities)
-                                                
-        #                                         y = str(yr)[:2]
-
-        #                         rk_possibilities = find_rk(all_sets, yr_possibilities_local)
-        #                         rk_possibilities = {key: value for key, value in rk_possibilities.items() if value}
-
-        #                         if rk_possibilities:
-
-        #                             for rk_key, rk_set in rk_possibilities.items():
-
-        #                                 if 8128 in rk_set:
-
-        #                                     print("rk possibilities are ", rk_possibilities, "for yr possibilities", yr_possibilities_local, "for xy possibilities",
-        #                                     xy_possibilities, "for mx possibilities", mx_possibilities, "for lm possibilities", lm_possibilities, "for kl possibilities", kl_possibilities, '''
-
-
-        #                                     ''')
-
-
-
-
-
-
-    # print("yr confirmed", yr_confirmed)
-
-    # for yr_key, yr_set in yr_confirmed.items():
-
-    #     for yr in yr_set:
-
-    #         y = str(yr)[:2]
-    #         r = str(yr)[-2:]
-
-    #         plausible_last = find_overlap(r, rk_values, "first") # rk
-
-    #         if plausible_last:
-    #             print("for yr", yr, "plausible triangular numbers are ", plausible_last)
-
-
-
-
-
-
-
-
-                        # for xy_key, xy_value in xy_possibilities.items():
-
-                        #     for yr_key, yr_value in yr_possibilities.items():
-
-                        #         for xy in xy_value:
-
-                        #             if xy in yr_value and xy_key == yr_key:
-
-                        #                 print("match found. key xy: ", xy_key, "key yr:", yr_key, "xy_value set", xy_value, "yr_value set", yr_value, "overlap: ", xy)
+                                        # print("match found, rk is ", rk, "yr is ", yr, "in set", yr_key, "")
+                                        # print("yr possibilities are ", yr_possibilities)
+                                        # print("xy possibilities are ", xy_possibilities)
+                                        # print("mx possibilities are ", mx_possibilities)
+                                        # print("lm possibilities are ", lm_possibilities)
+                                        # print("kl possibilities are ", kl_possibilities)
+
+                                        win_rk = rk
+                                        wins = [
+                                            yr_possibilities.copy(), 
+                                            xy_possibilities.copy(), 
+                                            mx_possibilities.copy(),
+                                            lm_possibilities.copy(),
+                                            kl_possibilities.copy()
+                                        ]
     
-    # print(yr_possibilities)
+    final_sum = win_rk
+    n = str(win_rk)[:2]
+
+    def add_to_sum(win_set, char):
+        to_add = 0
+        for key, value_set in win_set.items():
+            for ab in value_set:
+                if str(ab)[-2:] == char:
+                    to_add = ab
+        return to_add
+
+    for win_set in wins:
+        to_add = add_to_sum(win_set, n)
+        final_sum += to_add
+        n = str(to_add)[:2]
 
 
-
-
-
-
-
-
-    # print ("kl dict is ", kl_dict)
-    # print("yr_dict is ", yr_dict)
-
-
-    # for key, value in kl_dict.items():
-
-    #     for kl in value:
-
-    #         k = str(kl)[:2]
-    #         l = str(kl)[-2:]
-
-    #         plausible_lm = set()
-
-    #         for other_set in list_of_sets:
-
-    #             plausible_last = find_overlap(l, other_set, "first") # lm
-    #             # print("for kl ", kl, "lm possibilities are ", plausible_last)
-
-    #             if plausible_last:
-    #                 plausible_lm.update(plausible_last)
-
-    #             set_num += 1
-            
-    #         if plausible_lm:
-
-    #             lm_dict[str(kl)] = plausible_lm
-    
-    # # print("lm dict is ", lm_dict)
+    return final_sum
     
 
-
-    # for key, value in yr_dict.items():
-
-    #     for yr in value:
-
-    #         y = str(yr)[:2]
-    #         r = str(yr)[-2:]
-
-    #         plausible_xy = set()
-
-    #         for other_set in list_of_sets:
-
-    #             plausible_first = find_overlap(y, other_set, "last") # xy
-    #             # print("for yr ", yr, "xy possibilities are ", plausible_first)
-
-    #             if plausible_first:
-    #                 plausible_xy.update(plausible_first)
-
-    #             set_num += 1
-            
-    #         if plausible_xy:
-    #             xy_dict[str(yr)] = plausible_xy
-    
-    # # print("xy dict is ", xy_dict)
-
-
-    # # # find mx
-
-    # mx_candidates = set()
-
-    # for xy_key, xy_set in xy_dict.items():
-
-    #     for lm_key, lm_set in lm_dict.items():
-
-    #         for xy in xy_set:
-
-    #             for lm in lm_set:
-
-    #                 x = str(xy)[:2]
-    #                 m = str(lm)[-2:]
-
-    #                 mx = int(str(m) + str(x))
-    #                 # print("xy is ", xy, "lm is ", lm, "mx is ", mx)
-
-    #                 for other_set in list_of_sets:
-
-    #                     if mx in other_set:
-
-    #                         print("mx ", mx, "composed from ", xy, lm)
-
-    #                         mx_candidates.add(mx)
-                    
-    
-    # print("mx candidates are ", mx_candidates)
-
-    # for mx in mx_candidates:
-
-    #     for poly_key, poly_set in all_sets.items():
-
-    #         if mx in poly_set:
-
-    #             print("mx ", mx, "is found in set ", poly_key)
-
-    # print(len(kl_dict) + len(yr_dict))
-    # print(len(mx_candidates))
-    
-
-    
-generate_sets()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# for tri in tri_set:
-
-#         r = str(tri)[:2]
-#         k = str(tri)[-2:]
-
-#         if r == "17":
-#             print(tri)
-#         if k == "21":
-#             print(tri)
-
-#         plausible_kl = set()
-#         plausible_yr = set()
-#         set_num = 4
-
-#         for other_set in list_of_sets:
-
-#             plausible_first = find_overlap(r, other_set, "last") # yr
-#             # print("for tri ", tri, "yr possibilities are ", plausible_first)
-#             plausible_last = find_overlap(k, other_set, "first") # kl
-
-#             if plausible_first:
-#                 plausible_yr.update(plausible_first)
-#             if plausible_last:
-#                 plausible_kl.update(plausible_last)
-
-#             set_num += 1
-        
-#         if plausible_kl:
-#             kl_dict[str(tri)] = plausible_kl
-#         if plausible_yr:
-#             yr_dict[str(tri)] = plausible_yr
-
-#     # print ("kl dict is ", kl_dict)
-#     # print("yr_dict is ", yr_dict)
-
-
-#     for key, value in kl_dict.items():
-
-#         for kl in value:
-
-#             k = str(kl)[:2]
-#             l = str(kl)[-2:]
-
-#             plausible_lm = set()
-
-#             for other_set in list_of_sets:
-
-#                 plausible_last = find_overlap(l, other_set, "first") # lm
-#                 # print("for kl ", kl, "lm possibilities are ", plausible_last)
-
-#                 if plausible_last:
-#                     plausible_lm.update(plausible_last)
-
-#                 set_num += 1
-            
-#             if plausible_lm:
-
-#                 lm_dict[str(kl)] = plausible_lm
-    
-#     # print("lm dict is ", lm_dict)
-    
-
-
-#     for key, value in yr_dict.items():
-
-#         for yr in value:
-
-#             y = str(yr)[:2]
-#             r = str(yr)[-2:]
-
-#             plausible_xy = set()
-
-#             for other_set in list_of_sets:
-
-#                 plausible_first = find_overlap(y, other_set, "last") # xy
-#                 # print("for yr ", yr, "xy possibilities are ", plausible_first)
-
-#                 if plausible_first:
-#                     plausible_xy.update(plausible_first)
-
-#                 set_num += 1
-            
-#             if plausible_xy:
-#                 xy_dict[str(yr)] = plausible_xy
-    
-#     # print("xy dict is ", xy_dict)
-
-
-#     # # find mx
-
-#     mx_candidates = set()
-
-#     for xy_key, xy_set in xy_dict.items():
-
-#         for lm_key, lm_set in lm_dict.items():
-
-#             for xy in xy_set:
-
-#                 for lm in lm_set:
-
-#                     x = str(xy)[:2]
-#                     m = str(lm)[-2:]
-
-#                     mx = int(str(m) + str(x))
-#                     # print("xy is ", xy, "lm is ", lm, "mx is ", mx)
-
-#                     for other_set in list_of_sets:
-
-#                         if mx in other_set:
-
-#                             print("mx ", mx, "composed from ", xy, lm)
-
-#                             mx_candidates.add(mx)
-                    
-    
-#     print("mx candidates are ", mx_candidates)
-
-#     for mx in mx_candidates:
-
-#         for poly_key, poly_set in all_sets.items():
-
-#             if mx in poly_set:
-
-#                 print("mx ", mx, "is found in set ", poly_key)
-
-#     print(len(kl_dict) + len(yr_dict))
-#     print(len(mx_candidates))
-
-#     # for mx in mx_candidates:
-
-#     #     set_num = 4
-
-#     #     for other_set in list_of_sets:
-
-#     #         for num in other_set:
-
-#     #             if mx == num:
-
-#     #                 print("found a match", mx, num, "set # ", set_num)
-#     #                 m_set.add(str(mx)[:2])
-#     #                 x_set.add(str(mx)[-2:])
-
-#     #         set_num += 1
-        
-#     # print(m_set)
-#     # print(x_set)
-
-#     # for lm_key, lm_value in lm_dict.items():
-
-#     #     for lm in lm_value:
-
-#     #         l = str(lm)[:2]
-#     #         m = str(lm)[-2:]
-
-#     #         if m in m_set:
-#     #             l_set.add(l)
-    
-#     # print(l_set)
-
-#     # for xy_key, xy_value in xy_dict.items():
-
-#     #     for xy in xy_value:
-
-#     #         x = str(xy)[:2]
-#     #         y = str(xy)[-2:]
-
-#     #         if x in x_set:
-#     #             y_set.add(y)
-    
-#     # print(y_set)
-
-#     # for yr_key, yr_value in yr_dict.items():
-
-#     #     for yr in yr_value:
-
-#     #         y = str(yr)[:2]
-#     #         r = str(yr)[-2:]
-
-#     #         if y in y_set:
-#     #             r_set.add(r)
-    
-#     # print(r_set)
-
-#     # for kl_key, kl_value in kl_dict.items():
-
-#     #     for kl in kl_value:
-
-#     #         k = str(kl)[:2]
-#     #         l = str(kl)[-2:]
-
-#     #         if l in l_set:
-#     #             k_set.add(k)
-    
-#     # print(k_set)
-
-#     # for r in r_set:
-
-#     #     for k in k_set:
-
-#     #         rk = int(str(r) + str(k))
-
-#     #         if rk in tri_set:
-
-#     #             print("found a match")
-    
-#     # remaining_sets = []
-    
-#     # for y in y_set:
-
-#     #     for r in r_set:
-
-#     #         yr = int(str(y) + str(r))
-
-#     #         for i, other_set in enumerate(list_of_sets):
-
-#     #             if yr in other_set:
-
-#     #                 print("yr", yr, "is found in set ", i)
-#     #                 global_y = y
-#     #                 global_r = r
-                
-#     #             else:
-
-#     #                 remaining_sets.append(other_set)
-
-#     # again_remaining_sets = []
-
-#     # for x in x_set:
-
-#     #     xy = int(str(x) + str(global_y))
-
-#     #     for i, other_set in enumerate(remaining_sets):
-
-#     #         if xy in other_set:
-
-#     #             global_x = x
-
-#     #             print("xy", xy, "is found in set ", i)
-            
-#     #         else:
-
-#     #             again_remaining_sets.append(other_set)
-    
-#     # left_again = []
-
-#     # for m in m_set:
-
-#     #     mx = int(str(m) + str(global_x))
-#     #     # print("mx is ", mx)
-
-#     #     for i, other_set in enumerate(again_remaining_sets):
-
-#     #         if mx in other_set:
-
-#     #             print("mx", mx, "is found in set ", i)
-            
-#     #         else:
-
-#     #             left_again.append(other_set)
-        
-#     #     if mx in tri_set:
-
-#     #         print("found")
-
-#     #     for key, value in all_sets.items():
-
-#     #         if mx in value:
-
-#     #             print("mx", mx, "finally found in set", key)
-#     #             global_m = m
-    
-#     # global_l_set = set()
-
-#     # for l in l_set:
-        
-#     #     lm = int(str(l) + str(global_m))
-
-#     #     for key, value in all_sets.items():
-
-#     #         if lm in value:
-
-#     #             print("lm", lm, "finally found in set", key)
-#     #             global_l_set.add(l)
-
-#     # global_k_set = set()
-    
-#     # for k in k_set:
-
-#     #     for l in global_l_set:
-
-#     #         kl = int(str(k) + str(l))
-
-#     #         for key, value in all_sets.items():
-
-#     #             if kl in value:
-
-#     #                 print("kl", kl, "finally found in set", key)
-#     #                 # global_l_set.add(l)
-#     #                 global_k_set.add(k)
-
-
-#     # for k in global_k_set:
-
-#     #     rk = int(str(global_r) + str(k))
-
-#     #     print("rk is ", rk)
-
-#     #     for key, value in all_sets.items():
-
-#     #         if rk in value:
-
-#     #             print("rk", rk, "finally found in set", key)
-#     #             # global_l_set.add(l)
-#     #             # global_k_set.add(k)
+print("Answer to problem 61: ", find_cyclical_sum())
