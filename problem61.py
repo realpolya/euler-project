@@ -146,6 +146,8 @@ def generate_sets():
                 r = str(tri)[:2]
                 k = str(tri)[-2:]
 
+                rk_values.add(tri)
+
                 # print("for tri ", tri, "yr possibilities are ", plausible_first)
                 plausible_last = find_overlap(k, other_set, "first") # kl
 
@@ -177,7 +179,7 @@ def generate_sets():
     
     print("---------------")
 
-    # print("yr possibilities ", yr_possibilities)
+    print("yr possibilities ", yr_possibilities)
     print("---------------")
     # print("r candidates ", r_set)
     print("---------------")
@@ -286,7 +288,45 @@ def generate_sets():
         
         return xy_possibilities
 
-    
+    def find_yr(suspect, prev_suspect, pre_prev_suspect, grand_suspect, all_sets, mx_possibilities):
+
+        yr_possibilities = {}
+
+        for key, other_set in all_sets.items():
+
+            if key != "tri":
+
+                if key != suspect and key != grand_suspect and key != prev_suspect and key != pre_prev_suspect:
+
+                    yr_possibilities[key] = set()
+
+                    # print("here", kl_possibilities[suspect[0]])
+
+                    # print("suspect is", suspect, "kl possibilities are ", kl_possibilities[suspect])
+
+                    # print("suspect is ", suspect, "mx possibilities are ", mx_possibilities)
+
+                    for xy in mx_possibilities[suspect]:
+
+                        x = str(xy)[:2]
+                        y = str(xy)[-2:]
+                        # print("l is ", l)
+
+                        plausible_last = find_overlap(y, other_set, "first") # yr
+                        # print("other set is ", other_set)
+
+
+                        if plausible_last:
+                            yr_possibilities[key].update(plausible_last)
+                            # print("for kl ", kl, "the overlap is ", plausible_last)
+                            # l_set.add(l)
+        
+        return yr_possibilities
+
+    yr_confirmed = {}
+    for suspect in suspect_list:
+        yr_confirmed[suspect] = set()
+
     for suspect in suspect_list:
 
         lm_possibilities = find_lm(suspect, all_sets, kl_possibilities)
@@ -307,17 +347,76 @@ def generate_sets():
 
                         xy_possibilities = find_xy(super_suspect, next_suspect, suspect, all_sets, mx_possibilities)
 
-                        print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "xy possibilities are", xy_possibilities)
+                        # print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "xy possibilities are", xy_possibilities)
 
-                        for xy_key, xy_value in xy_possibilities.items():
+                        for last_suspect in suspect_list:
 
-                            for yr_key, yr_value in yr_possibilities.items():
+                            if last_suspect != suspect and last_suspect != next_suspect and last_suspect != super_suspect:
 
-                                for xy in xy_value:
+                                yr_possibilities_local = find_yr(last_suspect, super_suspect, next_suspect, suspect, all_sets, xy_possibilities)
 
-                                    if xy in yr_value and xy_key == yr_key:
+                                # if len(yr_possibilities) > 0:
+                                    
+                                #     print("grand suspect: ", suspect, ". for next suspect ", next_suspect, "with super suspect ", super_suspect, "with last suspect", last_suspect, "yr possibilities are", yr_possibilities)
+                                
+                                for yr_local_key, yr_local_set in yr_possibilities_local.items():
 
-                                        print("match found. key xy: ", xy_key, "key yr:", yr_key, "xy_value set", xy_value, "yr_value set", yr_value, "overlap: ", xy)
+                                    for yr_key, yr_set in yr_possibilities.items():
+
+                                        for yr in yr_local_set:
+
+                                            if yr in yr_set and yr_local_key == yr_key:
+
+                                                # print("match found, yr = ", yr, "local key:", yr_local_key, "global key:", yr_key)
+                                                yr_confirmed[yr_key].add(yr)
+                                                # if yr == 1281:
+                                                #     print('''analysis - yr: ''', yr, "clan:", yr_key, "xy possibilities were ", xy_possibilities)
+                                                
+                                                y = str(yr)[:2]
+
+                                                for xy_key, xy_set in xy_possibilities.items():
+
+                                                    for xy in xy_set:
+
+                                                        xy_y = str(xy)[-2:]
+
+                                                        if xy_y == y:
+
+                                                            print('''analysis - yr: ''', yr, "clan:", yr_key, "xy is", xy, "clan:", xy_key)
+
+
+
+
+    print("yr confirmed", yr_confirmed)
+
+    # for yr_key, yr_set in yr_confirmed.items():
+
+    #     for yr in yr_set:
+
+    #         y = str(yr)[:2]
+    #         r = str(yr)[-2:]
+
+    #         plausible_last = find_overlap(r, rk_values, "first") # rk
+
+    #         if plausible_last:
+    #             print("for yr", yr, "plausible triangular numbers are ", plausible_last)
+
+
+
+
+
+
+
+
+                        # for xy_key, xy_value in xy_possibilities.items():
+
+                        #     for yr_key, yr_value in yr_possibilities.items():
+
+                        #         for xy in xy_value:
+
+                        #             if xy in yr_value and xy_key == yr_key:
+
+                        #                 print("match found. key xy: ", xy_key, "key yr:", yr_key, "xy_value set", xy_value, "yr_value set", yr_value, "overlap: ", xy)
     
     # print(yr_possibilities)
 
