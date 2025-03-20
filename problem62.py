@@ -10,17 +10,40 @@ Find the smallest cube for which exactly five permutations of its digits are cub
 
 '''
 
+
+def eligible_num(n, cube_1_list, digit_num):
+    '''check whether n is eligible to to be the right answer'''
+
+    next_cube = 0
+    eligible = False
+    num = n + 1
+    
+    while len(str(next_cube)) <= digit_num and not eligible:
+
+        next_cube = num ** 3
+        next_cube_list = sorted(list(str(next_cube)))
+        # print("num is ", num, "n is ", n, "cube 1 list is ", cube_1_list, "next cube list is", next_cube_list)
+
+        if next_cube_list == cube_1_list:
+            # print("num is ", num, "n is ", n, "cube 1 list is ", cube_1_list, "next cube list is", next_cube_list)
+            # print("found a permutation")
+            eligible = True
+        else:
+            num += 1
+    
+    if not eligible:
+        num = 0
+
+    return num
+
+
+
 def produce_cube(limit=3):
 
+
     answer = False
-    n = 233
-
-    def check_eligibility(num, cube_1_list, digit_num):
-
-        next_cube = 0
-        while len(str(next_cube)) <= digit_num:
-
-            
+    smallest_cube = 0
+    n = 1
 
 
     # while loop
@@ -31,27 +54,32 @@ def produce_cube(limit=3):
         # print(cube_1)
 
         cube_1_list = sorted(list(str(cube_1)))
+
+        # establish a limit for the cube to reach the max number of digits
         digit_num = len(cube_1_list) # digit limit
         # print(cube_1_list)
 
-        # permutation has the same number of digits
-        # sorted(list1) == sorted(list3)  # True
-
-        # recursive function?
-        cube_2 = 0
-        while len(str(cube_2)) <= digit_num:
-
-
-        # establish a limit for the cube to reach the max number of digits
-
-        # if the limit is reached, move onto the next candidate
+        eligible = True
+        current_n = n
+        for _ in range(limit - 1):
+            current_n = eligible_num(current_n, cube_1_list, digit_num)
+            if not current_n:
+                eligible = False
+                break
 
         # if permutation is found, then go into the cycle again to find the last permutation, starting with
         # the second candidate until the limit is reached, then abandon the candidate if no permutation is found
+        if eligible:
+            # print("n is ", n)
+            answer = True
+            smallest_cube = cube_1
+        
+        # if n == 345:
+        #     answer = True
 
         n += 1
-        answer = 1
 
-    return answer
 
-produce_cube()
+    return smallest_cube
+
+print(produce_cube())
