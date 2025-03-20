@@ -22,11 +22,8 @@ def eligible_num(n, cube_1_list, digit_num):
 
         next_cube = num ** 3
         next_cube_list = sorted(list(str(next_cube)))
-        # print("num is ", num, "n is ", n, "cube 1 list is ", cube_1_list, "next cube list is", next_cube_list)
 
         if next_cube_list == cube_1_list:
-            # print("num is ", num, "n is ", n, "cube 1 list is ", cube_1_list, "next cube list is", next_cube_list)
-            # print("found a permutation")
             eligible = True
         else:
             num += 1
@@ -40,24 +37,15 @@ def eligible_num(n, cube_1_list, digit_num):
 
 def produce_cube(limit=3):
 
-
     answer = False
     smallest_cube = 0
     n = 1
 
-
-    # while loop
     while not answer:
 
-        # cycle through numbers
         cube_1 = n ** 3
-        # print(cube_1)
-
         cube_1_list = sorted(list(str(cube_1)))
-
-        # establish a limit for the cube to reach the max number of digits
         digit_num = len(cube_1_list) # digit limit
-        # print(cube_1_list)
 
         eligible = True
         current_n = n
@@ -67,19 +55,13 @@ def produce_cube(limit=3):
                 eligible = False
                 break
 
-        # if permutation is found, then go into the cycle again to find the last permutation, starting with
-        # the second candidate until the limit is reached, then abandon the candidate if no permutation is found
         if eligible:
-            # print("n is ", n)
             answer = True
             smallest_cube = cube_1
-        
-        # if n == 345:
-        #     answer = True
 
         n += 1
 
-
     return smallest_cube
 
-print(produce_cube())
+
+print("Answer to problem 62: ", produce_cube(5))
