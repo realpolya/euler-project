@@ -7,7 +7,6 @@ How many n-digit positive integers exist which are also an nth power?
 
 '''
 
-
 def powerful_digit_counts():
 
     distinct_integers = set()
