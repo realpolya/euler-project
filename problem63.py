@@ -7,18 +7,18 @@ How many n-digit positive integers exist which are also an nth power?
 
 '''
 
+
 def powerful_digit_counts():
 
-    count = 0
+    distinct_integers = set()
 
     for num in range(1, 100):
-        for n in range(2, 200):
-            # print("for exponent", n, "number of digis", len(str(5 ** n)))
+        for n in range(1, 25):
             result = num ** n
             if len(str(result)) == n:
-                print("for num", num, "for exponent", n, "number of digis", len(str(result)), "result is:", result)
-                count += 1
+                distinct_integers.add(result)
     
-    return count
-    
-print(powerful_digit_counts())
+    return len(distinct_integers)
+   
+
+print("Answer to problem 63: ", powerful_digit_counts())
