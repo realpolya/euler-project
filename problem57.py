@@ -3,7 +3,7 @@ Square Root Convergents
 
 It is possible to show that the square root of two can be 
 expressed as an infinite continued fraction.
-\sqrt 2 = 1 + 1 / {2 + 1 / {2 + 1 / {2+ ...}}}
+sqrt 2 = 1 + 1 / {2 + 1 / {2 + 1 / {2+ ...}}}
 By expanding this for the first four iterations, we get:
 1 + 1 / 2 =  32 = 1.5
 1 + 1 / {2 + 1 / 2} = 7 5 = 1.4
