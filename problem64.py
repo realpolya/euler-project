@@ -14,42 +14,60 @@ def odd_period_roots(limit=13):
 
     odd_count = 0
 
-    for n in range(2, limit + 1):
+    # for n in range(2, limit + 1):
 
-        root = math.sqrt(n)
+    n = 23
 
-        if root.is_integer():
-            continue
+    root = math.sqrt(n)
+
+    # if root.is_integer():
+    #     continue
+    
+    period = []
+    next_steps = set()
+    a0 = math.floor(root) # root = a0 + something < 1
+    # print(a0)
+
+    period_not_done = True
+    current_a = a0
+    increment = 1
+
+    while period_not_done:
+
+        # step_one = current_a + sqrt(n) - current_a
+
+        if increment == 1:
+            denominator = n - (current_a ** 2)
+            next_step = (sqrt(n) + current_a) / denominator
+        else:
+            next_step = simplify(1 / remainder)
+            # print("new remainder is ", new_remainder)
+            # next_step = 
         
-        period = []
-        next_steps = set()
-        a0 = math.floor(root) # root = a0 + something < 1
-        print(a0)
+        floor = math.floor(next_step)
 
-        period_not_done = True
-        current_a = a0
+        # what is left after the next_step? the remainder?
+        remainder = simplify(next_step - floor)
 
-        while period_not_done:
+        # print("next step is ", simplify(next_step))
+        # print("remainder is ", remainder)
 
-            step_one = current_a + sqrt(n) - current_a
-            next_step = (sqrt(n) + current_a) / (n - (current_a ** 2))
+        if next_step in next_steps:
+            period_not_done = False
+            print("period is ", period)
 
-            if next_step in next_steps:
-                period_not_done = False
+            if len(period) % 2 != 0:
+                odd_count += 1
+        else:
+            next_steps.add(next_step)
 
-                if len(period) % 2 != 0:
-                    odd_count += 1
+            
+            # print("for n ", n, "a", increment, " is ", floor)
 
+            period.append(floor)
 
-            else:
-                next_steps.add(next_step)
-
-                floor = math.floor(next_step)
-                print("for n ", n, "a1 is ", floor)
-
-                period.append(floor)
-
-            current_a = floor
+        current_a = floor
+        increment += 1
 
         # remainder = floor + 
 
@@ -58,6 +76,8 @@ def odd_period_roots(limit=13):
         # the block will start repeating if the equation is the same
 
         # floor + remainder, floor + remainder, etc ....
+    
+    return odd_count
 
     
-odd_period_roots()
+print("odd count is: ", odd_period_roots())
