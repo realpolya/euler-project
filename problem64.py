@@ -25,12 +25,19 @@ def odd_period_roots(limit=13):
         a0 = math.floor(root) # root = a0 + something < 1
         print(a0)
 
-        step_one = a0 + sqrt(n) - a0
-        # step_two = a0 + (1 / (1 / sqrt(n) - a0))
-        intermediate_step = (1 / (sqrt(n) - a0)) * ((sqrt(n) + a0) / (sqrt(n) + a0))
-        # denominator = (math.sqrt(n) - a0) * (math.sqrt(n) + a0)
-        floor = math.floor(intermediate_step)
-        print("for n ", n, "a1 is ", floor)
+        period_not_done = True
+        current_a = a0
+
+        while period_not_done:
+
+            step_one = current_a + sqrt(n) - current_a
+            next_step = (sqrt(n) + current_a) / (n - (current_a ** 2))
+            floor = math.floor(next_step)
+            print("for n ", n, "a1 is ", floor)
+
+            period.append(floor)
+
+            current_a = floor
 
         # remainder = floor + 
 
@@ -39,8 +46,6 @@ def odd_period_roots(limit=13):
         # the block will start repeating if the equation is the same
 
         # floor + remainder, floor + remainder, etc ....
-
-        # 
 
     
 odd_period_roots()
