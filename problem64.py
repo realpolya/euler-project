@@ -14,70 +14,55 @@ def odd_period_roots(limit=13):
 
     odd_count = 0
 
-    # for n in range(2, limit + 1):
 
-    n = 23
+    for n in range(2, limit + 1):
 
-    root = math.sqrt(n)
+        root = math.sqrt(n)
 
-    # if root.is_integer():
-    #     continue
-    
-    period = []
-    next_steps = set()
-    a0 = math.floor(root) # root = a0 + something < 1
-    # print(a0)
-
-    period_not_done = True
-    current_a = a0
-    increment = 1
-
-    while period_not_done:
-
-        # step_one = current_a + sqrt(n) - current_a
-
-        if increment == 1:
-            denominator = n - (current_a ** 2)
-            next_step = (sqrt(n) + current_a) / denominator
-        else:
-            next_step = simplify(1 / remainder)
-            # print("new remainder is ", new_remainder)
-            # next_step = 
+        if root.is_integer():
+            continue
         
-        floor = math.floor(next_step)
+        period = []
+        next_steps = set()
+        a0 = math.floor(root) # root = a0 + something < 1
 
-        # what is left after the next_step? the remainder?
-        remainder = simplify(next_step - floor)
+        period_not_done = True
+        current_a = a0
+        increment = 1
 
-        # print("next step is ", simplify(next_step))
-        # print("remainder is ", remainder)
+        while period_not_done:
 
-        if next_step in next_steps:
-            period_not_done = False
-            print("period is ", period)
-
-            if len(period) % 2 != 0:
-                odd_count += 1
-        else:
-            next_steps.add(next_step)
-
+            if increment == 1:
+                next_step = (sqrt(n) + current_a) / (n - (current_a ** 2))
+            else:
+                next_step = simplify(1 / remainder)
+                # next_step = 1 / remainder
             
-            # print("for n ", n, "a", increment, " is ", floor)
+            floor = math.floor(next_step)
 
-            period.append(floor)
+            # what is left after the next_step? the remainder?
+            remainder = simplify(next_step - floor)
+            # remainder = next_step - floor
 
-        current_a = floor
-        increment += 1
+            # print("next step is ", simplify(next_step))
+            # print("remainder is ", remainder)
 
-        # remainder = floor + 
+            if next_step in next_steps:
+                period_not_done = False
 
-        # create while block as we start calculating a1
+                if len(period) % 2 != 0:
+                    print("for n", n, "period is ", period)
+                    odd_count += 1
+            else:
+                next_steps.add(next_step)
+                # print("for n ", n, "a", increment, " is ", floor)
+                period.append(floor)
 
-        # the block will start repeating if the equation is the same
-
-        # floor + remainder, floor + remainder, etc ....
+            current_a = floor
+            increment += 1
     
+
     return odd_count
 
     
-print("odd count is: ", odd_period_roots())
+print("odd count is: ", odd_period_roots(10000))
