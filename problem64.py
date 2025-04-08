@@ -4,7 +4,7 @@ Odd Period Square Roots
 '''
 
 from fractions import Fraction
-from sympy import sqrt, Rational, simplify # library for fractions
+# from sympy import sqrt, Rational, simplify # library for fractions
 import math
 
 # problem 26 also calculates infinite cycles
@@ -23,7 +23,7 @@ def odd_period_roots(limit=13):
             continue
         
         period = []
-        next_steps = set()
+        triplets = set()
         a0 = math.floor(root) # root = a0 + something < 1
 
         period_not_done = True
@@ -33,28 +33,30 @@ def odd_period_roots(limit=13):
         while period_not_done:
 
             if increment == 1:
-                next_step = (sqrt(n) + current_a) / (n - (current_a ** 2))
+                next_step = (math.sqrt(n) + current_a) / (n - (current_a ** 2))
             else:
-                next_step = simplify(1 / remainder)
+                next_step = 1 / remainder
                 # next_step = 1 / remainder
             
             floor = math.floor(next_step)
 
             # what is left after the next_step? the remainder?
-            remainder = simplify(next_step - floor)
+            remainder = next_step - floor
             # remainder = next_step - floor
 
             # print("next step is ", simplify(next_step))
             # print("remainder is ", remainder)
 
-            if next_step in next_steps:
+            triplet = [next_step, floor, remainder]
+
+            if triplet in triplets:
                 period_not_done = False
 
                 if len(period) % 2 != 0:
                     print("for n", n, "period is ", period)
                     odd_count += 1
             else:
-                next_steps.add(next_step)
+                triplets.add(triplet)
                 # print("for n ", n, "a", increment, " is ", floor)
                 period.append(floor)
 
