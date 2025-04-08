@@ -22,6 +22,7 @@ def odd_period_roots(limit=13):
             continue
         
         period = []
+        next_steps = set()
         a0 = math.floor(root) # root = a0 + something < 1
         print(a0)
 
@@ -32,10 +33,21 @@ def odd_period_roots(limit=13):
 
             step_one = current_a + sqrt(n) - current_a
             next_step = (sqrt(n) + current_a) / (n - (current_a ** 2))
-            floor = math.floor(next_step)
-            print("for n ", n, "a1 is ", floor)
 
-            period.append(floor)
+            if next_step in next_steps:
+                period_not_done = False
+
+                if len(period) % 2 != 0:
+                    odd_count += 1
+
+
+            else:
+                next_steps.add(next_step)
+
+                floor = math.floor(next_step)
+                print("for n ", n, "a1 is ", floor)
+
+                period.append(floor)
 
             current_a = floor
 
