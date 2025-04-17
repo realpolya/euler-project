@@ -29,10 +29,11 @@ def find_convergents(limit=10):
     start = E
     a0 = math.floor(E)
     remainder = (E - a0).evalf()
-    print("remainder is ", remainder)
+    # print("remainder is ", remainder)
     prev_term = Rational(0)
     a_series = []
     prev_a = 0
+    count = 1
 
     for _ in range(limit):
 
@@ -55,9 +56,19 @@ def find_convergents(limit=10):
         
         convergent = simplify(a0 + 1 / nested_fraction)
 
-        print("terms so far:", a0, "and series are ", a_series)
+        # print("terms so far:", a0, "and series are ", a_series)
 
-        print("convergent is ", convergent)
+        count += 1
+        # print("convergent number ", count, "convergent is ", convergent)
+
+        if count == limit:
+            numerator, denominator = convergent.as_numer_denom()
+            sum = 0
+            for char in str(numerator):
+                sum += int(char)
+            break
+
+    return sum
 
     # start = math.sqrt(2)
     # a0 = math.floor(math.sqrt(2))
@@ -91,4 +102,4 @@ def find_convergents(limit=10):
     
 
 
-find_convergents()
+print(find_convergents())
