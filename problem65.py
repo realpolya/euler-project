@@ -58,17 +58,26 @@ def find_convergents(limit=10):
 
         # print("terms so far:", a0, "and series are ", a_series)
 
+        # print("convergent is ", convergent)
         count += 1
-        # print("convergent number ", count, "convergent is ", convergent)
+        print("convergent number ", count, "convergent is ", convergent)
 
         if count == limit:
             numerator, denominator = convergent.as_numer_denom()
-            sum = 0
-            for char in str(numerator):
-                sum += int(char)
+            numerator_answer = numerator
+            print("for count ", count, "numerator is ", numerator)
             break
+            
+        
+    # s = "6992432529593258630263690665699787787145693139"
+    # print("here we go ", sum(int(c) for c in s))  # should print 258
 
-    return sum
+    digit_sum = 0
+    for char in list(str(numerator_answer)):
+        digit_sum += int(char)
+        print("added ", int(char), ". now sum is ", digit_sum)
+
+    return digit_sum
 
     # start = math.sqrt(2)
     # a0 = math.floor(math.sqrt(2))
@@ -102,4 +111,4 @@ def find_convergents(limit=10):
     
 
 
-print(find_convergents())
+print(find_convergents(100))
