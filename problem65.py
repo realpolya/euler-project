@@ -31,20 +31,32 @@ def find_convergents(limit=10):
     remainder = (E - a0).evalf()
     # print("remainder is ", remainder)
     prev_term = Rational(0)
-    a_series = []
     prev_a = 0
     count = 1
 
-    for _ in range(limit):
+    a_series = []
+    # for i in range(1, limit):
+    #     if i % 3 == 2:
+    #         a_series.append(2 * ((i + 1) // 3))
+    #     else:
+    #         a_series.append(1)
 
-        a = math.floor(1 / remainder)
-        prev_r = remainder
-        remainder = simplify((1 / prev_r) - a)
 
-        # add to a series
-        a_series.append(a)
+    for i in range(1, limit + 1):
 
-        result = a0
+        # a = math.floor(1 / remainder)
+        # prev_r = remainder
+        # remainder = simplify((1 / prev_r) - a)
+
+        # # add to a series
+        # a_series.append(a)
+
+        # result = a0
+
+        if i % 3 == 2:
+            a_series.append(2 * ((i + 1) // 3))
+        else:
+            a_series.append(1)
 
         # get the last member of a_series, the newest a
         nested_fraction = Rational(a_series[-1])
@@ -63,9 +75,10 @@ def find_convergents(limit=10):
         print("convergent number ", count, "convergent is ", convergent)
 
         if count == limit:
+            print("length: ", len(a_series))
             numerator, denominator = convergent.as_numer_denom()
             numerator_answer = numerator
-            print("for count ", count, "numerator is ", numerator)
+            # print("for count ", count, "numerator is ", numerator)
             break
             
         
@@ -75,7 +88,10 @@ def find_convergents(limit=10):
     digit_sum = 0
     for char in list(str(numerator_answer)):
         digit_sum += int(char)
-        print("added ", int(char), ". now sum is ", digit_sum)
+        # print("added ", int(char), ". now sum is ", digit_sum)
+
+    print("a series is ", a_series)
+    print("numerator is ", numerator_answer)
 
     return digit_sum
 
