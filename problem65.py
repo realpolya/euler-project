@@ -10,7 +10,7 @@ fraction for e.
 import math
 from sympy import simplify, Rational, E
 
-def find_convergents(limit=3):
+def find_convergents(limit=10):
 
     # write function for the square root of 2
 
@@ -26,59 +26,61 @@ def find_convergents(limit=3):
 
     #     print(result)
     
+    start = E
     a0 = math.floor(E)
     remainder = (E - a0).evalf()
     print("remainder is ", remainder)
     prev_term = Rational(0)
     a_series = []
+    prev_a = 0
 
     for _ in range(limit):
 
-        something = simplify(1 / (1 / remainder))
-
-        current_x = 1 / remainder
-        a = math.floor(current_x)
-        remainder = simplify(current_x - a)
+        a = math.floor(1 / remainder)
+        prev_r = remainder
+        remainder = simplify((1 / prev_r) - a)
 
         # add to a series
         a_series.append(a)
 
-        # print("prev_term is ", prev_term) # FIXME: prev_term is an issue
+        result = a0
 
-        # simple_r = simplify(1 / (1 / math.floor(remainder)))
-        simple_r = simplify(1 / math.floor(remainder))
+        # get the last member of a_series, the newest a
+        nested_fraction = Rational(a_series[-1])
+        # take the remaining a members from the series backwards
+        for a_num in reversed(a_series[:-1]):
 
-        new_term = simplify(1 / a) # remainder instead of prev_term
-        # prev_term = new_term
+            # adding current a to the the nested fraction
+            nested_fraction = a_num + 1 / nested_fraction
+        
+        convergent = simplify(a0 + 1 / nested_fraction)
 
         print("terms so far:", a0, "and series are ", a_series)
-        result = simplify(a0 + (1 / new_term))
 
+        print("convergent is ", convergent)
 
-        print(result)
+    # start = math.sqrt(2)
+    # a0 = math.floor(math.sqrt(2))
 
-    start = math.sqrt(2)
-    a0 = math.floor(math.sqrt(2))
+    # r = start - a0
+    # print(r)
+    # print(math.floor(1 / r))
+    # a1 = math.floor(1 / r)
 
-    r = start - a0
-    print(r)
-    print(math.floor(1 / r))
-    a1 = math.floor(1 / r)
+    # convergent = a0 + 1 / math.floor(1 / r)
+    # print("convergent is ", convergent)
 
-    convergent = a0 + 1 / math.floor(1 / r)
-    print("convergent is ", convergent)
+    # new_r = simplify((1 / r) - a1)
+    # a2 = math.floor(1 / new_r)
 
-    new_r = simplify((1 / r) - a1)
-    a2 = math.floor(1 / new_r)
+    # convergent = a0 + 1 / (a1 + 1 / math.floor(1 / new_r))
+    # print("convergent is ", convergent)
 
-    convergent = a0 + 1 / (a1 + 1 / math.floor(1 / new_r))
-    print("convergent is ", convergent)
+    # very_new_r = simplify((1 / new_r) - a2)
+    # a3 = math.floor(1 / very_new_r)
 
-    very_new_r = simplify((1 / new_r) - a2)
-    a3 = math.floor(1 / very_new_r)
-
-    convergent = a0 + 1 / (a1 + 1 / (a2 + 1 / math.floor(1 / very_new_r)))
-    print("convergent is ", convergent)
+    # convergent = a0 + 1 / (a1 + 1 / (a2 + 1 / math.floor(1 / very_new_r)))
+    # print("convergent is ", convergent)
 
 
 
