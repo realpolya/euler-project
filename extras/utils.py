@@ -19,6 +19,22 @@ def is_prime(number):
     return True
 
 
+def sieve_eratosthenes(limit):
+    '''Calculate a set of primes up to a limit'''
+
+    is_prime_cache = [True] * limit # Sieve of Eratosthenes
+    is_prime_cache[0] = is_prime_cache[1] = False # 0 and 1 are not primes
+
+    for num in range(2, math.isqrt(limit) + 1):
+        if is_prime_cache[num]:
+            for multiplied in range(num ** 2, limit, +num):
+                is_prime_cache[multiplied] = False
+    
+    prime_set = {num for num, prime in enumerate(is_prime_cache) if prime}
+
+    return prime_set
+
+
 def prime_factorization(number, prime):
     '''Recursive function to get the prime factorization of a number'''
 
@@ -52,7 +68,7 @@ def is_pandigital(n, required_set):
 
 
 def permutate(array):
-    '''Find all of the permutations of the set'''
+    '''Find all of the permutations of the set, recursive function'''
 
     if len(array) == 1:
         return str(array[0])
