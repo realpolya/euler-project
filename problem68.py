@@ -28,7 +28,52 @@ def get_remaining_digits(digits, triad):
     return available_digits
 
 
+
+def branch(remaining_digits, first_sum, counter, limit, current_candidates=[]):
+    '''find middle candidates' validity'''
+
+    if counter == limit:
+        return current_candidates
+
+    if first_sum != new_sum:
+        return False
+
+    new_candidates = combinations(remaining_digits, 2)
+    new_permutations = []
+
+    for subset in new_candidates:
+
+        permutations = permutate(list(subset))
+
+        for diad in permutations:
+            new_permutations.append(diad)
+        
+        # cycle through permutations (2 candidates)
+        for new_candidate in new_permutations:
+
+            # create a list view of the triad
+            new_triad = [int(new_candidate[0]), first_triad_list[2], int(new_candidate[1])]
+
+            # calculate the sum of the triad
+            new_sum = sum(new_triad)
+            
+            # check the validity of sums
+            if new_sum == first_sum:
+
+                
+
+
+
+
+
+
+
+
+
 def gon_ring(ring_num=3):
+
+    # number of repetitions in the middle
+    middle_repetitions = ring_num - 2
 
     # calculate digits
     digits = [1]
@@ -53,7 +98,7 @@ def gon_ring(ring_num=3):
 
     solutions = set()
 
-    # cycle through start permutations
+    # cycle through START permutations
     for first_triad in start_permutations:
 
         # create a list view of the triad
@@ -69,9 +114,11 @@ def gon_ring(ring_num=3):
         second_triad = [0, first_triad_list[2], 0]
 
         # try different digits for 0s in second triad, see if the sum is the same
-        # FIXME: recursive function!!!
+        # FIXME: recursive function!!! ---------------------------------
+
         second_candidates = combinations(remaining_digits, 2)
         second_permutations = []
+
         for subset in second_candidates:
 
             permutations = permutate(list(subset))
@@ -79,15 +126,22 @@ def gon_ring(ring_num=3):
             for diad in permutations:
                 second_permutations.append(diad)
         
-        # cycle through permutations
+        print(second_permutations)
+        
+        # cycle through permutations (2 candidates)
         for second_candidate in second_permutations:
 
+            # create a list view of the triad
             second_triad = [int(second_candidate[0]), first_triad_list[2], int(second_candidate[1])]
-            second_sum = sum(second_triad)
 
+            # calculate the sum of the triad
+            second_sum = sum(second_triad)
+            
+            # check the validity of sums
             if second_sum == first_sum:
                 # print("sum ", second_sum, "first triad is ", first_triad_list, "second triad is ", second_triad)
 
+                # establish the last digit for the last step
                 for digit in remaining_digits:
                     if digit not in second_triad:
                         last_digit = digit
