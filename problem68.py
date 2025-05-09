@@ -17,6 +17,17 @@ def get_int_from_str(list):
     return int(string)
 
 
+def get_remaining_digits(digits, triad):
+
+    available_digits = set()
+
+    for digit in digits:
+        if digit not in triad:
+            available_digits.add(digit)
+
+    return available_digits
+
+
 def gon_ring(ring_num=3):
 
     # calculate digits
@@ -27,7 +38,7 @@ def gon_ring(ring_num=3):
     start_permutations = []
     
     # find possible start triplets/triads
-    possible_sets = binomial_coefficient(6, 3)
+    # possible_sets = binomial_coefficient(6, 3)
 
     triads = combinations(digits, 3)
     for subset in triads:
@@ -42,17 +53,17 @@ def gon_ring(ring_num=3):
 
     solutions = set()
 
-    # check the viability of each of start_permutations
+    # cycle through start permutations
     for first_triad in start_permutations:
 
+        # create a list view of the triad
         first_triad_list = [int(n) for n in list(first_triad)]
+
+        # calculate the sum of the triad
         first_sum = sum(first_triad_list)
 
-        # remaining digits
-        remaining_digits = set()
-        for digit in digits:
-            if digit not in first_triad_list:
-                remaining_digits.add(digit)
+        # establish available remaining digits
+        remaining_digits = get_remaining_digits(digits, first_triad_list)
         
         # last digit is middle of second
         second_triad = [0, first_triad_list[2], 0]
@@ -68,6 +79,7 @@ def gon_ring(ring_num=3):
             for diad in permutations:
                 second_permutations.append(diad)
         
+        # cycle through permutations
         for second_candidate in second_permutations:
 
             second_triad = [int(second_candidate[0]), first_triad_list[2], int(second_candidate[1])]
@@ -131,12 +143,12 @@ def gon_ring(ring_num=3):
     # if checks clear, then 
 
 
-def next_candidates(limit, permutations, digits, first=False):
+# def next_candidates(limit, permutations, digits, first=False):
 
-    if limit == 0:
-        return 
+#     if limit == 0:
+#         return 
     
-    if 
+#     if 
     
 
 
