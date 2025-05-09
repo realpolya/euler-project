@@ -88,8 +88,6 @@ def gon_ring(ring_num=3):
                 if third_sum == second_sum:
                     # print("sum", third_sum, "solution: ", first_triad_list, second_triad, last_triad)
 
-                    
-
                     # establish lowest value
                     solution = [get_int_from_str(first_triad_list), get_int_from_str(second_triad), get_int_from_str(last_triad)]
                     # print(solution)
@@ -133,6 +131,13 @@ def gon_ring(ring_num=3):
     # if checks clear, then 
 
 
+def next_candidates(limit, permutations, digits, first=False):
+
+    if limit == 0:
+        return 
+    
+    if 
+    
 
 
 print(gon_ring())
