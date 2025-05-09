@@ -29,9 +29,10 @@ def get_remaining_digits(digits, triad):
 
 
 
-def branch(remaining_digits, first_sum, counter, limit, current_candidates=[]):
+def branch(remaining_digits, first_sum, counter=0, limit, current_candidates=[]):
     '''find middle candidates' validity'''
 
+    # # handle base cases
     if counter == limit:
         return current_candidates
 
@@ -43,24 +44,42 @@ def branch(remaining_digits, first_sum, counter, limit, current_candidates=[]):
 
     for subset in new_candidates:
 
+        # permutate the 
         permutations = permutate(list(subset))
 
         for diad in permutations:
             new_permutations.append(diad)
         
-        # cycle through permutations (2 candidates)
-        for new_candidate in new_permutations:
+    # cycle through permutations (2 candidates)
+    for new_candidate in new_permutations:
 
-            # create a list view of the triad
-            new_triad = [int(new_candidate[0]), first_triad_list[2], int(new_candidate[1])]
+        # create a list view of the triad
+        new_triad = [int(new_candidate[0]), first_triad_list[2], int(new_candidate[1])]
 
-            # calculate the sum of the triad
-            new_sum = sum(new_triad)
+        # calculate the sum of the triad
+        new_sum = sum(new_triad)
+        
+        # check the validity of sums
+        if new_sum == first_sum:
+
+            # recalculate remaining digits
+            remaining_digits = get_remaining_digits(remaining_digits, new_triad)
+            counter += 1
+
+            current_candidates.append(new_triad)
+
+            return branch(remaining_digits, first_sum, counter, limit, current_candidates)
             
-            # check the validity of sums
-            if new_sum == first_sum:
+        else:
+            return False
 
-                
+
+
+
+
+            
+
+
 
 
 
