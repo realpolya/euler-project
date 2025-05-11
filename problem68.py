@@ -29,15 +29,18 @@ def get_remaining_digits(digits, triad):
 
 
 
-def branch(remaining_digits, first_sum, counter=0, limit, current_candidates=[]):
+def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=0, current_candidates=[]):
     '''find middle candidates' validity'''
+
+    if counter == 0:
+        current_candidates.clear()
+
+    # print("triad is ", first_triad, "limit is ", limit, "counter is ", counter, "current candidates are ", current_candidates)
+
 
     # # handle base cases
     if counter == limit:
         return current_candidates
-
-    if first_sum != new_sum:
-        return False
 
     new_candidates = combinations(remaining_digits, 2)
     new_permutations = []
@@ -49,41 +52,96 @@ def branch(remaining_digits, first_sum, counter=0, limit, current_candidates=[])
 
         for diad in permutations:
             new_permutations.append(diad)
+    
+
+    # print("for middle num", middle_num, "permutations are ", new_permutations)
+    
+    viable = False
         
     # cycle through permutations (2 candidates)
     for new_candidate in new_permutations:
 
         # create a list view of the triad
-        new_triad = [int(new_candidate[0]), first_triad_list[2], int(new_candidate[1])]
+        new_triad = [int(new_candidate[0]), middle_num, int(new_candidate[1])]
 
         # calculate the sum of the triad
         new_sum = sum(new_triad)
         
         # check the validity of sums
         if new_sum == first_sum:
+            # FIXME: currently assumign that each candidate only has one solution
+            # print("counter is ", counter, "triad is ", new_triad, "the original triad is ", first_triad, "candidates are", current_candidates)
+            
+            viable = True
+            current_candidates.append(new_triad)
 
             # recalculate remaining digits
             remaining_digits = get_remaining_digits(remaining_digits, new_triad)
             counter += 1
 
-            current_candidates.append(new_triad)
+            middle_num = int(new_candidate[1])
 
-            return branch(remaining_digits, first_sum, counter, limit, current_candidates)
+            break
+        
+        if viable:
+            break
+
+    if viable:
+        return branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
+
+    return False
+
+
             
-        else:
-            return False
 
+def gon_ring_recur(ring_num=3):
 
+    # number of repetitions in the middle
+    middle_repetitions = ring_num - 2
 
+    # calculate digits
+    digits = [1]
+    for n in range(2, (ring_num * 2) + 1):
+        digits.append(n)
+    
+    start_permutations = []
+    
+    # find possible start triplets/triads
+    # possible_sets = binomial_coefficient(6, 3)
 
+    triads = combinations(digits, 3)
+    for subset in triads:
 
-            
+        triad_permutations = permutate(list(subset))
+        # print("for subset ", subset, "permutations are ", triad_permutations)
 
+        for triad in triad_permutations:
+            start_permutations.append(triad)
+    
+    solutions = set()
 
+    # cycle through START permutations
+    for first_triad in start_permutations:
 
+        # create a list view of the triad
+        first_triad_list = [int(n) for n in list(first_triad)]
 
+        # calculate the sum of the triad
+        first_sum = sum(first_triad_list)
 
+        # establish available remaining digits
+        remaining_digits = get_remaining_digits(digits, first_triad_list)
+        
+        # last digit is middle of second
+        second_triad = [0, first_triad_list[2], 0]
 
+        viable_branch = branch(remaining_digits, first_sum, middle_repetitions, first_triad_list[2], first_triad_list)
+
+        
+        if viable_branch:
+            print("for triad", first_triad_list, "viable branch results are ", viable_branch)
+            # break
+    
 
 
 
@@ -225,4 +283,5 @@ def gon_ring(ring_num=3):
     
 
 
-print(gon_ring())
+# print(gon_ring())
+gon_ring_recur()
