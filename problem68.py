@@ -29,14 +29,20 @@ def get_remaining_digits(digits, triad):
 
 
 
-def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=0, current_candidates=[]):
+def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=0, current_candidates=None, all_solutions=None):
     '''find middle candidates' validity'''
 
-    if counter == 0:
-        current_candidates.clear()
+    # if counter == 0:
+    #     current_candidates.clear()
+    #     all_solutions.clear()
+    
+    if current_candidates is None:
+        current_candidates = []
+    if all_solutions is None:
+        all_solutions = []
+
 
     # print("triad is ", first_triad, "limit is ", limit, "counter is ", counter, "current candidates are ", current_candidates)
-
 
     # # handle base cases
     if counter == limit:
@@ -56,7 +62,7 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
 
     # print("for middle num", middle_num, "permutations are ", new_permutations)
     
-    viable = False
+    # viable = False
         
     # cycle through permutations (2 candidates)
     for new_candidate in new_permutations:
@@ -70,10 +76,11 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
         # check the validity of sums
         if new_sum == first_sum:
             # FIXME: currently assumign that each candidate only has one solution
+
             # print("counter is ", counter, "triad is ", new_triad, "the original triad is ", first_triad, "candidates are", current_candidates)
             
-            viable = True
-            current_candidates.append(new_triad)
+            # viable = True
+            current_candidates.extend(new_triad)
 
             # recalculate remaining digits
             remaining_digits = get_remaining_digits(remaining_digits, new_triad)
@@ -81,14 +88,19 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
 
             middle_num = int(new_candidate[1])
 
-            break
+            solution = branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
+            
+            if solution:
+                all_solutions.append(solution)
+
+            # break
+
+    # if viable:
+    #     return branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
+    if all_solutions:
+        print("all solutions for the triad ", first_triad, "are", all_solutions)
+        return all_solutions 
         
-        if viable:
-            break
-
-    if viable:
-        return branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
-
     return False
 
 
@@ -138,8 +150,8 @@ def gon_ring_recur(ring_num=3):
         viable_branch = branch(remaining_digits, first_sum, middle_repetitions, first_triad_list[2], first_triad_list)
 
         
-        if viable_branch:
-            print("for triad", first_triad_list, "viable branch results are ", viable_branch)
+        # if viable_branch:
+        #     print("for triad", first_triad_list, "viable branch results are ", viable_branch)
             # break
     
 
