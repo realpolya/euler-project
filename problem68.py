@@ -110,6 +110,7 @@ def gon_ring_recur(ring_num=3):
 
     # number of repetitions in the middle
     middle_repetitions = ring_num - 2
+    solutions = []
 
     # calculate digits
     digits = [1]
@@ -143,16 +144,42 @@ def gon_ring_recur(ring_num=3):
 
         # establish available remaining digits
         remaining_digits = get_remaining_digits(digits, first_triad_list)
-        
-        # last digit is middle of second
-        second_triad = [0, first_triad_list[2], 0]
 
-        viable_branch = branch(remaining_digits, first_sum, middle_repetitions, first_triad_list[2], first_triad_list)
+        viable_branches = branch(remaining_digits, first_sum, middle_repetitions, first_triad_list[2], first_triad_list)
 
+        if viable_branches:
+
+            for viable_branch in viable_branches:
+
+                last_digit = next(iter(get_remaining_digits(remaining_digits, viable_branch)))
+
+                last_triad = [last_digit, viable_branch[2], first_triad_list[1]]
+                third_sum = sum(last_triad)
+
+                if third_sum == first_sum:
+
+                    solution = [get_int_from_str(first_triad_list), get_int_from_str(viable_branch), get_int_from_str(last_triad)]
+                    # print(solution)
+
+                    lowest_term = 10000
+                    for term in solution:
+                        if term < lowest_term:
+                            lowest_term = term
+                    
+                    if lowest_term == solution[0]:
+                        print("solution is ", solution, "sum is ", third_sum)
+                        solutions.add(get_int_from_str(solution))
         
-        # if viable_branch:
-        #     print("for triad", first_triad_list, "viable branch results are ", viable_branch)
-            # break
+
+    print(solutions)
+
+    return max(solutions)
+
+
+
+
+
+
     
 
 
@@ -296,4 +323,4 @@ def gon_ring(ring_num=3):
 
 
 # print(gon_ring())
-gon_ring_recur()
+print(gon_ring_recur())
