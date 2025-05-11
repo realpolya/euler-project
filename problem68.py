@@ -176,120 +176,122 @@ def gon_ring_recur(ring_num=3):
     return max(solutions)
 
 
+print(gon_ring_recur())
+
 
 
 
 
     
+# -----------------------------------------------------------------
 
 
 
 
+# def gon_ring(ring_num=3):
 
-def gon_ring(ring_num=3):
+#     # number of repetitions in the middle
+#     middle_repetitions = ring_num - 2
 
-    # number of repetitions in the middle
-    middle_repetitions = ring_num - 2
-
-    # calculate digits
-    digits = [1]
-    for n in range(2, (ring_num * 2) + 1):
-        digits.append(n)
+#     # calculate digits
+#     digits = [1]
+#     for n in range(2, (ring_num * 2) + 1):
+#         digits.append(n)
     
-    start_permutations = []
+#     start_permutations = []
     
-    # find possible start triplets/triads
-    # possible_sets = binomial_coefficient(6, 3)
+#     # find possible start triplets/triads
+#     # possible_sets = binomial_coefficient(6, 3)
 
-    triads = combinations(digits, 3)
-    for subset in triads:
+#     triads = combinations(digits, 3)
+#     for subset in triads:
 
-        triad_permutations = permutate(list(subset))
-        # print("for subset ", subset, "permutations are ", triad_permutations)
+#         triad_permutations = permutate(list(subset))
+#         # print("for subset ", subset, "permutations are ", triad_permutations)
 
-        for triad in triad_permutations:
-            start_permutations.append(triad)
+#         for triad in triad_permutations:
+#             start_permutations.append(triad)
     
-    print(len(start_permutations))
+#     print(len(start_permutations))
 
-    solutions = set()
+#     solutions = set()
 
-    # cycle through START permutations
-    for first_triad in start_permutations:
+#     # cycle through START permutations
+#     for first_triad in start_permutations:
 
-        # create a list view of the triad
-        first_triad_list = [int(n) for n in list(first_triad)]
+#         # create a list view of the triad
+#         first_triad_list = [int(n) for n in list(first_triad)]
 
-        # calculate the sum of the triad
-        first_sum = sum(first_triad_list)
+#         # calculate the sum of the triad
+#         first_sum = sum(first_triad_list)
 
-        # establish available remaining digits
-        remaining_digits = get_remaining_digits(digits, first_triad_list)
+#         # establish available remaining digits
+#         remaining_digits = get_remaining_digits(digits, first_triad_list)
         
-        # last digit is middle of second
-        second_triad = [0, first_triad_list[2], 0]
+#         # last digit is middle of second
+#         second_triad = [0, first_triad_list[2], 0]
 
-        # try different digits for 0s in second triad, see if the sum is the same
-        # FIXME: recursive function!!! ---------------------------------
+#         # try different digits for 0s in second triad, see if the sum is the same
+#         # FIXME: recursive function!!! ---------------------------------
 
-        second_candidates = combinations(remaining_digits, 2)
-        second_permutations = []
+#         second_candidates = combinations(remaining_digits, 2)
+#         second_permutations = []
 
-        for subset in second_candidates:
+#         for subset in second_candidates:
 
-            permutations = permutate(list(subset))
+#             permutations = permutate(list(subset))
 
-            for diad in permutations:
-                second_permutations.append(diad)
+#             for diad in permutations:
+#                 second_permutations.append(diad)
         
-        print(second_permutations)
+#         print(second_permutations)
         
-        # cycle through permutations (2 candidates)
-        for second_candidate in second_permutations:
+#         # cycle through permutations (2 candidates)
+#         for second_candidate in second_permutations:
 
-            # create a list view of the triad
-            second_triad = [int(second_candidate[0]), first_triad_list[2], int(second_candidate[1])]
+#             # create a list view of the triad
+#             second_triad = [int(second_candidate[0]), first_triad_list[2], int(second_candidate[1])]
 
-            # calculate the sum of the triad
-            second_sum = sum(second_triad)
+#             # calculate the sum of the triad
+#             second_sum = sum(second_triad)
             
-            # check the validity of sums
-            if second_sum == first_sum:
-                # print("sum ", second_sum, "first triad is ", first_triad_list, "second triad is ", second_triad)
+#             # check the validity of sums
+#             if second_sum == first_sum:
+#                 # print("sum ", second_sum, "first triad is ", first_triad_list, "second triad is ", second_triad)
 
-                # establish the last digit for the last step
-                for digit in remaining_digits:
-                    if digit not in second_triad:
-                        last_digit = digit
+#                 # establish the last digit for the last step
+#                 for digit in remaining_digits:
+#                     if digit not in second_triad:
+#                         last_digit = digit
                 
-                # middle digit of first is last of last – 0 placeholder
-                # last digit of second is middle digit of second
-                last_triad = [last_digit, second_triad[2], first_triad_list[1]]
-                third_sum = sum(last_triad)
+#                 # middle digit of first is last of last – 0 placeholder
+#                 # last digit of second is middle digit of second
+#                 last_triad = [last_digit, second_triad[2], first_triad_list[1]]
+#                 third_sum = sum(last_triad)
 
-                if third_sum == second_sum:
-                    # print("sum", third_sum, "solution: ", first_triad_list, second_triad, last_triad)
+#                 if third_sum == second_sum:
+#                     # print("sum", third_sum, "solution: ", first_triad_list, second_triad, last_triad)
 
-                    # establish lowest value
-                    solution = [get_int_from_str(first_triad_list), get_int_from_str(second_triad), get_int_from_str(last_triad)]
-                    # print(solution)
+#                     # establish lowest value
+#                     solution = [get_int_from_str(first_triad_list), get_int_from_str(second_triad), get_int_from_str(last_triad)]
+#                     # print(solution)
 
-                    lowest_term = 10000
-                    for term in solution:
-                        if term < lowest_term:
-                            lowest_term = term
+#                     lowest_term = 10000
+#                     for term in solution:
+#                         if term < lowest_term:
+#                             lowest_term = term
                     
-                    if lowest_term == solution[0]:
-                        print("solution is ", solution, "sum is ", third_sum)
-                        solutions.add(get_int_from_str(solution))
+#                     if lowest_term == solution[0]:
+#                         print("solution is ", solution, "sum is ", third_sum)
+#                         solutions.add(get_int_from_str(solution))
         
 
-    print(solutions)
+#     print(solutions)
 
-    return max(solutions)
+#     return max(solutions)
 
 
-        # how many triads ? depends on the ring_num
+#         # how many triads ? depends on the ring_num
 
 
 
@@ -323,4 +325,3 @@ def gon_ring(ring_num=3):
 
 
 # print(gon_ring())
-print(gon_ring_recur())
