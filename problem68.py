@@ -80,15 +80,15 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
             # print("counter is ", counter, "triad is ", new_triad, "the original triad is ", first_triad, "candidates are", current_candidates)
             
             # viable = True
-            current_candidates.extend(new_triad)
+            new_current = current_candidates[:] + new_triad
 
             # recalculate remaining digits
-            remaining_digits = get_remaining_digits(remaining_digits, new_triad)
-            counter += 1
+            new_remaining_digits = get_remaining_digits(remaining_digits, new_triad)
+            # counter += 1
 
-            middle_num = int(new_candidate[1])
+            new_middle_num = int(new_candidate[1])
 
-            solution = branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
+            solution = branch(new_remaining_digits, first_sum, limit, new_middle_num, first_triad, counter + 1, new_current)
             
             if solution:
                 all_solutions.append(solution)
