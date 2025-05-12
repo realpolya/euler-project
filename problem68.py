@@ -4,7 +4,7 @@ Magic 5-gon Ring
 '''
 
 from itertools import combinations
-from extras.utils import permutate, binomial_coefficient, permutate_integers
+from extras.utils import permutate_integers
 
 
 def get_int_from_str(list):
@@ -15,6 +15,7 @@ def get_int_from_str(list):
         string += str(x)
     
     return int(string)
+
 
 
 def get_remaining_digits(digits, triad):
@@ -30,21 +31,14 @@ def get_remaining_digits(digits, triad):
 
 
 def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=0, current_candidates=None, all_solutions=None):
-    '''find middle candidates' validity'''
-
-    # if counter == 0:
-    #     current_candidates.clear()
-    #     all_solutions.clear()
+    '''find middle candidates' validity via recursive function'''
     
     if current_candidates is None:
         current_candidates = []
     if all_solutions is None:
         all_solutions = []
 
-
-    # print("triad is ", first_triad, "limit is ", limit, "counter is ", counter, "current candidates are ", current_candidates)
-
-    # # handle base cases
+    # handle base cases
     if counter == limit:
         return [current_candidates[:]]
 
@@ -53,16 +47,10 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
 
     for subset in new_candidates:
 
-        # permutate the 
         permutations = permutate_integers(list(subset))
 
         for diad in permutations:
             new_permutations.append(diad)
-    
-
-    # print("for middle num", middle_num, "permutations are ", new_permutations)
-    
-    # viable = False
         
     # cycle through permutations (2 candidates)
     for new_candidate in new_permutations:
@@ -75,17 +63,9 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
         
         # check the validity of sums
         if new_sum == first_sum:
-            # FIXME: currently assumign that each candidate only has one solution
 
-            # print("counter is ", counter, "triad is ", new_triad, "the original triad is ", first_triad, "candidates are", current_candidates)
-            
-            # viable = True
             new_current = current_candidates[:] + new_triad
-
-            # recalculate remaining digits
             new_remaining_digits = get_remaining_digits(remaining_digits, new_triad)
-            # counter += 1
-
             new_middle_num = int(new_candidate[1])
 
             solution = branch(new_remaining_digits, first_sum, limit, new_middle_num, first_triad, counter + 1, new_current)
@@ -93,12 +73,8 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
             if solution:
                 all_solutions.extend(solution)
 
-            # break
 
-    # if viable:
-    #     return branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter, current_candidates)
     if all_solutions:
-        # print("all solutions for the triad ", first_triad, "are", all_solutions)
         return all_solutions 
         
     return False
@@ -106,75 +82,63 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
 
             
 
-def gon_ring_recur(ring_num=3):
+def gon_ring(ring_num=5):
 
     # number of repetitions in the middle
     middle_repetitions = ring_num - 2
-    solutions = []
 
-    # calculate digits
     digits = [1]
     for n in range(2, (ring_num * 2) + 1):
         digits.append(n)
-    
-    print("digits are ", digits)
-    
+        
     start_permutations = []
-    
-    # find possible start triplets/triads
-    # possible_sets = binomial_coefficient(6, 3)
-
     triads = list(combinations(digits, 3))
-
-    print("triads are ", triads)
 
     for subset in triads:
 
         triad_permutations = permutate_integers(list(subset))
-        # print("for subset ", subset, "permutations are ", triad_permutations)
 
         for triad in triad_permutations:
             start_permutations.append(triad)
     
-    print("start permutations are ", start_permutations)
     solutions = set()
 
-    # return 1
-
     # cycle through START permutations
-    for first_triad_list in start_permutations:
-
-        # create a list view of the triad
-        # first_triad_list = [int(n) for n in list(first_triad)]
+    for first_triad in start_permutations:
 
         # calculate the sum of the triad
-        first_sum = sum(first_triad_list)
+        first_sum = sum(first_triad)
 
         # establish available remaining digits
-        remaining_digits = get_remaining_digits(digits, first_triad_list)
+        remaining_digits = get_remaining_digits(digits, first_triad)
 
-        viable_branches = branch(remaining_digits, first_sum, middle_repetitions, first_triad_list[2], first_triad_list)
+        viable_branches = branch(remaining_digits, first_sum, middle_repetitions, first_triad[2], first_triad)
 
         if viable_branches:
-
-            # print("for first triad", first_triad, "viable branches are ", viable_branches)
 
             for viable_branch in viable_branches:
 
                 penultimate_triad = viable_branch[-3:]
 
-                # triad_2 = viable_branch[-6:-3]
-                # triad_3 = 
-
                 last_digit = next(iter(get_remaining_digits(remaining_digits, viable_branch)))
 
-                last_triad = [last_digit, penultimate_triad[2], first_triad_list[1]]
+                last_triad = [last_digit, penultimate_triad[2], first_triad[1]]
                 last_sum = sum(last_triad)
 
-                if last_sum == first_sum:
+                if ring_num == 5:
+                    triad_3 = viable_branch[-6:-3]
+                    triad_2 = viable_branch[-9:-6]
 
-                    solution = [get_int_from_str(first_triad_list), get_int_from_str(viable_branch), get_int_from_str(last_triad)]
-                    print(solution)
+                if last_sum == first_sum:
+                    
+                    # solution for a 5 ring, adjust the following variable
+                    # to get a solution for other numbers
+                    solution = [get_int_from_str(first_triad), 
+                        get_int_from_str(triad_2),
+                        get_int_from_str(triad_3),
+                        get_int_from_str(penultimate_triad),
+                        get_int_from_str(last_triad)
+                    ]
 
                     lowest_term = 10000
                     for term in solution:
@@ -182,33 +146,22 @@ def gon_ring_recur(ring_num=3):
                             lowest_term = term
                     
                     if lowest_term == solution[0]:
-                        # print("solution is ", solution, "sum is ", last_sum)
                         solutions.add(get_int_from_str(solution))
-        
 
-    # print(solutions)
-
-    # 16 digit string
-
+    # a solution should be a 16-digit string
     sixteen = set()
-
     for solution in solutions:
 
         long_string = str(solution)
 
         if len(long_string) == 16:
             sixteen.add(solution)
-        # print(len(long_string))
-
-    print(sixteen)
-
 
     return max(sixteen)
 
 
-print(gon_ring_recur(5))
 
-
+print("Answer to problem 68: ", gon_ring())
 
 
 
