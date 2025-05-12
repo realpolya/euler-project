@@ -88,6 +88,27 @@ def permutate(array):
     return permutations
 
 
+
+def permutate_integers(array):
+    '''Find all of the permutations of the set of integers, recursive function'''
+
+    if len(array) == 1:
+        return [array]
+
+    permutations = []
+
+    for n in range(len(array)):
+
+        perm_start = array[n]
+        remaining = array[:n] + array[n+1:]
+
+        for p in permutate(remaining):
+
+            permutations.append([perm_start] + p)
+
+    return permutations
+
+
 def is_pentagonal(num):
     '''is number pentagonal'''
 
