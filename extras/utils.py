@@ -102,7 +102,7 @@ def permutate_integers(array):
         perm_start = array[n]
         remaining = array[:n] + array[n+1:]
 
-        for p in permutate(remaining):
+        for p in permutate_integers(remaining):
 
             permutations.append([perm_start] + p)
 

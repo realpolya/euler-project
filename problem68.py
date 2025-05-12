@@ -54,7 +54,7 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
     for subset in new_candidates:
 
         # permutate the 
-        permutations = permutate(list(subset))
+        permutations = permutate_integers(list(subset))
 
         for diad in permutations:
             new_permutations.append(diad)
@@ -139,13 +139,13 @@ def gon_ring_recur(ring_num=3):
     print("start permutations are ", start_permutations)
     solutions = set()
 
-    return 1
+    # return 1
 
     # cycle through START permutations
-    for first_triad in start_permutations:
+    for first_triad_list in start_permutations:
 
         # create a list view of the triad
-        first_triad_list = [int(n) for n in list(first_triad)]
+        # first_triad_list = [int(n) for n in list(first_triad)]
 
         # calculate the sum of the triad
         first_sum = sum(first_triad_list)
@@ -163,6 +163,9 @@ def gon_ring_recur(ring_num=3):
 
                 penultimate_triad = viable_branch[-3:]
 
+                # triad_2 = viable_branch[-6:-3]
+                # triad_3 = 
+
                 last_digit = next(iter(get_remaining_digits(remaining_digits, viable_branch)))
 
                 last_triad = [last_digit, penultimate_triad[2], first_triad_list[1]]
@@ -171,7 +174,7 @@ def gon_ring_recur(ring_num=3):
                 if last_sum == first_sum:
 
                     solution = [get_int_from_str(first_triad_list), get_int_from_str(viable_branch), get_int_from_str(last_triad)]
-                    # print(solution)
+                    print(solution)
 
                     lowest_term = 10000
                     for term in solution:
@@ -183,9 +186,24 @@ def gon_ring_recur(ring_num=3):
                         solutions.add(get_int_from_str(solution))
         
 
-    print(solutions)
+    # print(solutions)
 
-    return max(solutions)
+    # 16 digit string
+
+    sixteen = set()
+
+    for solution in solutions:
+
+        long_string = str(solution)
+
+        if len(long_string) == 16:
+            sixteen.add(solution)
+        # print(len(long_string))
+
+    print(sixteen)
+
+
+    return max(sixteen)
 
 
 print(gon_ring_recur(5))
