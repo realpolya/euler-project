@@ -46,7 +46,7 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
 
     # # handle base cases
     if counter == limit:
-        return current_candidates
+        return [current_candidates[:]]
 
     new_candidates = combinations(remaining_digits, 2)
     new_permutations = []
@@ -91,7 +91,7 @@ def branch(remaining_digits, first_sum, limit, middle_num, first_triad, counter=
             solution = branch(new_remaining_digits, first_sum, limit, new_middle_num, first_triad, counter + 1, new_current)
             
             if solution:
-                all_solutions.append(solution)
+                all_solutions.extend(solution)
 
             # break
 
@@ -149,34 +149,36 @@ def gon_ring_recur(ring_num=3):
 
         if viable_branches:
 
-            for viable_branch in viable_branches:
+            print("for first triad", first_triad, "viable branches are ", viable_branches)
 
-                last_digit = next(iter(get_remaining_digits(remaining_digits, viable_branch)))
+    #         for viable_branch in viable_branches:
 
-                last_triad = [last_digit, viable_branch[2], first_triad_list[1]]
-                third_sum = sum(last_triad)
+    #             last_digit = next(iter(get_remaining_digits(remaining_digits, viable_branch)))
 
-                if third_sum == first_sum:
+    #             last_triad = [last_digit, viable_branch[2], first_triad_list[1]]
+    #             third_sum = sum(last_triad)
 
-                    solution = [get_int_from_str(first_triad_list), get_int_from_str(viable_branch), get_int_from_str(last_triad)]
-                    # print(solution)
+    #             if third_sum == first_sum:
 
-                    lowest_term = 10000
-                    for term in solution:
-                        if term < lowest_term:
-                            lowest_term = term
+    #                 solution = [get_int_from_str(first_triad_list), get_int_from_str(viable_branch), get_int_from_str(last_triad)]
+    #                 # print(solution)
+
+    #                 lowest_term = 10000
+    #                 for term in solution:
+    #                     if term < lowest_term:
+    #                         lowest_term = term
                     
-                    if lowest_term == solution[0]:
-                        print("solution is ", solution, "sum is ", third_sum)
-                        solutions.add(get_int_from_str(solution))
+    #                 if lowest_term == solution[0]:
+    #                     print("solution is ", solution, "sum is ", third_sum)
+    #                     solutions.add(get_int_from_str(solution))
         
 
-    print(solutions)
+    # print(solutions)
 
-    return max(solutions)
+    # return max(solutions)
 
 
-print(gon_ring_recur())
+print(gon_ring_recur(5))
 
 
 
