@@ -21,34 +21,61 @@ for which the largest value of x is obtained.
 
 '''
 
+import math
+
 def diophantine(limit):
 
     d_value = 0
     max_x = 0
+    minimal_x = {}
 
     # loop
     for D in range(2, limit + 1):
 
-        sum = 0
-        x = 1
-        y = 1
+        if math.sqrt(D).is_integer():
+            continue
+
+        # sum = 0
+        x = 2
+
         # y = sqrt(x**2 - 1 / D)
+        # y is always smaller than x
+        # check if y is an integer
+        not_an_integer = True
 
-        while sum != 1:
+        while not_an_integer:
 
-            sum = x**2 - (D * y**2)
+            # sum = x**2 - (D * y**2)
+            y_squared = (x**2 - 1) / D
+            y = math.sqrt(y_squared)
+            print("y is ", y, "integer is ", y.is_integer(), "x is ", x, "D is ", D)
 
-            if sum == 1 and x > max_x:
+            if y.is_integer():
 
-                max_x = x
-                d_value = D
-            
-            elif sum != 1:
+                minimal_x[D] = x
+
+                if x > max_x:
+                    max_x = x
+                    d_value = D
+
+                not_an_integer = False
+
+            else:
 
                 x += 1
+
+
+            # if sum == 1 and x > max_x:
+
+            #     max_x = x
+            #     d_value = D
             
+            # elif sum != 1:
 
+            #     x += 1
 
+    print(minimal_x)
+    
+    return d_value
 
-                
-
+print(diophantine(7))
