@@ -20,3 +20,35 @@ Find the value of D <= 1000 in minimal solutions of x
 for which the largest value of x is obtained.
 
 '''
+
+def diophantine(limit):
+
+    d_value = 0
+    max_x = 0
+
+    # loop
+    for D in range(2, limit + 1):
+
+        sum = 0
+        x = 1
+        y = 1
+        # y = sqrt(x**2 - 1 / D)
+
+        while sum != 1:
+
+            sum = x**2 - (D * y**2)
+
+            if sum == 1 and x > max_x:
+
+                max_x = x
+                d_value = D
+            
+            elif sum != 1:
+
+                x += 1
+            
+
+
+
+                
+
