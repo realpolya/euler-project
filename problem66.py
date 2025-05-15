@@ -24,6 +24,7 @@ for which the largest value of x is obtained.
 import math
 
 def diophantine(limit):
+    # TODO: need to calculate convergents, brute force does not work
 
     d_value = 0
     max_x = 0
@@ -35,7 +36,6 @@ def diophantine(limit):
         if math.sqrt(D).is_integer():
             continue
 
-        # sum = 0
         x = 2
 
         # y = sqrt(x**2 - 1 / D)
@@ -64,18 +64,9 @@ def diophantine(limit):
 
                 x += 1
 
-
-            # if sum == 1 and x > max_x:
-
-            #     max_x = x
-            #     d_value = D
-            
-            # elif sum != 1:
-
-            #     x += 1
-
     print(minimal_x)
     
     return d_value
 
-print(diophantine(7))
+
+print(diophantine(100))
