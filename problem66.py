@@ -23,6 +23,35 @@ for which the largest value of x is obtained.
 
 import math
 
+def find_next_convergent(D, a_series, ):
+
+    start = math.sqrt(D)
+    a0 = math.floor(start)
+    remainder = (start - a0).evalf()
+
+    
+
+    # FIXME: the code below works for the convergents of e
+    if i % 3 == 2:
+        a_series.append(2 * ((i + 1) // 3))
+    else:
+        a_series.append(1)
+
+    # get the last member of a_series, the newest a
+    nested_fraction = Rational(a_series[-1])
+
+    # take the remaining a members from the series backwards
+    for a_num in reversed(a_series[:-1]):
+
+        # adding current a to the the nested fraction
+        nested_fraction = a_num + 1 / nested_fraction
+    
+    convergent = simplify(a0 + 1 / nested_fraction)
+    print("convergent is ", convergent)
+
+    return digit_sum
+
+
 def diophantine(limit):
     # TODO: need to calculate convergents, brute force does not work
 

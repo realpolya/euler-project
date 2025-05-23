@@ -36,6 +36,7 @@ def find_convergents(limit=10):
             nested_fraction = a_num + 1 / nested_fraction
         
         convergent = simplify(a0 + 1 / nested_fraction)
+        print("convergent is ", convergent)
         count += 1
 
         if count == limit:
