@@ -30,14 +30,18 @@ def find_next_convergent(D, a0, first=False, triplet=None):
         next_step = a0
         remainder = (D - next_step * next_step)
     else:
-        next_step = triplet.remainder * triplet.floor - triplet.next_step
-        remainder = (D - next_step * next_step) // triplet.remainder
+        next_step = triplet["remainder"] * triplet["floor"] - triplet["next_step"]
+        remainder = (D - next_step * next_step) // triplet["remainder"]
             
     floor = (a0 + next_step) // remainder
 
+    obj = { 
+        "next_step": next_step, 
+        "floor": floor, 
+        "remainder": remainder
+    }
     
-    return { next_step, floor, remainder}
-
+    return obj
 
 
 
@@ -81,20 +85,26 @@ def diophantine(limit):
         # stop when convergent satisfies the equation wiht integers
 
         not_found = True
+        first = True
         a_series = []
         start = math.sqrt(D)
         a0 = math.floor(start)
 
+        # count = 0
+
+        # while not_found:
         while not_found:
 
             if first:
                 new_triplet = find_next_convergent(D, a0, True)
+                first = False
             else:
-                prev_triplet = new_triplet # create a copy
-                new_triplet = (D, a0, False, prev_triplet)
+                prev_triplet = new_triplet.copy() # create a copy
+                new_triplet = find_next_convergent(D, a0, False, prev_triplet)
             
+            # print("new triplet is ", new_triplet)
             # add new floor to the series
-            a_series.append(new_triplet.floor)
+            a_series.append(new_triplet["floor"])
 
             # get the last member of a_series, the newest a
             nested_fraction = Rational(a_series[-1])
@@ -106,7 +116,7 @@ def diophantine(limit):
                 nested_fraction = a_num + 1 / nested_fraction
             
             convergent = simplify(a0 + 1 / nested_fraction)
-            print("convergent is ", convergent)
+            # print("convergent is ", convergent)
 
             # see if the convergent works (x is numerator, y is denominator)
             x, y = convergent.as_numer_denom()
@@ -114,17 +124,28 @@ def diophantine(limit):
             y_squared = (x**2 - 1) / D
             new_y = math.sqrt(y_squared)
 
-            if y == new_y:
-                
-                not_found = False
+            # print("new y is ", new_y, "y is ", y)
+
+            if new_y.is_integer():
+
+                new_y = int(new_y)
+
+                if y == new_y:
+                    # print("Trying D =", D)
 
 
+                    # print("FOUND!!")
+                    if x > max_x:
+                        print("old new max is ", max_x, "new max is ", x, "D is ", D)
+                        max_x = x
+                        d_value = D
 
+                    minimal_x[D] = x
+                    not_found = False
 
-
-
-
-
+            
+            # count += 1
+        
 
         # x = 2
 
@@ -154,9 +175,9 @@ def diophantine(limit):
 
         #         x += 1
 
-    print(minimal_x)
+    # print(minimal_x)
     
     return d_value
 
 
-print(diophantine(8))
+print(diophantine(1000))
