@@ -26,6 +26,7 @@ from sympy import Rational, simplify
 
 
 def find_next_convergent(D, a0, first=False, triplet=None):
+    '''Find the next convergent in the continued fractions series'''
 
     if first == True:
         next_step = a0
@@ -66,8 +67,6 @@ def diophantine(limit):
         start = math.sqrt(D)
         a0 = math.floor(start)
 
-        # count = 0
-
         while not_found:
 
             if first:
@@ -77,7 +76,6 @@ def diophantine(limit):
                 prev_triplet = new_triplet.copy() # create a copy
                 new_triplet = find_next_convergent(D, a0, False, prev_triplet)
             
-            # print("new triplet is ", new_triplet)
             # add new floor to the series
             a_series.append(new_triplet["floor"])
 
@@ -91,90 +89,20 @@ def diophantine(limit):
                 nested_fraction = a_num + 1 / nested_fraction
             
             convergent = simplify(a0 + 1 / nested_fraction)
-            # print("convergent is ", convergent)
 
             # see if the convergent works (x is numerator, y is denominator)
             x, y = convergent.as_numer_denom()
 
-            # y_squared = (x**2 - 1) / D
-            # new_y = math.sqrt(y_squared)
-
-            # print("new y is ", new_y, "y is ", y)
-
-            # if new_y.is_integer():
-
-            #     new_y = int(new_y)
-
-            #     if y == new_y:
-            #         # print("Trying D =", D)
-
+            # check the equation
             if x**2 - D * y**2 == 1:
 
-                # print("FOUND!!")
                 if x > max_x:
-                    # print("old new max is ", max_x, "new max is ", x, "D is ", D)
                     max_x = x
                     d_value = D
 
-                minimal_x[D] = x
                 not_found = False
-
-            
-            # count += 1
-        
-    # print(minimal_x)
     
     return d_value
 
 
-print(diophantine(1000))
-
-
-        # x = 2
-
-        # # y = sqrt(x**2 - 1 / D)
-        # # y is always smaller than x
-        # # check if y is an integer
-        # not_an_integer = True
-
-        # while not_an_integer:
-
-        #     # sum = x**2 - (D * y**2)
-        #     y_squared = (x**2 - 1) / D
-        #     y = math.sqrt(y_squared)
-        #     print("y is ", y, "integer is ", y.is_integer(), "x is ", x, "D is ", D)
-
-        #     if y.is_integer():
-
-        #         minimal_x[D] = x
-
-        #         if x > max_x:
-        #             max_x = x
-        #             d_value = D
-
-        #         not_an_integer = False
-
-        #     else:
-
-        #         x += 1
-
-
-    # # FIXME: the code below works for the convergents of e
-    # if i % 3 == 2:
-    #     a_series.append(2 * ((i + 1) // 3))
-    # else:
-    #     a_series.append(1)
-
-    # # get the last member of a_series, the newest a
-    # nested_fraction = Rational(a_series[-1])
-
-    # # take the remaining a members from the series backwards
-    # for a_num in reversed(a_series[:-1]):
-
-    #     # adding current a to the the nested fraction
-    #     nested_fraction = a_num + 1 / nested_fraction
-    
-    # convergent = simplify(a0 + 1 / nested_fraction)
-    # print("convergent is ", convergent)
-
-    # return digit_sum
+print("Answer to problem 66: ", diophantine(1000))
