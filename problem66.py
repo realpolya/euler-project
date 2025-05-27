@@ -22,12 +22,9 @@ for which the largest value of x is obtained.
 '''
 
 import math
+from sympy import Rational, simplify
 
-def find_next_convergent(D, triplet, first=False):
-
-    start = math.sqrt(D)
-    a0 = math.floor(start)
-    # remainder = (start - a0).evalf()
+def find_next_convergent(D, a0, first=False, triplet=None):
 
     if first == True:
         next_step = a0
@@ -38,7 +35,9 @@ def find_next_convergent(D, triplet, first=False):
             
     floor = (a0 + next_step) // remainder
 
+    
     return { next_step, floor, remainder}
+
 
 
 
@@ -75,38 +74,89 @@ def diophantine(limit):
 
         if math.sqrt(D).is_integer():
             continue
+        
 
-        x = 2
+        # generate convergents such as x / y = sqrt(D)
+        # test the convergent in the equation
+        # stop when convergent satisfies the equation wiht integers
 
-        # y = sqrt(x**2 - 1 / D)
-        # y is always smaller than x
-        # check if y is an integer
-        not_an_integer = True
+        not_found = True
+        a_series = []
+        start = math.sqrt(D)
+        a0 = math.floor(start)
 
-        while not_an_integer:
+        while not_found:
 
-            # sum = x**2 - (D * y**2)
-            y_squared = (x**2 - 1) / D
-            y = math.sqrt(y_squared)
-            print("y is ", y, "integer is ", y.is_integer(), "x is ", x, "D is ", D)
-
-            if y.is_integer():
-
-                minimal_x[D] = x
-
-                if x > max_x:
-                    max_x = x
-                    d_value = D
-
-                not_an_integer = False
-
+            if first:
+                new_triplet = find_next_convergent(D, a0, True)
             else:
+                prev_triplet = new_triplet # create a copy
+                new_triplet = (D, a0, False, prev_triplet)
+            
+            # add new floor to the series
+            a_series.append(new_triplet.floor)
 
-                x += 1
+            # get the last member of a_series, the newest a
+            nested_fraction = Rational(a_series[-1])
+
+            # take the remaining a members from the series backwards
+            for a_num in reversed(a_series[:-1]):
+
+                # adding current a to the the nested fraction
+                nested_fraction = a_num + 1 / nested_fraction
+            
+            convergent = simplify(a0 + 1 / nested_fraction)
+            print("convergent is ", convergent)
+
+            # see if the convergent works (x is numerator, y is denominator)
+            x, y = convergent.as_numer_denom()
+
+            y_squared = (x**2 - 1) / D
+            new_y = math.sqrt(y_squared)
+
+            if y == new_y:
+                
+                not_found = False
+
+
+
+
+
+
+
+
+
+        # x = 2
+
+        # # y = sqrt(x**2 - 1 / D)
+        # # y is always smaller than x
+        # # check if y is an integer
+        # not_an_integer = True
+
+        # while not_an_integer:
+
+        #     # sum = x**2 - (D * y**2)
+        #     y_squared = (x**2 - 1) / D
+        #     y = math.sqrt(y_squared)
+        #     print("y is ", y, "integer is ", y.is_integer(), "x is ", x, "D is ", D)
+
+        #     if y.is_integer():
+
+        #         minimal_x[D] = x
+
+        #         if x > max_x:
+        #             max_x = x
+        #             d_value = D
+
+        #         not_an_integer = False
+
+        #     else:
+
+        #         x += 1
 
     print(minimal_x)
     
     return d_value
 
 
-print(diophantine(100))
+print(diophantine(8))
