@@ -15,14 +15,14 @@ Find the value of n <= 1,000,000 for which n/phi(n) is a maximum.
 # find a number of positive integers below n
 # that are relatively prime to n
 
-def find_divisors(num):
+def find_divisors(n):
 
     divisors = set()
 
-    for n in range(2, num):
+    for num in range(2, n):
 
-        if num % n == 0:
-            divisors.add(n)
+        if n % num == 0:
+            divisors.add(num)
 
     return divisors
 
@@ -71,18 +71,35 @@ def is_relatively_prime(num1, num2):
 def totient_max(limit=10):
 
     max_toti = 0
+    max_n = 0
 
     for n in range(2, limit+1):
 
         prime_count = 1 # number 1 is already included
-
+        n_divisors = find_divisors(n)
+        coprime = True
 
         for candidate in range(2, n):
 
-            if is_relatively_prime(n, candidate):
+            # if is_relatively_prime(n, candidate):
 
+            for num in range(2, candidate):
 
+                if candidate % num == 0 and num in n_divisors:
+                    coprime = False
+                    break
+        
+            if coprime:
+                prime_count += 1
+            
+        ratio = n / prime_count
 
-    return max_toti
+        if ratio > max_toti:
+            max_toti = ratio
+            max_n = n
 
+    print("max toti is ", max_toti, "max n is", max_n)
 
+    return max_n
+    
+totient_max()
