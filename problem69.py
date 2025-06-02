@@ -32,18 +32,24 @@ def is_relatively_prime(num1, num2):
     # calculate divisors for each n
     for n in range(2, max_num):
 
-        divisor_true = [False, False]
-
-        if num1 % n == 0:
-            # divisors1.add(n)
-            divisor_true[0] = True
-        
-        if num2 % n == 0:
-            # divisors2.add(n)
-            divisor_true[1] = True
-        
-        if all(divisor_true):
+        if num1 % n == 0 and num2 % n == 0:
             return False
+        
+        if n > num1 or n > num2:
+            break
+
+        # divisor_true = [False, False]
+
+        # if num1 % n == 0:
+        #     # divisors1.add(n)
+        #     divisor_true[0] = True
+        
+        # if num2 % n == 0:
+        #     # divisors2.add(n)
+        #     divisor_true[1] = True
+        
+        # if all(divisor_true):
+        #     return False
 
     # is there overlap?
     return True
