@@ -14,3 +14,13 @@ of n and the ratio n/phi(n) produces a minimum.
 
 '''
 
+def is_permutation(num1, num2):
+    '''compares whether two numbers are permutations of each other'''
+
+    # see if lists are identical
+    if sorted(list(str(num1))) == sorted(list(str(num2))):
+        return True
+    
+    return False
+
+print(is_permutation(718200, 800271))
