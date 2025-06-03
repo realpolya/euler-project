@@ -26,13 +26,17 @@ def is_permutation(num1, num2):
 
     if num1 == num2:
         return False
+    
+    if len(str(num1)) != len(str(num2)):
+        return False
 
     # see if lists are identical
     if sorted(list(str(num1))) == sorted(list(str(num2))):
         return True
     
     return False
-    
+
+
 def get_prime_factors(n, primes):
     '''non-recursive approach'''
 
@@ -41,7 +45,7 @@ def get_prime_factors(n, primes):
 
     for prime in primes:
 
-        if prime > math.sqrt(n):
+        if prime > math.isqrt(n):
             break
         
         if new_n % prime == 0:
@@ -49,9 +53,9 @@ def get_prime_factors(n, primes):
             prime_factors.add(prime)
 
             while new_n % prime == 0:
-                new_n /= prime
+                new_n //= prime
     
-    if new_n > 1 and new_n.is_integer():
+    if new_n > 1:
         prime_factors.add(int(new_n))
     
     return prime_factors
@@ -72,17 +76,6 @@ def toti_perm(limit=100000):
         # prime factors of n
         n_primes = get_prime_factors(n, mill_primes)
 
-        # for prime in mill_primes:
-
-        #     if prime > math.sqrt(n):
-        #         break
-
-        #     n_primes = prime_factorization(n, prime) + n_primes
-
-        # n_prime_set = set(n_primes)
-
-        # find co-factors
-
         phi = n
 
         for prime in n_primes:
@@ -95,9 +88,9 @@ def toti_perm(limit=100000):
         else:
             continue
         
-        if n == 87109:
-            print("phi is ", phi)
-            print("primes are", n_primes)
+        # if n == 87109:
+        #     print("phi is ", phi)
+        #     print("primes are", n_primes)
 
         # check if permutation
         if not is_permutation(n, phi):
@@ -115,4 +108,6 @@ def toti_perm(limit=100000):
 
     return n_answer
 
-print(toti_perm())
+
+
+print(toti_perm(10**7))
