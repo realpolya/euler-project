@@ -127,19 +127,19 @@ def toti_perm(limit=100000):
         #     print("phi is ", phi)
         #     print("primes are", n_primes)
 
-        # check if permutation
-        if not is_permutation(n, phi):
-            continue
-
-        print("permutation found, n is ", n, "phi is", phi)
-
         # calculate ratio
         ratio = n / phi
 
         if ratio < min_toti:
 
-            min_toti = ratio
-            n_answer = n
+            # check if permutation
+            if is_permutation(n, phi):
+
+                min_toti = ratio
+                n_answer = n
+
+                print("promising permutation found, n is ", n, "phi is", phi)
+
 
     return n_answer
 
