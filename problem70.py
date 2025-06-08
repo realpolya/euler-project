@@ -61,9 +61,6 @@ def get_prime_factors(n, primes):
     return prime_factors
 
 
-# print(get_prime_factors(54, sorted(sieve_eratosthenes(1000000))))
-
-
 def toti_perm(limit=100000):
     '''function adapted from problem 69'''
 
@@ -71,32 +68,6 @@ def toti_perm(limit=100000):
     n_answer = 0
     mill_primes = sorted(sieve_eratosthenes(limit))
 
-    # TODO: generate n instead of iterating
-    # single prime factors do not work (no permutations found)
-    # for prime in mill_primes:
-
-    #     phi = prime
-    #     phi *= (1 - (1/prime))
-        
-    #     if phi.is_integer():
-    #         phi = int(phi)
-    #     else:
-    #         continue
-
-    #     if not is_permutation(prime, phi):
-    #         continue
-        
-    #     print("permutation found, n is ", prime, "phi is", phi)
-        
-    #     ratio = prime / phi
-
-    #     if ratio < min_toti:
-
-    #         min_toti = ratio
-    #         n_answer = prime
-
-
-    # FIXME: generative approach
     sqrt_limit =  math.sqrt(limit)
 
     for i, prime in enumerate(mill_primes):
@@ -107,7 +78,6 @@ def toti_perm(limit=100000):
         for prime_2 in mill_primes[i+1:]: # two distinct primes
 
             n = prime * prime_2
-            # print("n is ", n)
 
             if n > limit:
                 break
@@ -121,11 +91,7 @@ def toti_perm(limit=100000):
             else:
                 continue
 
-            # calculate ratio
             ratio = n / phi
-
-            # print("n is ", n, "phi is", phi, "ratio is", ratio)
-
 
             if ratio < min_toti:
 
@@ -138,47 +104,47 @@ def toti_perm(limit=100000):
                     print("promising permutation found, n is ", n, "phi is", phi)
 
 
-    # # CURRENT solution
-    # for n in range(2, limit+1):
-
-    #     # prime factors of n
-    #     n_primes = get_prime_factors(n, mill_primes)
-
-    #     if len(n_primes) > 2:
-    #         continue
-
-    #     phi = n
-
-    #     for prime in n_primes:
-
-    #         # totient formula
-    #         phi *= (1 - (1/prime))
-        
-    #     if phi.is_integer():
-    #         phi = int(phi)
-    #     else:
-    #         continue
-        
-    #     # if n == 87109:
-    #     #     print("phi is ", phi)
-    #     #     print("primes are", n_primes)
-
-    #     # calculate ratio
-    #     ratio = n / phi
-
-    #     if ratio < min_toti:
-
-    #         # check if permutation
-    #         if is_permutation(n, phi):
-
-    #             min_toti = ratio
-    #             n_answer = n
-
-    #             print("promising permutation found, n is ", n, "phi is", phi)
-
-
     return n_answer
 
 
+print("Answer to problem 70: ", toti_perm(10**7))
 
-print(toti_perm(10**7))
+
+
+# # OLD solution
+# for n in range(2, limit+1):
+
+#     # prime factors of n
+#     n_primes = get_prime_factors(n, mill_primes)
+
+#     if len(n_primes) > 2:
+#         continue
+
+#     phi = n
+
+#     for prime in n_primes:
+
+#         # totient formula
+#         phi *= (1 - (1/prime))
+    
+#     if phi.is_integer():
+#         phi = int(phi)
+#     else:
+#         continue
+    
+#     # if n == 87109:
+#     #     print("phi is ", phi)
+#     #     print("primes are", n_primes)
+
+#     # calculate ratio
+#     ratio = n / phi
+
+#     if ratio < min_toti:
+
+#         # check if permutation
+#         if is_permutation(n, phi):
+
+#             min_toti = ratio
+#             n_answer = n
+
+#             print("promising permutation found, n is ", n, "phi is", phi)
