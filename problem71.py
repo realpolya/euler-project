@@ -22,46 +22,20 @@ to the left of  3 / 7.
 '''
 
 from fractions import Fraction
+from extras.utils import sieve_eratosthenes, get_prime_factors
+import time
 
-def is_relatively_prime(num1, num2):
+def is_relatively_prime(num1, num2, primes):
     '''check if 2 numbers are co-prime'''
 
-    # divisors1 = set()
-    # divisors2 = set()
-
-    max_num = 0
-
-    if num1 > num2:
-        max_num = num1
-    elif num2 > num1 or num1 == num2:
-        max_num = num2
-
-    # must not have common divisors greater than 1
-
     # calculate divisors for each n
-    for n in range(2, max_num):
+    for n in primes:
 
         if num1 % n == 0 and num2 % n == 0:
             return False
         
-        if n > num1 or n > num2:
-            break
-
-        # divisor_true = [False, False]
-
-        # if num1 % n == 0:
-        #     # divisors1.add(n)
-        #     divisor_true[0] = True
-        
-        # if num2 % n == 0:
-        #     # divisors2.add(n)
-        #     divisor_true[1] = True
-        
-        # if all(divisor_true):
-        #     return False
-
-    # is there overlap?
-    return True
+        if n > num1:
+            return True
 
 
 
@@ -71,37 +45,76 @@ def is_relatively_prime(num1, num2):
 
 def ordered_fractions(limit=8):
 
-    fractions = []
+    primes = sieve_eratosthenes(limit)
+
+    fractions = set()
     target = Fraction(3, 7)
+    prev_target = Fraction(2, 5)
 
-    # n and d
-
-    # get a set or a list of irreducible fractions below the limit
-
-    # for each d, run through n up to d (nested loops - won't work as it is too large)
     for d in range(1, limit+1):
 
-        for n in range(1, d):
+        # d_factors = get_prime_factors(d, primes)
+        n_max = int(d * target) + 1
+        n_min = int(d * prev_target)
 
-            if is_relatively_prime(n, d):
+        for n in range(n_min, n_max):
 
-                fractions.append(Fraction(n, d))
+            # if n in d_factors:
+            #     continue
+            
+            if Fraction(n, d) < prev_target:
+                continue
+
+            if Fraction(n, d) > target:
+                break
+
+            if Fraction(n, d) in fractions:
+                continue
+            
+            # n_factors = get_prime_factors(n, primes)
+
+            # if not d_factors.isdisjoint(n_factors):
+            #     continue
+            
+            if is_relatively_prime(n, d, primes):
+                fractions.add(Fraction(n, d))
+        
+
+    # # n and d
+
+    # # get a set or a list of irreducible fractions below the limit
+
+    # # for each d, run through n up to d (nested loops - won't work as it is too large)
+    # for d in range(1, limit+1):
+
+    #     for n in range(1, d):
+
+    #         if is_relatively_prime(n, d):
+
+    #             fractions.append(Fraction(n, d))
     
 
-    fractions.sort()
+    sorted_fractions = sorted(fractions)
 
-    # print(fractions)
+    # print(sorted_fractions)
 
-    # locate 3/7
+    # # locate 3/7
     answer_i = 0
-    for i, fraction in enumerate(fractions):
+    for i, fraction in enumerate(sorted_fractions):
 
         if fraction == target:
             answer_i = i - 1
         
-    return fractions[answer_i].numerator
+    # # find numerator
+    return sorted_fractions[answer_i]
             
-    # find numerator
 
-print(ordered_fractions())
+print(ordered_fractions(10000))
 
+
+# 3/7 is close to half, need to look at numbers in 
+# that area (n should be half of d)
+# look for numbers between 2/5 and 3/7
+# instead of looping, GENERATE fractions?
+
+#is relatively prime very inefficient

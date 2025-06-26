@@ -190,3 +190,27 @@ def is_palindromic(num):
         return True
 
     return False
+
+
+def get_prime_factors(n, primes):
+    '''non-recursive approach'''
+
+    prime_factors = set()
+    new_n = n
+
+    for prime in primes:
+
+        if prime > math.isqrt(n):
+            break
+        
+        if new_n % prime == 0:
+
+            prime_factors.add(prime)
+
+            while new_n % prime == 0:
+                new_n //= prime
+    
+    if new_n > 1:
+        prime_factors.add(int(new_n))
+    
+    return prime_factors
