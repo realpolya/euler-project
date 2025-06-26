@@ -47,38 +47,93 @@ def ordered_fractions(limit=8):
 
     primes = sieve_eratosthenes(limit)
 
-    fractions = set()
+    # fractions = set()
     target = Fraction(3, 7)
     prev_target = Fraction(2, 5)
+    answer = prev_target
+    # fractions.add(target)
 
-    for d in range(1, limit+1):
+    # start_d = int(target * limit) - 1
+
+    start_n = int(target * limit)
+    start_d = int(start_n * (1 / target))
+
+    while Fraction(start_n, start_d) > prev_target:
+        start_d -= 1
+        start_n -= 1
+
+    # for d in range(1, limit+1):
+    for d in range(start_d, limit+1):
 
         # d_factors = get_prime_factors(d, primes)
         n_max = int(d * target) + 1
         n_min = int(d * prev_target)
 
-        for n in range(n_min, n_max):
+        # calculate n instead of looping
+        no_best_n = True
+        n = int(d * target)
 
-            # if n in d_factors:
-            #     continue
+        if is_relatively_prime(n, d, primes):
+            if Fraction(n, d) > answer and Fraction(n, d) < target:
+                # print("current fraction is", n, "/", d)
+                answer = Fraction(n, d)
+
+        # while no_best_n:
+        #     best_n = 
+
+        # for n in range(n_min, n_max):
+
+        #     # if n in d_factors:
+        #     #     continue
             
-            if Fraction(n, d) < prev_target:
-                continue
+        #     if Fraction(n, d) < prev_target:
+        #         continue
 
-            if Fraction(n, d) > target:
-                break
+        #     if Fraction(n, d) > target:
+        #         break
 
-            if Fraction(n, d) in fractions:
-                continue
+        #     # if Fraction(n, d) in fractions:
+        #     #     continue
             
-            # n_factors = get_prime_factors(n, primes)
+        #     # n_factors = get_prime_factors(n, primes)
 
-            # if not d_factors.isdisjoint(n_factors):
-            #     continue
+        #     # if not d_factors.isdisjoint(n_factors):
+        #     #     continue
             
-            if is_relatively_prime(n, d, primes):
-                fractions.add(Fraction(n, d))
+            # if is_relatively_prime(n, d, primes):
+            #     if Fraction(n, d) > answer and Fraction(n, d) < target:
+            #         print("current fraction is", n, "/", d)
+            #         answer = Fraction(n, d)
+
+                # fractions.add(Fraction(n, d))
+
+
+    # sorted_fractions = sorted(fractions)
+
+    # print(sorted_fractions)
+
+    # # locate 3/7
+    # answer_i = 0
+    # for i, fraction in enumerate(sorted_fractions):
+
+    #     if fraction == target:
+    #         answer_i = i - 1
         
+    # # find numerator
+    return answer.numerator
+            
+
+print(ordered_fractions(10**6))
+# print(ordered_fractions(10000)) 
+
+
+# 3/7 is close to half, need to look at numbers in 
+# that area (n should be half of d)
+# look for numbers between 2/5 and 3/7
+# instead of looping, GENERATE fractions?
+
+#is relatively prime very inefficient
+
 
     # # n and d
 
@@ -92,29 +147,3 @@ def ordered_fractions(limit=8):
     #         if is_relatively_prime(n, d):
 
     #             fractions.append(Fraction(n, d))
-    
-
-    sorted_fractions = sorted(fractions)
-
-    # print(sorted_fractions)
-
-    # # locate 3/7
-    answer_i = 0
-    for i, fraction in enumerate(sorted_fractions):
-
-        if fraction == target:
-            answer_i = i - 1
-        
-    # # find numerator
-    return sorted_fractions[answer_i]
-            
-
-print(ordered_fractions(10000))
-
-
-# 3/7 is close to half, need to look at numbers in 
-# that area (n should be half of d)
-# look for numbers between 2/5 and 3/7
-# instead of looping, GENERATE fractions?
-
-#is relatively prime very inefficient
