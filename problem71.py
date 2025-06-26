@@ -72,6 +72,7 @@ def is_relatively_prime(num1, num2):
 def ordered_fractions(limit=8):
 
     fractions = []
+    target = Fraction(3, 7)
 
     # n and d
 
@@ -89,12 +90,18 @@ def ordered_fractions(limit=8):
 
     fractions.sort()
 
-    print(fractions)
+    # print(fractions)
+
+    # locate 3/7
+    answer_i = 0
+    for i, fraction in enumerate(fractions):
+
+        if fraction == target:
+            answer_i = i - 1
+        
+    return fractions[answer_i].numerator
             
-
-
-
     # find numerator
 
-ordered_fractions()
+print(ordered_fractions())
 
