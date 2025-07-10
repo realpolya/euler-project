@@ -18,3 +18,12 @@ How many elements would be contained in the set of reduced proper
 fractions for d <= 1,000,000?
 
 '''
+
+from fractions import Fraction
+from extras.utils import sieve_eratosthenes, is_relatively_prime
+
+def counting_fractions(limit=8):
+    '''Cound reduced proper fractions below a limit'''
+
+
+

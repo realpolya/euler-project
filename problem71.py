@@ -22,20 +22,20 @@ to the left of  3 / 7.
 '''
 
 from fractions import Fraction
-from extras.utils import sieve_eratosthenes, get_prime_factors
+from extras.utils import sieve_eratosthenes, get_prime_factors, is_relatively_prime
 
 
-def is_relatively_prime(num1, num2, primes):
-    '''check if 2 numbers are co-prime'''
+# def is_relatively_prime(num1, num2, primes):
+#     '''check if 2 numbers are co-prime'''
 
-    # calculate divisors for each n
-    for n in primes:
+#     # calculate divisors for each n
+#     for n in primes:
 
-        if num1 % n == 0 and num2 % n == 0:
-            return False
+#         if num1 % n == 0 and num2 % n == 0:
+#             return False
         
-        if n > num1:
-            return True
+#         if n > num1:
+#             return True
 
 
 def ordered_fractions(limit=8):
