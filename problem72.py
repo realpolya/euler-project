@@ -25,5 +25,12 @@ from extras.utils import sieve_eratosthenes, is_relatively_prime
 def counting_fractions(limit=8):
     '''Cound reduced proper fractions below a limit'''
 
+    primes = sieve_eratosthenes(limit)
 
+    count = 0
+
+    # the roughest version is to create nested loops – but it can't work
+    # for limit such as 10**6
+
+    
 
