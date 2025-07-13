@@ -23,14 +23,27 @@ from fractions import Fraction
 from extras.utils import sieve_eratosthenes, is_relatively_prime
 
 def counting_fractions(limit=8):
-    '''Cound reduced proper fractions below a limit'''
+    '''Count reduced proper fractions below a limit'''
 
     primes = sieve_eratosthenes(limit)
 
     count = 0
+    # fractions = []
 
     # the roughest version is to create nested loops – but it can't work
     # for limit such as 10**6
+    for d in range(2, limit+1):
 
+        for n in range(1, d):
+
+            if is_relatively_prime(n, d, primes):
+
+                count += 1
+                print("count is ", count)
+                # fractions.append(Fraction(n, d))
     
+    # print(fractions)
+    
+    return count
 
+print(counting_fractions(10**6))
