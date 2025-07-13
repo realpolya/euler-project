@@ -20,30 +20,45 @@ fractions for d <= 1,000,000?
 '''
 
 from fractions import Fraction
-from extras.utils import sieve_eratosthenes, is_relatively_prime
+from extras.utils import sieve_eratosthenes, is_relatively_prime, get_prime_factors
 
 def counting_fractions(limit=8):
     '''Count reduced proper fractions below a limit'''
 
     primes = sieve_eratosthenes(limit)
+    sorted_primes = sorted(primes)
 
     count = 0
     # fractions = []
 
     # the roughest version is to create nested loops – but it can't work
     # for limit such as 10**6
-    for d in range(2, limit+1):
+    # for d in range(2, limit+1):
 
-        for n in range(1, d):
+    #     for n in range(1, d):
 
-            if is_relatively_prime(n, d, primes):
+    #         if is_relatively_prime(n, d, primes):
 
-                count += 1
-                print("count is ", count)
-                # fractions.append(Fraction(n, d))
+    #             count += 1
+    #             print("count is ", count)
+    #             # fractions.append(Fraction(n, d))
     
     # print(fractions)
+
+    # for each d generate a list of numbers list_n 
+    # that are co-prime to d
+    # and less than d
+
+    dict = {}
+
+    # print(get_prime_factors(100, sorted_primes))
+
+    for d in range(limit, 0, -1):
+
+        dict[d] = get_prime_factors(d, sorted_primes)
     
+    print("done", dict)
+
     return count
 
 print(counting_fractions(10**6))
