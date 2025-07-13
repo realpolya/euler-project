@@ -231,3 +231,22 @@ def is_relatively_prime(num1, num2, primes):
             return True
     
     return True
+
+
+def totient_sieve(limit):
+    '''Calculate sum of totient function phi(n) up to a limit'''
+
+    phi = list(range(limit+1))
+
+    for i in range(2, limit+1):
+
+        if phi[i] == i: # this would mean it is prime
+
+            for j in range(i, limit + 1, i):
+
+                phi[j] -= phi[j] // i # reducing by each prime factor
+
+
+    count = sum(phi) - 1 # reduce by 1 to remove the 1/1
+
+    return count
