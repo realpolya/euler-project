@@ -193,7 +193,7 @@ def is_palindromic(num):
 
 
 def get_prime_factors(n, primes):
-    '''non-recursive approach'''
+    '''non-recursive approach: primes argument MUST be sorted'''
 
     prime_factors = set()
     new_n = n

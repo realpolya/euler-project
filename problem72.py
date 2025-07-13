@@ -57,8 +57,21 @@ def counting_fractions(limit=8):
 
         dict[d] = get_prime_factors(d, sorted_primes)
     
-    print("done", dict)
+    print("dict done")
+
+    # i = 0
+    for d, d_set in dict.items():
+
+        # co-primes would make a reduced fraction anyway
+        coprimes = [n for n, n_set in dict.items() if n < d and d_set.isdisjoint(n_set)]
+
+        count += len(coprimes)
+
+        # print("d is ", d, "factors are ", factors_set)
+        # i += 1
+
 
     return count
 
-print(counting_fractions(10**6))
+print(counting_fractions())
+# print(counting_fractions(10**6))
