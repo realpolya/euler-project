@@ -19,6 +19,8 @@ fractions for d <= 1,000,000?
 
 '''
 
+# need to use Euler's totient function phi
+
 from fractions import Fraction
 from extras.utils import sieve_eratosthenes, is_relatively_prime, get_prime_factors
 
@@ -29,49 +31,37 @@ def counting_fractions(limit=8):
     sorted_primes = sorted(primes)
 
     count = 0
-    # fractions = []
+    # dict = {}
 
-    # the roughest version is to create nested loops – but it can't work
-    # for limit such as 10**6
-    # for d in range(2, limit+1):
+    # for d in range(limit, 0, -1):
 
-    #     for n in range(1, d):
-
-    #         if is_relatively_prime(n, d, primes):
-
-    #             count += 1
-    #             print("count is ", count)
-    #             # fractions.append(Fraction(n, d))
+    #     dict[d] = get_prime_factors(d, sorted_primes)
     
-    # print(fractions)
+    # print("dict done")
 
-    # for each d generate a list of numbers list_n 
-    # that are co-prime to d
-    # and less than d
+    # # i = 0
+    # for d, d_set in dict.items():
 
-    dict = {}
+    #     # co-primes would make a reduced fraction anyway
+    #     coprimes = [n for n, n_set in dict.items() if n < d and d_set.isdisjoint(n_set)]
+    #     count += len(coprimes)
 
-    # print(get_prime_factors(100, sorted_primes))
+    # totient sieve instead of dictionary
+    phi = list(range(limit+1))
+    # print(phi)
 
-    for d in range(limit, 0, -1):
+    for i in range(2, limit+1):
 
-        dict[d] = get_prime_factors(d, sorted_primes)
-    
-    print("dict done")
+        # print("list is", phi, "i is", i)
+        if phi[i] == i: # this would mean it is prime
 
-    # i = 0
-    for d, d_set in dict.items():
+            for j in range(i, limit + 1, i):
 
-        # co-primes would make a reduced fraction anyway
-        coprimes = [n for n, n_set in dict.items() if n < d and d_set.isdisjoint(n_set)]
+                phi[j] -= phi[j] // i
 
-        count += len(coprimes)
-
-        # print("d is ", d, "factors are ", factors_set)
-        # i += 1
-
+    count = sum(phi) - 1 # reduce by 1 to remove the 1/1
 
     return count
 
-print(counting_fractions())
-# print(counting_fractions(10**6))
+# print(counting_fractions())
+print(counting_fractions(10**6))
