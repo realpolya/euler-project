@@ -217,9 +217,7 @@ def get_prime_factors(n, primes):
 
 
 def is_relatively_prime(num1, num2, primes):
-    '''check if 2 numbers are co-prime'''
-
-    # print("testing")
+    '''check if two numbers are co-prime'''
 
     # calculate divisors for each n
     for n in primes:
