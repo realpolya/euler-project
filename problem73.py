@@ -31,17 +31,22 @@ def fractions_in_range(limit=8):
     count = 0
 
     # fracs = []
+    fracs_set = set()
 
     # loop
-    for d in range(1, limit+1):
+    for d in range(2, limit+1):
 
         for n in range(int(d * start_range), int(d * end_range) + 1):
 
-            if Fraction(n, d) < start_range or Fraction(n, d) > end_range:
+            if Fraction(n, d) <= start_range or Fraction(n, d) >= end_range:
+                continue
+
+            if Fraction(n, d) in fracs_set:
                 continue
 
             if is_relatively_prime(n, d, primes):
                 count += 1
+                fracs_set.add(Fraction(n, d))
                 # fracs.append(Fraction(n, d))
     
     # print(fracs)
@@ -52,3 +57,4 @@ def fractions_in_range(limit=8):
 print(fractions_in_range(12000))
 # answer – 7390660
 # 2nd answer – 7392464
+# 3rd answer – 7295372
