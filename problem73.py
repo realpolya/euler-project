@@ -18,6 +18,7 @@ fractions for d <= 12,000?
 from fractions import Fraction
 from extras.utils import sieve_eratosthenes, is_relatively_prime
 
+
 def fractions_in_range(limit=8):
 
     # calculate primes
@@ -30,7 +31,6 @@ def fractions_in_range(limit=8):
     # start count of fractions in range
     count = 0
 
-    # fracs = []
     fracs_set = set()
 
     # loop
@@ -47,14 +47,7 @@ def fractions_in_range(limit=8):
             if is_relatively_prime(n, d, primes):
                 count += 1
                 fracs_set.add(Fraction(n, d))
-                # fracs.append(Fraction(n, d))
-    
-    # print(fracs)
-    
+        
     return count
 
-# print(fractions_in_range())
-print(fractions_in_range(12000))
-# answer – 7390660
-# 2nd answer – 7392464
-# 3rd answer – 7295372
+print("Answer to problem 73: ", fractions_in_range(12000))
