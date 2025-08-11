@@ -57,7 +57,7 @@ def digit_chains(limit=200, target=5):
     count = 0
 
     # list of target numbers
-    target_list = []
+    # target_list = []
 
     # start loop up to the limit
     for n in range(1, limit + 1):
@@ -91,14 +91,14 @@ def digit_chains(limit=200, target=5):
         # get the sum of the current_n
         if local_count == target:
             count += 1
-            target_list.append(n)
-            print("number is ", n, "list is ", non_repeats)
+            # target_list.append(n)
+            # print("number is ", n, "list is ", non_repeats)
     
     # print the list
-    print(target_list)
+    # print(target_list)
 
     # return count
     return count
 
 
-print(digit_chains())
+print(digit_chains(1000000, 60))
