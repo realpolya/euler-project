@@ -31,8 +31,6 @@ contain exactly sixty non-repeating terms?
 
 import math
 
-# TODO: what is the factorial of 0? 0! = 1?
-
 
 def get_the_sum(n):
 
@@ -47,7 +45,6 @@ def get_the_sum(n):
         # sum the factorials up
         final_sum += math.factorial(int(digit))
 
-    # repeat
     return final_sum
 
 
@@ -55,9 +52,6 @@ def digit_chains(limit=200, target=5):
 
     # count non-repeating terms, initiate count
     count = 0
-
-    # list of target numbers
-    # target_list = []
 
     # start loop up to the limit
     for n in range(1, limit + 1):
@@ -70,19 +64,12 @@ def digit_chains(limit=200, target=5):
 
         # a copy
         local_n = n
-
-        if n == 69:
-            print("now dealing with ", local_n) 
         
         # while loop? that would lead to nesting of a million within a million
         while local_n not in non_repeats:
 
             non_repeats.add(local_n)
             local_n = get_the_sum(local_n)
-
-            if n == 69:
-                print("now dealing with ", local_n)
-
             local_count += 1
 
             if local_count > target:
@@ -91,14 +78,10 @@ def digit_chains(limit=200, target=5):
         # get the sum of the current_n
         if local_count == target:
             count += 1
-            # target_list.append(n)
-            # print("number is ", n, "list is ", non_repeats)
     
-    # print the list
-    # print(target_list)
 
     # return count
     return count
 
 
-print(digit_chains(1000000, 60))
+print(digit_chains(10**6, 60))
