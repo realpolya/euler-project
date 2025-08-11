@@ -23,10 +23,31 @@ eventually get stuck in a loop. For example,
 Starting with 69 produces a chain of five non-repeating terms, 
 but the longest non-repeating chain with a starting number 
 below one million is sixty terms.
+
 How many chains, with a starting number below one million, 
 contain exactly sixty non-repeating terms?
 
-
 '''
 
+import math
+
 # TODO: what is the factorial of 0? 0! = 1?
+
+def get_the_sum(n):
+
+    final_sum = 0
+
+    # break the number into digits
+    digits = list(str(n))
+
+    # find factorial of each digit
+    for digit in digits:
+
+        # sum the factorials up
+        final_sum += math.factorial(int(digit))
+
+    # repeat
+    return final_sum
+
+print(get_the_sum(145))
+print(get_the_sum(169))
