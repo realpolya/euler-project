@@ -74,10 +74,10 @@ def primitive_triples(limit):
             # c = n**2 + m**2
             L = (m**2 - n**2) + (2 * m * n) + (n**2 + m**2)
 
-            # print("now m is ", m, "n is ", n, "now L is ", L)
+            print("now m is ", m, "n is ", n, "now L is ", L)
 
             if L > limit+1:
-                time_to_break = True
+                # time_to_break = True
                 break
 
 
@@ -99,8 +99,8 @@ def primitive_triples(limit):
                 multiplier += 1
                 multiple = L * multiplier
         
-        if time_to_break:
-            break
+        # if time_to_break:
+        #     break
     
     # for i, item in enumerate(one_solution_cache):
 
