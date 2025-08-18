@@ -55,7 +55,9 @@ def triangle_sieve(limit):
     multiples_a = set()
 
     # TODO: eliminate a and bs that are multiples of the original ones
-    # can I reduce it ot O of n instead of n^2?
+    # can I reduce it ot O of n instead of n^3?
+
+
 
     # loop through a and b? a^2 + b^2 = c^2
     for b in range(2, int(1/3 * limit)):
