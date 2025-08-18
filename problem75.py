@@ -27,6 +27,7 @@ be formed:
 '''
 
 import math
+from extras.utils import sieve_eratosthenes, is_relatively_prime, are_coprime
 
 # a^2 + b^2 = c^2
 
@@ -42,6 +43,73 @@ import math
 # pythagorean theorem
 
 # build my own sieve!
+
+
+def primitive_triples(limit):
+    '''New solution: generate primitive triples using Euclid's formula'''
+
+    # primes = sieve_eratosthenes(limit)
+
+    one_solution_cache = [False] * (limit+1)
+
+    # m and n
+    # m > n
+    # m and n are co-prime
+    # m - n is odd
+
+    time_to_break = False
+
+    for m in range(1, math.isqrt(limit) + 1):
+
+        for n in range(1, m):
+
+            if ((m - n) % 2) == 0:
+                continue
+
+            if not are_coprime(m, n):
+                continue
+
+            # a = m**2 - n**2
+            # b = 2 * m * n
+            # c = n**2 + m**2
+            L = (m**2 - n**2) + (2 * m * n) + (n**2 + m**2)
+            if L > limit:
+                time_to_break = True
+                break
+
+            # print("now m is ", m, "n is ", n, "now L is ", L)
+
+            # introduce multiple variable
+            multiplier = 1
+            multiple = L
+
+            # take multiples of L length up until the end of the range
+            while multiple <= limit:
+
+                if one_solution_cache[multiple] == True:
+                    print("L of ", multiple, "has more than 1 solution!")
+                    one_solution_cache[multiple] = False
+                else:
+                    # print("eliminating this now", multiple)
+                    one_solution_cache[multiple] = True
+
+                multiplier += 1
+                multiple = L * multiplier
+        
+        if time_to_break:
+            break
+    
+    for i, item in enumerate(one_solution_cache):
+
+        if item:
+            print("for item", i, "the boolean is ", item)
+
+    return sum(one_solution_cache)
+
+
+
+
+
 
 def triangle_sieve(limit):
 
@@ -61,6 +129,8 @@ def triangle_sieve(limit):
     for b in range(2, int(1/3 * limit)):
 
         for a in range(math.isqrt(2*b + 1), b):
+
+            print("dealing with a", a, "and b", b)
 
             if a in multiples_a and b in multiples_b:
                 continue
@@ -114,4 +184,5 @@ def triangle_sieve(limit):
 
 
 # print(triangle_sieve(100))
-print(triangle_sieve(100000))
+# print(triangle_sieve(100000))
+print(primitive_triples(100))

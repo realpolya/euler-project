@@ -230,6 +230,10 @@ def is_relatively_prime(num1, num2, primes):
     
     return True
 
+def are_coprime(a, b):
+    '''fast formula to check co-prime numbers'''
+    return math.gcd(a, b) == 1
+
 
 def totient_sieve(limit):
     '''Calculate sum of totient function phi(n) up to a limit'''
