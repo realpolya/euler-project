@@ -48,7 +48,8 @@ from extras.utils import are_coprime
 def primitive_triples(limit):
     '''New solution: generate primitive triples using Euclid's formula'''
 
-    one_solution_cache = [False] * (limit+1)
+    # one_solution_cache = [False] * (limit+1)
+    one_solution_cache = [0] * (limit+1)
 
     # m and n
     # m > n
@@ -87,13 +88,14 @@ def primitive_triples(limit):
             # take multiples of L length up until the end of the range
             while multiple <= limit:
 
-                if one_solution_cache[multiple] == True:
-                    # print("L of ", multiple, "has more than 1 solution!")
-                    one_solution_cache[multiple] = False
-                else:
-                    # print("eliminating this now", multiple)
-                    one_solution_cache[multiple] = True
+                # if one_solution_cache[multiple] == True:
+                #     # print("L of ", multiple, "has more than 1 solution!")
+                #     one_solution_cache[multiple] = False
+                # else:
+                #     # print("eliminating this now", multiple)
+                #     one_solution_cache[multiple] = True
 
+                one_solution_cache[multiple] += 1
                 multiplier += 1
                 multiple = L * multiplier
         
@@ -105,7 +107,10 @@ def primitive_triples(limit):
     #     if item:
     #         print("for item", i, "the boolean is ", item)
 
-    return sum(one_solution_cache)
+    # exactly_one = sum(1 for x in one_solution_cache if x == 1)
+
+    return sum(1 for x in one_solution_cache if x == 1)
+
 
 
 
@@ -116,6 +121,7 @@ def primitive_triples(limit):
 
 # print(primitive_triples(100))
 # print(primitive_triples(100000))
+# print(primitive_triples(200))
 print(primitive_triples(1500000))
 
 
