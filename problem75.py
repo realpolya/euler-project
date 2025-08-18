@@ -49,7 +49,7 @@ def triangle_sieve(limit):
     # too slow for the desired limit
 
     # create a sieve
-    one_solution_cache = [False] * limit
+    one_solution_cache = [False] * (limit+1)
 
     multiples_b = set()
     multiples_a = set()
@@ -57,12 +57,10 @@ def triangle_sieve(limit):
     # TODO: eliminate a and bs that are multiples of the original ones
     # can I reduce it ot O of n instead of n^3?
 
-
-
     # loop through a and b? a^2 + b^2 = c^2
     for b in range(2, int(1/3 * limit)):
 
-        for a in range(1, b):
+        for a in range(math.isqrt(2*b + 1), b):
 
             if a in multiples_a and b in multiples_b:
                 continue
@@ -73,7 +71,7 @@ def triangle_sieve(limit):
             # extract integer square root
             c = math.isqrt(c_squared)
 
-            if c*c == c_squared:
+            if c**2 == c_squared:
 
                 # check passed, true square
                 # calculate L wire length
@@ -115,5 +113,5 @@ def triangle_sieve(limit):
     return sum(one_solution_cache)
 
 
-print(triangle_sieve(100))
-# print(triangle_sieve(100000))
+# print(triangle_sieve(100))
+print(triangle_sieve(100000))
