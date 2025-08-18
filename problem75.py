@@ -27,7 +27,7 @@ be formed:
 '''
 
 import math
-from extras.utils import sieve_eratosthenes, is_relatively_prime, are_coprime
+from extras.utils import are_coprime
 
 # a^2 + b^2 = c^2
 
@@ -48,8 +48,6 @@ from extras.utils import sieve_eratosthenes, is_relatively_prime, are_coprime
 def primitive_triples(limit):
     '''New solution: generate primitive triples using Euclid's formula'''
 
-    # primes = sieve_eratosthenes(limit)
-
     one_solution_cache = [False] * (limit+1)
 
     # m and n
@@ -59,6 +57,7 @@ def primitive_triples(limit):
 
     time_to_break = False
 
+    # for m in range(1, int(limit/2)):
     for m in range(1, math.isqrt(limit) + 1):
 
         for n in range(1, m):
@@ -73,11 +72,13 @@ def primitive_triples(limit):
             # b = 2 * m * n
             # c = n**2 + m**2
             L = (m**2 - n**2) + (2 * m * n) + (n**2 + m**2)
-            if L > limit:
+
+            # print("now m is ", m, "n is ", n, "now L is ", L)
+
+            if L > limit+1:
                 time_to_break = True
                 break
 
-            # print("now m is ", m, "n is ", n, "now L is ", L)
 
             # introduce multiple variable
             multiplier = 1
@@ -87,7 +88,7 @@ def primitive_triples(limit):
             while multiple <= limit:
 
                 if one_solution_cache[multiple] == True:
-                    print("L of ", multiple, "has more than 1 solution!")
+                    # print("L of ", multiple, "has more than 1 solution!")
                     one_solution_cache[multiple] = False
                 else:
                     # print("eliminating this now", multiple)
@@ -99,16 +100,26 @@ def primitive_triples(limit):
         if time_to_break:
             break
     
-    for i, item in enumerate(one_solution_cache):
+    # for i, item in enumerate(one_solution_cache):
 
-        if item:
-            print("for item", i, "the boolean is ", item)
+    #     if item:
+    #         print("for item", i, "the boolean is ", item)
 
     return sum(one_solution_cache)
 
 
 
 
+
+
+
+
+# print(primitive_triples(100))
+# print(primitive_triples(100000))
+print(primitive_triples(1500000))
+
+
+# --------------------------- OLD FUNCTION --------------------------------
 
 
 def triangle_sieve(limit):
@@ -185,4 +196,3 @@ def triangle_sieve(limit):
 
 # print(triangle_sieve(100))
 # print(triangle_sieve(100000))
-print(primitive_triples(100))
