@@ -49,9 +49,9 @@ def triangle_sieve(limit):
     one_solution_cache = [False] * limit
 
     # loop through a and b? a^2 + b^2 = c^2
-    for b in range(1, int(1/3 * limit)):
+    for b in range(2, int(1/3 * limit)):
 
-        for a in range(1, int(1/3 * limit)):
+        for a in range(1, b):
 
             # sum of squares
             c_squared = a**2 + b**2
@@ -69,6 +69,8 @@ def triangle_sieve(limit):
                 multiplier = 1
                 multiple = L
 
+                print("L of ", L, "has at least one solution")
+
                 # take multiples of L length up until the end of the range
                 while multiple < limit:
 
@@ -76,15 +78,17 @@ def triangle_sieve(limit):
                     # if already True and finds it again, then it makes it False permanently
                     # more than 1 solution found!!
                     if one_solution_cache[multiple] == True:
+                        print("L of ", multiple, "has more than 1 solution!")
                         one_solution_cache[multiple] = False
 
                     one_solution_cache[multiple] = True
                     multiple += 1
                     multiple = L * multiple
     
+    print(one_solution_cache)
 
     # return number of yes
     return sum(one_solution_cache)
 
 
-
+print(triangle_sieve(100))
