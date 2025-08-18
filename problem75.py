@@ -29,24 +29,9 @@ be formed:
 import math
 from extras.utils import are_coprime
 
-# a^2 + b^2 = c^2
-
-# exactly one solution under 1.5 million
-# what if there are more than 1 solutions? how do we check
-# totient sieve?
-# nested loops wouldn't work – too massive (1.5 million squared)
-
-
-# add integers together a and b
-# see if c is an integer?
-
-# pythagorean theorem
-
-# build my own sieve!
-
 
 def primitive_triples(limit):
-    '''New solution: generate primitive triples using Euclid's formula'''
+    '''Generate primitive triples using Euclid's formula'''
 
     # one_solution_cache = [False] * (limit+1)
     one_solution_cache = [0] * (limit+1)
@@ -58,7 +43,6 @@ def primitive_triples(limit):
 
     time_to_break = False
 
-    # for m in range(1, int(limit/2)):
     for m in range(1, math.isqrt(limit) + 1):
 
         for n in range(1, m):
@@ -74,12 +58,8 @@ def primitive_triples(limit):
             # c = n**2 + m**2
             L = (m**2 - n**2) + (2 * m * n) + (n**2 + m**2)
 
-            print("now m is ", m, "n is ", n, "now L is ", L)
-
             if L > limit+1:
-                # time_to_break = True
                 break
-
 
             # introduce multiple variable
             multiplier = 1
@@ -88,41 +68,15 @@ def primitive_triples(limit):
             # take multiples of L length up until the end of the range
             while multiple <= limit:
 
-                # if one_solution_cache[multiple] == True:
-                #     # print("L of ", multiple, "has more than 1 solution!")
-                #     one_solution_cache[multiple] = False
-                # else:
-                #     # print("eliminating this now", multiple)
-                #     one_solution_cache[multiple] = True
-
                 one_solution_cache[multiple] += 1
                 multiplier += 1
                 multiple = L * multiplier
-        
-        # if time_to_break:
-        #     break
-    
-    # for i, item in enumerate(one_solution_cache):
 
-    #     if item:
-    #         print("for item", i, "the boolean is ", item)
-
-    # exactly_one = sum(1 for x in one_solution_cache if x == 1)
 
     return sum(1 for x in one_solution_cache if x == 1)
 
 
-
-
-
-
-
-
-
-# print(primitive_triples(100))
-# print(primitive_triples(100000))
-# print(primitive_triples(200))
-print(primitive_triples(1500000))
+print("Answer to problem 75: ", primitive_triples(1500000))
 
 
 # --------------------------- OLD FUNCTION --------------------------------

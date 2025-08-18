@@ -84,4 +84,4 @@ def digit_chains(limit=200, target=5):
     return count
 
 
-print(digit_chains(10**6, 60))
+print("Answer to problem 74: ", digit_chains(10**6, 60))
