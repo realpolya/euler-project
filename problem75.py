@@ -51,10 +51,19 @@ def triangle_sieve(limit):
     # create a sieve
     one_solution_cache = [False] * limit
 
+    multiples_b = set()
+    multiples_a = set()
+
+    # TODO: eliminate a and bs that are multiples of the original ones
+    # can I reduce it ot O of n instead of n^2?
+
     # loop through a and b? a^2 + b^2 = c^2
     for b in range(2, int(1/3 * limit)):
 
         for a in range(1, b):
+
+            if a in multiples_a and b in multiples_b:
+                continue
 
             # sum of squares
             c_squared = a**2 + b**2
@@ -72,7 +81,7 @@ def triangle_sieve(limit):
                 multiplier = 1
                 multiple = L
 
-                print("L of ", L, "has at least one solution")
+                # print("L of ", L, "has at least one solution")
 
                 # take multiples of L length up until the end of the range
                 while multiple <= limit:
@@ -87,13 +96,18 @@ def triangle_sieve(limit):
                     else:
                         one_solution_cache[multiple] = True
 
-                    multiple += 1
-                    multiple = L * multiple
-    
-    # print(one_solution_cache)
-    for i, item in enumerate(one_solution_cache):
+                    multiplier += 1
+                    multiple = L * multiplier
 
-        print("for item", i, "the boolean is ", item)
+                    # adding a and b
+                    multiples_b.add(b * multiplier)
+                    multiples_a.add(a * multiplier)
+    
+    # # print(one_solution_cache)
+    # for i, item in enumerate(one_solution_cache):
+
+    #     if item:
+    #         print("for item", i, "the boolean is ", item)
 
     # return number of yes
     return sum(one_solution_cache)
