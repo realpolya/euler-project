@@ -45,6 +45,9 @@ import math
 
 def triangle_sieve(limit):
 
+    # the version of solution below is correct but 
+    # too slow for the desired limit
+
     # create a sieve
     one_solution_cache = [False] * limit
 
