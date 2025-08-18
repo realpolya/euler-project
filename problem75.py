@@ -26,4 +26,65 @@ be formed:
 
 '''
 
+import math
+
 # a^2 + b^2 = c^2
+
+# exactly one solution under 1.5 million
+# what if there are more than 1 solutions? how do we check
+# totient sieve?
+# nested loops wouldn't work – too massive (1.5 million squared)
+
+
+# add integers together a and b
+# see if c is an integer?
+
+# pythagorean theorem
+
+# build my own sieve!
+
+def triangle_sieve(limit):
+
+    # create a sieve
+    one_solution_cache = [False] * limit
+
+    # loop through a and b? a^2 + b^2 = c^2
+    for b in range(1, int(1/3 * limit)):
+
+        for a in range(1, int(1/3 * limit)):
+
+            # sum of squares
+            c_squared = a**2 + b**2
+
+            # extract integer square root
+            c = math.isqrt(c_squared)
+
+            if c*c == c_squared:
+
+                # check passed, true square
+                # calculate L wire length
+                L = a + b + c
+
+                # introduce multiple variable
+                multiplier = 1
+                multiple = L
+
+                # take multiples of L length up until the end of the range
+                while multiple < limit:
+
+                    # if already true – permanently false
+                    # if already True and finds it again, then it makes it False permanently
+                    # more than 1 solution found!!
+                    if one_solution_cache[multiple] == True:
+                        one_solution_cache[multiple] = False
+
+                    one_solution_cache[multiple] = True
+                    multiple += 1
+                    multiple = L * multiple
+    
+
+    # return number of yes
+    return sum(one_solution_cache)
+
+
+
