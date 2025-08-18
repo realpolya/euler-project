@@ -72,23 +72,29 @@ def triangle_sieve(limit):
                 print("L of ", L, "has at least one solution")
 
                 # take multiples of L length up until the end of the range
-                while multiple < limit:
+                while multiple <= limit:
 
                     # if already true – permanently false
                     # if already True and finds it again, then it makes it False permanently
                     # more than 1 solution found!!
                     if one_solution_cache[multiple] == True:
-                        print("L of ", multiple, "has more than 1 solution!")
+                        # print("L of ", multiple, "has more than 1 solution!")
                         one_solution_cache[multiple] = False
+                        # print("now the item is", one_solution_cache[multiple])
+                    else:
+                        one_solution_cache[multiple] = True
 
-                    one_solution_cache[multiple] = True
                     multiple += 1
                     multiple = L * multiple
     
-    print(one_solution_cache)
+    # print(one_solution_cache)
+    for i, item in enumerate(one_solution_cache):
+
+        print("for item", i, "the boolean is ", item)
 
     # return number of yes
     return sum(one_solution_cache)
 
 
 print(triangle_sieve(100))
+# print(triangle_sieve(100000))
