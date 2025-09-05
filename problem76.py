@@ -51,4 +51,27 @@ def count_summations(limit=LIMIT):
 
     print(integers)
 
+    combinations = []
+    current_max = max(integers)
+
+    # print(current_max)
+
+    while current_max > 0:
+
+        current_max = max(integers)
+
+        for n in integers:
+
+            sum = current_max + n
+
+            while sum <= limit:
+                sum += n 
+
+        integers.remove(current_max)
+
+
+# problem 31 introduces a recursive function
+
+
 count_summations()
+
