@@ -23,7 +23,12 @@ How many different ways can one hundred be written as a sum of at least two posi
 
 # establish a possible range
 
-def list_integers(limit=5):
+LIMIT = 5 # max number of integers for summation
+MAX_INTEGERS = LIMIT
+MIN_INTEGERS = 2
+
+
+def list_integers(limit=LIMIT):
 
     integers = []
 
@@ -32,3 +37,18 @@ def list_integers(limit=5):
     
     return integers
 
+
+# take the greatest member of array
+# try adding everything smaller to it
+# if above the limit, move onto the next
+# if below the limit, keep adding
+# if at limit, add combination to the list of lists
+# return len of lists
+
+def count_summations(limit=LIMIT):
+
+    integers = list_integers()
+
+    print(integers)
+
+count_summations()
