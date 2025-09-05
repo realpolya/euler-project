@@ -70,7 +70,7 @@ def count_summations(limit=LIMIT):
         integers.remove(current_max)
 
 
-# problem 31 introduces a recursive function
+# TODO: problem 31 introduces a recursive function
 
 
 count_summations()

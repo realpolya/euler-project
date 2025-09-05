@@ -26,7 +26,7 @@ def coin_sums(coins=COINS, goal=200):
         # base case
         if current_sum == goal:
 
-            # print("found a combo")
+            print("found a combo")
 
             # append the list to results
             results.append(list(current_combo))
@@ -34,12 +34,12 @@ def coin_sums(coins=COINS, goal=200):
         
         # if exceeded the needed sum
         if current_sum > goal:
-            # print("exceeded")
+            print("exceeded")
             return
         
         for i in range(start, len(coins)):
 
-            # print("current combo is ", current_combo, "current sum is ", current_sum, "coins[i] is ", coins[i])
+            print("current combo is ", current_combo, "current sum is ", current_sum, "coins[i] is ", coins[i])
 
             # include coins[i] in current combination
             current_combo.append(coins[i])
