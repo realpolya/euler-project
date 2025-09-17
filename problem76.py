@@ -23,7 +23,7 @@ How many different ways can one hundred be written as a sum of at least two posi
 
 # establish a possible range
 
-LIMIT = 5 # max number of integers for summation
+LIMIT = 100 # max number of integers for summation
 MAX_INTEGERS = LIMIT
 MIN_INTEGERS = 2
 
@@ -72,6 +72,56 @@ def count_summations(limit=LIMIT):
 
 # TODO: problem 31 introduces a recursive function
 
+def summation(integers=list_integers(), limit=LIMIT):
 
-count_summations()
+    print(integers)
 
+    # keep track of the results
+    results = []
+
+    # TODO: need to increment the count
+    results_count = 0
+
+    # maximum index
+    max_i = len(integers)
+
+    def recursive_count(start, current_combo, current_sum):
+
+        # handle base case
+        if current_sum == limit:
+
+            # results.append(list(current_combo))
+            results.append(True)
+            print("count is ", len(results))
+            # print("results count is ", results_count)
+            # results_count += 1
+            return
+        
+        # limit exceeded - another base case
+        if current_sum > limit:
+            return
+        
+        # recursive loop
+        for i in range(start, max_i):
+
+            # include current integer in current combo
+            current_combo.append(integers[i])
+
+            # recurse with the updated sum
+            # create a new branch
+            # recursive count itself does not return anything
+            # it just increases the corresponding count
+            recursive_count(i, current_combo, current_sum + integers[i])
+
+            # remove the last added number to explore the next branch 
+            # with next integers[i] so it remains unaffected by this branch
+            current_combo.pop()
+
+    recursive_count(0, [], 0)
+
+    # print(results)
+
+    return len(results)
+
+# count_summations()
+print(summation())
