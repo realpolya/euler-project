@@ -31,6 +31,7 @@ LIMIT = 100 # max number of integers for summation
 MAX_INTEGERS = LIMIT
 
 
+
 def list_integers(limit=LIMIT):
 
     integers = []
@@ -42,33 +43,45 @@ def list_integers(limit=LIMIT):
 
 
 
-def partition_fn(integers=list_integers(), limit=LIMIT):
+def partition_fn(limit=LIMIT):
     ''' series expansion for partition function, generative function '''
 
-    # find coefficient of x to k
     x = symbols('x')
 
     product = 1
-
     for k in range(1, limit + 1):
 
-        # k is power: 1/ (1 - x**k)
         product *= (1 / (1 - x**k))
 
     series_expansion = product.series(x, 0, limit + 1).removeO()
 
-    print(series_expansion)
-
-    print('coeff is ', series_expansion.coeff(x, limit))
+    return series_expansion.coeff(x, limit)
 
 
 
 
-partition_fn()
+def dynamic_programming(limit=LIMIT):
+    ''' dynamic programming approach to computing partitions '''
+
+    dp_list = [0] * (limit + 1)
+    dp_list[0] = 1
+
+    # print(dp_list)
+
+    for k in range(1, limit + 1):
+
+        for j in range(k, limit + 1):
+
+            dp_list[j] += dp_list[j-k]
+    
+    # print(dp_list)
+
+    return (dp_list[limit] - 1)
 
 
-# count_summations()
-# print(summation())
+print("Answer to problem 76: ", dynamic_programming())
+
+
 
 
 # -------------------- redundant --------------------------
