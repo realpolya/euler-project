@@ -49,6 +49,18 @@ def partition_fn(integers=list_integers(), limit=LIMIT):
 
     print(x)
 
+    expr = (1/(1-x)) * (1/(1-x**2)) * (1/(1-x**3))
+
+    # print(expand(expr).coeff(x, 4))
+
+    series_expansion = expr.series(x, 0, 5).removeO()
+
+    print(series_expansion)
+
+    print('coeff is ', series_expansion.coeff(x, 4))
+
+    
+
 
 partition_fn()
 
