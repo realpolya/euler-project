@@ -27,7 +27,7 @@ How many different ways can one hundred be written as a sum of at least two posi
 from sympy import symbols, expand
 
 
-LIMIT = 6 # max number of integers for summation
+LIMIT = 100 # max number of integers for summation
 MAX_INTEGERS = LIMIT
 
 
@@ -43,23 +43,25 @@ def list_integers(limit=LIMIT):
 
 
 def partition_fn(integers=list_integers(), limit=LIMIT):
+    ''' series expansion for partition function, generative function '''
 
     # find coefficient of x to k
     x = symbols('x')
 
-    print(x)
+    product = 1
 
-    expr = (1/(1-x)) * (1/(1-x**2)) * (1/(1-x**3))
+    for k in range(1, limit + 1):
 
-    # print(expand(expr).coeff(x, 4))
+        # k is power: 1/ (1 - x**k)
+        product *= (1 / (1 - x**k))
 
-    series_expansion = expr.series(x, 0, 5).removeO()
+    series_expansion = product.series(x, 0, limit + 1).removeO()
 
     print(series_expansion)
 
-    print('coeff is ', series_expansion.coeff(x, 4))
+    print('coeff is ', series_expansion.coeff(x, limit))
 
-    
+
 
 
 partition_fn()
