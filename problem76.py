@@ -23,9 +23,12 @@ How many different ways can one hundred be written as a sum of at least two posi
 
 # establish a possible range
 
-LIMIT = 100 # max number of integers for summation
+
+from sympy import symbols, expand
+
+
+LIMIT = 6 # max number of integers for summation
 MAX_INTEGERS = LIMIT
-MIN_INTEGERS = 2
 
 
 def list_integers(limit=LIMIT):
@@ -38,39 +41,23 @@ def list_integers(limit=LIMIT):
     return integers
 
 
-# take the greatest member of array
-# try adding everything smaller to it
-# if above the limit, move onto the next
-# if below the limit, keep adding
-# if at limit, add combination to the list of lists
-# return len of lists
 
-def count_summations(limit=LIMIT):
+def partition_fn(integers=list_integers(), limit=LIMIT):
 
-    integers = list_integers()
+    # find coefficient of x to k
+    x = symbols('x')
 
-    print(integers)
-
-    combinations = []
-    current_max = max(integers)
-
-    # print(current_max)
-
-    while current_max > 0:
-
-        current_max = max(integers)
-
-        for n in integers:
-
-            sum = current_max + n
-
-            while sum <= limit:
-                sum += n 
-
-        integers.remove(current_max)
+    print(x)
 
 
-# TODO: problem 31 introduces a recursive function
+partition_fn()
+
+
+# count_summations()
+# print(summation())
+
+
+# -------------------- redundant --------------------------
 
 def summation(integers=list_integers(), limit=LIMIT):
 
@@ -123,5 +110,33 @@ def summation(integers=list_integers(), limit=LIMIT):
 
     return len(results)
 
-# count_summations()
-print(summation())
+# take the greatest member of array
+# try adding everything smaller to it
+# if above the limit, move onto the next
+# if below the limit, keep adding
+# if at limit, add combination to the list of lists
+# return len of lists
+
+# def count_summations(limit=LIMIT):
+
+#     integers = list_integers()
+
+#     print(integers)
+
+#     combinations = []
+#     current_max = max(integers)
+
+#     # print(current_max)
+
+#     while current_max > 0:
+
+#         current_max = max(integers)
+
+#         for n in integers:
+
+#             sum = current_max + n
+
+#             while sum <= limit:
+#                 sum += n 
+
+#         integers.remove(current_max)
