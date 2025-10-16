@@ -26,8 +26,8 @@ How many different ways can one hundred be written as a sum of at least two posi
 
 from sympy import symbols, expand
 
-
-LIMIT = 100 # max number of integers for summation
+LIMIT = 5
+# LIMIT = 100 # max number of integers for summation
 MAX_INTEGERS = LIMIT
 
 
@@ -63,18 +63,21 @@ def partition_fn(limit=LIMIT):
 def dynamic_programming(limit=LIMIT):
     ''' dynamic programming approach to computing partitions '''
 
+    # dynamic programming list
     dp_list = [0] * (limit + 1)
     dp_list[0] = 1
 
-    # print(dp_list)
+    print(dp_list)
 
     for k in range(1, limit + 1):
 
         for j in range(k, limit + 1):
+            # nested loops with indices
 
             dp_list[j] += dp_list[j-k]
+            print("dp list now is ", dp_list)
     
-    # print(dp_list)
+    print(dp_list)
 
     return (dp_list[limit] - 1)
 
