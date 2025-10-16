@@ -18,10 +18,10 @@ in over five thousand different ways? (5000 ways)
 from extras.utils import sieve_eratosthenes
 
 # number of ways to sum up to the composite number
-LIMIT = 5
+LIMIT = 5000
 
 # limit of sieve of eratosthenes
-PRIME_LIMIT = 20
+PRIME_LIMIT = 1000
 
 
 def prime_partitions(limit=LIMIT, prime_limit=PRIME_LIMIT):
@@ -29,14 +29,28 @@ def prime_partitions(limit=LIMIT, prime_limit=PRIME_LIMIT):
     # up to which number?
     primes = sorted(sieve_eratosthenes(prime_limit))
 
+    answer = None
+
     # dynamic programming list
     dp_list = [0] * (prime_limit + 1)
     dp_list[0] = 1
 
     for p in primes:
-        for i in range(p, limit + 1):
+        for i in range(p, prime_limit + 1):
             dp_list[i] += dp_list[i - p]
+            # print("dp list now is ", dp_list)
 
-    print(dp_list)
+    # print(dp_list)
 
-prime_partitions()
+    for i, dp in enumerate(dp_list):
+        if dp >= limit:
+            answer = i
+            break
+
+    print("for number", answer-1, "the number of prime summations is", dp_list[answer-1])
+    print("for number", answer, "the number of prime summations is", dp_list[answer])
+
+    return answer
+
+
+print(prime_partitions())
