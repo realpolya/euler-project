@@ -21,8 +21,7 @@ from extras.utils import sieve_eratosthenes
 LIMIT = 5000
 
 # limit of sieve of eratosthenes
-PRIME_LIMIT = 1000
-
+PRIME_LIMIT = 100
 
 def prime_partitions(limit=LIMIT, prime_limit=PRIME_LIMIT):
 
@@ -38,19 +37,15 @@ def prime_partitions(limit=LIMIT, prime_limit=PRIME_LIMIT):
     for p in primes:
         for i in range(p, prime_limit + 1):
             dp_list[i] += dp_list[i - p]
-            # print("dp list now is ", dp_list)
-
-    # print(dp_list)
 
     for i, dp in enumerate(dp_list):
         if dp >= limit:
             answer = i
             break
 
-    print("for number", answer-1, "the number of prime summations is", dp_list[answer-1])
-    print("for number", answer, "the number of prime summations is", dp_list[answer])
+    # print("for number", answer-1, "the number of prime summations is", dp_list[answer-1])
+    # print("for number", answer, "the number of prime summations is", dp_list[answer])
 
     return answer
 
-
-print(prime_partitions())
+print("Answer to problem 77: ", prime_partitions())
