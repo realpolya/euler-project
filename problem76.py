@@ -26,7 +26,7 @@ How many different ways can one hundred be written as a sum of at least two posi
 
 from sympy import symbols, expand
 
-LIMIT = 5
+LIMIT = 100
 # LIMIT = 100 # max number of integers for summation
 MAX_INTEGERS = LIMIT
 
