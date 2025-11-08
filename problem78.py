@@ -19,8 +19,15 @@ p(n) is divisible by one million.
 '''
 
 COINS = 5
+DIVISIBLE_LIMIT = 10**6
 
 def coin_partitions(coins=COINS):
 
     print("hello coins")
+
+    # divisible by 1 million
+
+    
+
+
 
