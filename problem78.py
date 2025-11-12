@@ -24,36 +24,19 @@ from extras.utils import dynamic_programming
 
 COINS = 5
 DIVISIBLE_LIMIT = 10**6
+
+
 # goal: p(n) % DIVISIBLE_LIMIT == 0
 # what is n?
+# p(coins) = number of ways
 
 def coin_partitions(coins=COINS):
 
     print("hello coins")
 
-
-
-# copy def from problem76
-def dynamic_programming(limit=LIMIT):
-    '''dynamic programming approach to computing partitions'''
-
-    # # dp[i] will store the number of ways to make amount i
-    dp_list = [0] * (limit + 1)
-    dp_list[0] = 1
-
-    print(dp_list)
-
-    for k in range(1, limit + 1):
-
-        for j in range(k, limit + 1):
-            # nested loops with indices
-
-            dp_list[j] += dp_list[j-k]
-            print("dp list now is ", dp_list)
-    
-    print(dp_list)
-
-    return (dp_list[limit] - 1)
+    print(dynamic_programming(coins))
 
 
 
+
+coin_partitions()
