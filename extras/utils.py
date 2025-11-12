@@ -230,6 +230,7 @@ def is_relatively_prime(num1, num2, primes):
     
     return True
 
+
 def are_coprime(a, b):
     '''fast formula to check co-prime numbers'''
     return math.gcd(a, b) == 1
@@ -252,3 +253,29 @@ def totient_sieve(limit):
     count = sum(phi) - 1 # reduce by 1 to remove the 1/1
 
     return count
+
+
+def dynamic_programming(limit):
+    '''Calculate partitions via dynamic programming. Returns a dp_list'''
+
+    # dp[i] will store the number of 
+    # ways to make amount i
+    dp_list = [0] * (limit + 1)
+
+    # there is only 1 way to make 0 - add nothing
+    dp_list[0] = 1
+
+    # the value of the coin being added on each iteration
+    for coin in range(1, limit + 1):
+
+        # current amount being tracked that starts
+        # with the value of the current coin
+        for amount in range(coin, limit + 1):
+
+            # add the number of ways to make (amount - coin)
+            # because adding this coin to each of those 
+            # ways makes amount
+            dp_list[amount] += dp_list[amount-coin]
+    
+    return dp_list
+

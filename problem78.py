@@ -16,23 +16,28 @@ O   O   O   O   O
 
 Find the least value of n for which 
 p(n) is divisible by one million.
+
 '''
+
+from extras.utils import dynamic_programming
+
 
 COINS = 5
 DIVISIBLE_LIMIT = 10**6
+# goal: p(n) % DIVISIBLE_LIMIT == 0
+# what is n?
 
 def coin_partitions(coins=COINS):
 
     print("hello coins")
 
-    # divisible by 1 million
 
 
 # copy def from problem76
 def dynamic_programming(limit=LIMIT):
-    ''' dynamic programming approach to computing partitions '''
+    '''dynamic programming approach to computing partitions'''
 
-    # dynamic programming list
+    # # dp[i] will store the number of ways to make amount i
     dp_list = [0] * (limit + 1)
     dp_list[0] = 1
 
