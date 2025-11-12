@@ -32,17 +32,19 @@ DIVISIBLE_LIMIT = 10**6
 
 def coin_partitions():
 
-    limit = 1
+    # limit = 1
 
-    new_dp_list = dynamic_programming(limit)
+    # new_dp_list = dynamic_programming(limit)
 
-    print("new dp list is ", new_dp_list)
+    # print("new dp list is ", new_dp_list)
 
-    new_list = new_dp_list.copy()
+    # new_list = new_dp_list.copy()
 
-    for i in range(limit + 1, 6):
-        new_list = dynamic_programming_existing(new_list, i)
-        print(f"After coin {i}:", new_list)
+    dp = [1]
+
+    for i in range(1, 6):
+        dp = dynamic_programming_existing(dp, i)
+        print(f"After coin {i}:", dp)
 
     print("the correct dp list for 5 is ", dynamic_programming(5))
 
