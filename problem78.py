@@ -46,12 +46,16 @@ def coin_partitions():
 
     while not divisible:
 
+        print("amount of coins is now ", limit)
+
         dp_list = dynamic_programming(limit)
 
         if dp_list[-1] % DIVISIBLE_LIMIT == 0:
             print("found")
             answer = limit
             divisible = True
+        
+        limit += 1
         
     return answer
 
