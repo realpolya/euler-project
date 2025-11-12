@@ -283,3 +283,22 @@ def dynamic_programming(limit):
     
     return dp_list
 
+
+def dynamic_programming_existing(existing_list, coin):
+    '''Grow an existing dp_list. Returns a dp_list'''
+
+    # start with pre-existing list
+    dp_list = existing_list.copy()
+    current_length = len(dp_list)
+
+    # newest member
+    target = current_length - 1
+    while len(dp_list) <= target + coin:
+        dp_list.append(dp_list[-1])
+
+    # current amount being tracked that starts
+    # with the value of the current coin
+    for amount in range(coin, len(dp_list)):
+        dp_list[amount] += dp_list[amount-coin]
+    
+    return dp_list

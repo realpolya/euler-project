@@ -34,30 +34,34 @@ def coin_partitions():
 
     limit = 1
 
-    # initiate dp_list
-    # dp_list = dynamic_programming(limit)
+    # # initiate dp_list
+    # # dp_list = dynamic_programming(limit)
     
-    # print(dp_list)
+    # # print(dp_list)
 
-    # final condition
-    divisible = False
+    # # final condition
+    # divisible = False
 
-    answer = 0
+    # answer = 0
 
-    while not divisible:
+    # while not divisible:
 
-        print("amount of coins is now ", limit)
+    #     print("amount of coins is now ", limit)
 
-        dp_list = dynamic_programming(limit)
+    #     dp_list = dynamic_programming(limit)
 
-        if dp_list[-1] % DIVISIBLE_LIMIT == 0:
-            print("found")
-            answer = limit
-            divisible = True
+    #     if dp_list[-1] % DIVISIBLE_LIMIT == 0:
+    #         print("found")
+    #         answer = limit
+    #         divisible = True
         
-        limit += 1
+    #     limit += 1
         
-    return answer
+    # return answer
+
+    
+
+
 
 
 
@@ -88,4 +92,4 @@ def coin_partitions():
     #     # increment coins
 
 
-coin_partitions()
+print("Answer is: ", coin_partitions())
