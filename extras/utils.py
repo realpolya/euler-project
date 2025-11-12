@@ -294,7 +294,8 @@ def dynamic_programming_existing(existing_list, coin):
     # newest member
     target = current_length - 1
     while len(dp_list) <= target + coin:
-        dp_list.append(dp_list[-1])
+        # dp_list.append(dp_list[-1])
+        dp_list.append(0)
 
     # current amount being tracked that starts
     # with the value of the current coin

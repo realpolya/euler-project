@@ -19,7 +19,7 @@ p(n) is divisible by one million.
 
 '''
 
-from extras.utils import dynamic_programming
+from extras.utils import dynamic_programming, dynamic_programming_existing
 
 
 COINS = 5
@@ -33,6 +33,18 @@ DIVISIBLE_LIMIT = 10**6
 def coin_partitions():
 
     limit = 1
+
+    new_dp_list = dynamic_programming(limit)
+
+    print("new dp list is ", new_dp_list)
+
+    new_list = new_dp_list.copy()
+
+    for i in range(limit + 1, 6):
+        new_list = dynamic_programming_existing(new_list, i)
+        print(f"After coin {i}:", new_list)
+
+    print("the correct dp list for 5 is ", dynamic_programming(5))
 
     # # initiate dp_list
     # # dp_list = dynamic_programming(limit)
@@ -58,8 +70,6 @@ def coin_partitions():
     #     limit += 1
         
     # return answer
-
-    
 
 
 
