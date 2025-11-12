@@ -72,7 +72,11 @@ def dynamic_programming(limit=LIMIT):
 
     for k in range(1, limit + 1):
 
+        # print("OUTER: dp_list now is ", dp_list)
+
         for j in range(k, limit + 1):
+
+            # print("INNER: dp_list now is ", dp_list)
             # nested loops with indices
 
             dp_list[j] += dp_list[j-k]

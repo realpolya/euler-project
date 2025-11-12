@@ -30,13 +30,58 @@ DIVISIBLE_LIMIT = 10**6
 # what is n?
 # p(coins) = number of ways
 
-def coin_partitions(coins=COINS):
+def coin_partitions():
 
-    print("hello coins")
+    limit = 1
 
-    print(dynamic_programming(coins))
+    # initiate dp_list
+    # dp_list = dynamic_programming(limit)
+    
+    # print(dp_list)
+
+    # final condition
+    divisible = False
+
+    answer = 0
+
+    while not divisible:
+
+        dp_list = dynamic_programming(limit)
+
+        if dp_list[-1] % DIVISIBLE_LIMIT == 0:
+            print("found")
+            answer = limit
+            divisible = True
+        
+    return answer
 
 
+
+
+    # # we don't know how many n coins, aka what is the limit?
+    # # it needs to be a while loop
+
+    # # initiate dp list
+    # dp_list = [1]
+
+    # # final condition
+    # divisible = False
+
+    # # initiate coins (n) and amount
+
+    # # start the while loop
+    # while not divisible:
+
+    #     # append new element to dp_list
+    #     dp_list.append(0)
+
+    #     # interior loop for amount
+    #     for amount in range()
+
+    #     # check for divisibility of the added element
+    #     if 
+
+    #     # increment coins
 
 
 coin_partitions()

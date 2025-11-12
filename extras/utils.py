@@ -268,9 +268,13 @@ def dynamic_programming(limit):
     # the value of the coin being added on each iteration
     for coin in range(1, limit + 1):
 
+        print("OUTER: dp_list now is ", dp_list, "coin now is ", coin)
+
         # current amount being tracked that starts
         # with the value of the current coin
         for amount in range(coin, limit + 1):
+
+            print("inner: dp_list now is ", dp_list)
 
             # add the number of ways to make (amount - coin)
             # because adding this coin to each of those 
