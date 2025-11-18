@@ -134,7 +134,7 @@ def is_hexagonal(num):
 
 
 def generate_polygonal_set(start, limit, formula):
-    '''generate set of triangular numbers between start and limit'''
+    '''generate set of polygonal numbers between start and limit'''
 
     result_set = set()
     n = 1

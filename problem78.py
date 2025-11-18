@@ -19,8 +19,8 @@ p(n) is divisible by one million.
 
 '''
 
-from extras.utils import dynamic_programming, dynamic_programming_existing
-
+from extras.utils import generate_polygonal_set
+from extras.polygonal import pentagonal_formula
 
 COINS = 5
 DIVISIBLE_LIMIT = 10**6
@@ -33,10 +33,12 @@ DIVISIBLE_LIMIT = 10**6
 def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
     # use pentagonal number theorem
-    
+    pentagonals = generate_polygonal_set(1, 20, pentagonal_formula)
+    print(pentagonals)
 
 
-print("Answer is: ", coin_partitions())
+coin_partitions()
+# print("Answer is: ", coin_partitions())
 
 
 

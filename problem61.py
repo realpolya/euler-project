@@ -53,24 +53,7 @@ and octagonal, is represented by a different number in the set.
 # find all of the numbers up between 1000 and 10 000 in each set
 
 from extras.utils import generate_polygonal_set
-
-def triangular_formula(n):
-    return n * (n+1) / 2
-
-def square_formula(n):
-    return n ** 2
-
-def pentagonal_formula(n):
-    return n * (3 * n - 1)/2
-
-def hexagonal_formula(n):
-    return n * (2 * n - 1)
-
-def heptagonal_formula(n):
-    return n * (5 * n - 3) / 2
-
-def octagonal_formula(n):
-    return n * (3 * n - 2)
+from extras.polygonal import triangular_formula, square_formula, pentagonal_formula, hexagonal_formula, heptagonal_formula, octagonal_formula
 
 def find_overlap(chars, set):
     '''chars are y, checks for numbers that are yr'''
