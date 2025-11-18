@@ -25,7 +25,6 @@ from extras.polygonal import pentagonal_formula
 COINS = 5
 DIVISIBLE_LIMIT = 10**6
 
-
 # goal: p(n) % DIVISIBLE_LIMIT == 0
 # what is n?
 # p(coins) = number of ways
@@ -38,17 +37,16 @@ def coin_partitions(modulo=DIVISIBLE_LIMIT):
     negative = True
     pentagonals = generate_polygonal_set(0, limit+1, pentagonal_formula, negative)
     pentagonals = sorted(pentagonals)
-    # print(sorted(pentagonals))
+
+    answer = None
 
     p_list = [0] * (limit + 1)
     p_list[0] = 1 # partition of 0 is 1
-
+    
     for n in range(1, limit + 1):
 
         positive = True
         positive_tracker = 0
-
-        # print("working with n: ", n, "the p_list is now", p_list)
 
         p = 0
 
@@ -88,24 +86,16 @@ def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
         p_list[n] = p
 
-    # print(p_list)
-
-    answer = None
-
-    print("starting enumerate loop")
-
-    for i, value in enumerate(p_list):
-        if value == 0:
+        if p == 0:
             print("FOUND")
-            answer = i
+            answer = n
             break
 
     return answer
 
 
 
-# coin_partitions()
-print("Answer is: ", coin_partitions())
+print("Answer to problem 78: ", coin_partitions())
 
 
 
