@@ -32,7 +32,7 @@ DIVISIBLE_LIMIT = 10**6
 
 def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
-    limit = 10
+    limit = 50
 
     # use pentagonal number theorem
     negative = True
@@ -47,7 +47,7 @@ def coin_partitions(modulo=DIVISIBLE_LIMIT):
         positive = True
         positive_tracker = 0
 
-        print("working with n: ", n, "the p_list is now", p_list)
+        # print("working with n: ", n, "the p_list is now", p_list)
 
         p = 0
 
