@@ -57,6 +57,8 @@ def coin_partitions():
     divisible = False
 
     answer = 0
+    # subdivision = 100000
+    modulo = DIVISIBLE_LIMIT
 
     while not divisible:
 
@@ -64,7 +66,7 @@ def coin_partitions():
 
         dp_list = dynamic_programming(limit)
 
-        last_ten_thousand = dp_list[-10000:]
+        last_ten_thousand = dp_list[-subdivision:]
         for result in last_ten_thousand:
 
             if result % DIVISIBLE_LIMIT == 0:
@@ -78,7 +80,8 @@ def coin_partitions():
                 if value == part_answer:
                     answer = i
         
-        limit += 10000
+        print("the last result for the last coin now is ", dp_list[-1])
+        limit += subdivision
         
     return answer
 

@@ -255,7 +255,7 @@ def totient_sieve(limit):
     return count
 
 
-def dynamic_programming(limit):
+def dynamic_programming(limit, modulo):
     '''Calculate partitions via dynamic programming. Returns a dp_list'''
 
     # dp[i] will store the number of 
