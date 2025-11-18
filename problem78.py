@@ -32,10 +32,45 @@ DIVISIBLE_LIMIT = 10**6
 
 def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
+    limit = 100
+
     # use pentagonal number theorem
     negative = True
-    pentagonals = generate_polygonal_set(1, 30, pentagonal_formula, negative)
+    pentagonals = generate_polygonal_set(0, limit, pentagonal_formula, negative)
     print(sorted(pentagonals))
+
+    p_list = [0] * (limit + 1)
+    p_list[0] = 1 # partition of 0 is 1
+    positive = True
+    positive_tracker = 0
+
+    for n in range(limit):
+
+        p = 0
+
+        for penta in pentagonals:
+            current_n = n - penta
+
+            if current_n >= 0:
+
+                if positive_tracker > 1:
+                    positive_tracker = 0
+                    positive = False
+                elif positive_tracker < -1:
+                    positive_tracker = 0
+                    positive = True
+
+                if positive:
+                    p += p_list[current_n]
+                    positive_tracker += 1
+                else:
+                    p -= p_list[current_n]
+                    positive_tracker -= 1
+
+        p_list[n] = p
+
+    print(p_list)
+
 
 
 coin_partitions()
