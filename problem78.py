@@ -33,8 +33,9 @@ DIVISIBLE_LIMIT = 10**6
 def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
     # use pentagonal number theorem
-    pentagonals = generate_polygonal_set(1, 20, pentagonal_formula)
-    print(pentagonals)
+    negative = True
+    pentagonals = generate_polygonal_set(1, 20, pentagonal_formula, negative)
+    print(sorted(pentagonals))
 
 
 coin_partitions()

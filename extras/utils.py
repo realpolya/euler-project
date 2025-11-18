@@ -133,7 +133,7 @@ def is_hexagonal(num):
     return False
 
 
-def generate_polygonal_set(start, limit, formula):
+def generate_polygonal_set(start, limit, formula, negative=False):
     '''generate set of polygonal numbers between start and limit'''
 
     result_set = set()
@@ -149,6 +149,21 @@ def generate_polygonal_set(start, limit, formula):
         
         n += 1
     
+    if negative:
+
+        final_n = n
+        n = -1
+
+        current_num = 0
+
+        while abs(n) < final_n:
+
+            current_num = int(formula(n))
+            result_set.add(current_num)
+            
+            n -= 1
+
+
     return result_set
     
 
