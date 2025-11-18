@@ -149,6 +149,7 @@ def generate_polygonal_set(start, limit, formula, negative=False):
         
         n += 1
     
+    # account for negative numbers too
     if negative:
 
         final_n = n
@@ -159,7 +160,8 @@ def generate_polygonal_set(start, limit, formula, negative=False):
         while abs(n) < final_n:
 
             current_num = int(formula(n))
-            result_set.add(current_num)
+            if current_num > start and current_num < limit:
+                result_set.add(current_num)
             
             n -= 1
 

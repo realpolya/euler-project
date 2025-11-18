@@ -34,7 +34,7 @@ def coin_partitions(modulo=DIVISIBLE_LIMIT):
 
     # use pentagonal number theorem
     negative = True
-    pentagonals = generate_polygonal_set(1, 20, pentagonal_formula, negative)
+    pentagonals = generate_polygonal_set(1, 30, pentagonal_formula, negative)
     print(sorted(pentagonals))
 
 
