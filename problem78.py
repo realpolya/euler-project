@@ -32,7 +32,6 @@ DIVISIBLE_LIMIT = 10**6
 
 def coin_partitions():
 
-    # limit = 1
 
     # new_dp_list = dynamic_programming(limit)
 
@@ -40,38 +39,48 @@ def coin_partitions():
 
     # new_list = new_dp_list.copy()
 
-    dp = [1]
+    # dp = [1]
 
-    for i in range(1, 6):
-        dp = dynamic_programming_existing(dp, i)
-        print(f"After coin {i}:", dp)
+    # # for i in range(1, 6):
+    # #     dp = dynamic_programming_existing(dp, i)
+    # #     print(f"After coin {i}:", dp)
 
-    print("the correct dp list for 5 is ", dynamic_programming(5))
+    # print("the correct dp list for 5 is ", dynamic_programming(5))
 
     # # initiate dp_list
     # # dp_list = dynamic_programming(limit)
     
     # # print(dp_list)
 
-    # # final condition
-    # divisible = False
+    limit = 1
+    # final condition
+    divisible = False
 
-    # answer = 0
+    answer = 0
 
-    # while not divisible:
+    while not divisible:
 
-    #     print("amount of coins is now ", limit)
+        print("amount of coins is now ", limit)
 
-    #     dp_list = dynamic_programming(limit)
+        dp_list = dynamic_programming(limit)
 
-    #     if dp_list[-1] % DIVISIBLE_LIMIT == 0:
-    #         print("found")
-    #         answer = limit
-    #         divisible = True
+        last_ten_thousand = dp_list[-10000:]
+        for result in last_ten_thousand:
+
+            if result % DIVISIBLE_LIMIT == 0:
+                print("found, result is ", result)
+                part_answer = result
+                # answer = limit
+                divisible = True
         
-    #     limit += 1
+        if divisible:
+            for i, value in dp_list:
+                if value == part_answer:
+                    answer = i
         
-    # return answer
+        limit += 10000
+        
+    return answer
 
 
 
