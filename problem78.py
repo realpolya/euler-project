@@ -57,19 +57,19 @@ def coin_partitions():
     divisible = False
 
     answer = 0
-    # subdivision = 100000
+    subdivision = 100000
     modulo = DIVISIBLE_LIMIT
 
     while not divisible:
 
         print("amount of coins is now ", limit)
 
-        dp_list = dynamic_programming(limit)
+        dp_list = dynamic_programming(limit, modulo)
 
         last_ten_thousand = dp_list[-subdivision:]
         for result in last_ten_thousand:
 
-            if result % DIVISIBLE_LIMIT == 0:
+            if result == 0:
                 print("found, result is ", result)
                 part_answer = result
                 # answer = limit

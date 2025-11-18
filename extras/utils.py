@@ -280,6 +280,9 @@ def dynamic_programming(limit, modulo):
             # because adding this coin to each of those 
             # ways makes amount
             dp_list[amount] += dp_list[amount-coin]
+
+            # if modulo:
+            dp_list[amount] %= modulo
     
     return dp_list
 
