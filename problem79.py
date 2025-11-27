@@ -17,4 +17,39 @@ possible secret passcode of unknown length.
 
 from extras.problem79_extra import ATTEMPTS
 
-print(ATTEMPTS)
+def derive_passcode():
+    # the numbers are always in order
+
+    # initiate a passcode variable
+    passcode = ''
+
+    count = 0 # temp count
+
+    # loop through attempts
+    for attempt in ATTEMPTS:
+
+        digits = str(attempt)
+
+        # loop through digits
+        for digit in digits:
+
+            # if digits are not seen before, concatenate
+            if str(digit) not in passcode:
+
+                passcode += str(digit)
+        
+        count += 1
+
+        if count > 2:
+            break
+
+    # follow the order of digits until something does not click
+
+    print(passcode)
+
+
+
+
+# print(ATTEMPTS)
+
+derive_passcode()
