@@ -14,3 +14,7 @@ analyse the file so as to determine the shortest
 possible secret passcode of unknown length.
 
 '''
+
+from extras.problem79_extra import ATTEMPTS
+
+print(ATTEMPTS)
