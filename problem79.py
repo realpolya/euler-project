@@ -18,8 +18,6 @@ possible secret passcode of unknown length.
 # topological sort idea: Directed Acyclic Graph (DAG)
 
 from extras.problem79_extra import ATTEMPTS
-# import math
-# from itertools import combinations
 
 
 def is_subsequence(main, incoming):
@@ -30,7 +28,7 @@ def is_subsequence(main, incoming):
     return all(x in it for x in incoming)
 
 
-def reorder_list(new_att, passcode, rulebook):
+def reorder_list(new_att, passcode):
 
     # if subsequence has the same order as passcode
     if is_subsequence(passcode, new_att):
@@ -50,10 +48,11 @@ def reorder_list(new_att, passcode, rulebook):
 
     for a, b in zip(new_att, new_att[1:]):
 
-        # get indices for a and b
+        # get indices for a and b in the passcode
         ia = pass_copy.index(a)
         ib = pass_copy.index(b)
 
+        # if in passcode index of a precedes index of b, change order
         if ia > ib:
             pass_copy.pop(ia)
             ib = pass_copy.index(b)
@@ -76,28 +75,24 @@ def analyze_attempts(attempts=ATTEMPTS):
             passcode.extend(att_list)
             first = False
 
-        passcode = reorder_list(att_list, passcode, rulebook)
-        # print("passcode now is", passcode)
+        # keep reordering list with every attempt
+        passcode = reorder_list(att_list, passcode)
 
-        # add to rulebook
+        # add to rulebook the baked rule
         rulebook.append(att_list)
 
 
     # double check that the rulebook was followed
-    count = 0
     for attempt in attempts:
 
         if not is_subsequence(passcode, list(str(attempt))):
             print("ERROR")
-        # else:
-        #     print(count, ". ALL checks out. Attempt:", attempt, "Passcode:", passcode)
-        #     count += 1
 
     return ''.join(passcode)
 
-# analyze_attempts(samples)
-print(analyze_attempts())
-    
+
+print("Answer to problem 79: ", analyze_attempts())
+
 
 
 
