@@ -38,36 +38,36 @@ def compare_lists(list1, list2):
 # branching would become too extreme (tree too large)
 
 
-def derive_brute_force():
+# def derive_brute_force():
 
-    # get all of the possible digits
-    possible_digits = set()
+#     # get all of the possible digits
+#     possible_digits = set()
 
-    for attempt in ATTEMPTS:
-        digits = list(str(attempt))
+#     for attempt in ATTEMPTS:
+#         digits = list(str(attempt))
 
-        for digit in digits:
-            possible_digits.add(digit)
+#         for digit in digits:
+#             possible_digits.add(digit)
     
-    print(possible_digits)
+#     print(possible_digits)
 
-    print(len(ATTEMPTS))
-    print(math.factorial(8))
-    print(math.factorial(8) * len(ATTEMPTS))
+#     print(len(ATTEMPTS))
+#     print(math.factorial(8))
+#     print(math.factorial(8) * len(ATTEMPTS))
 
-    factorial_obj = {}
+#     factorial_obj = {}
 
-    factorial_digits = list(possible_digits)
+#     factorial_digits = list(possible_digits)
 
-    possible_combos = combinations(factorial_digits, 8) # FIXME: get all possible combos with all digits
-    # print(possible_combos)
+#     possible_combos = combinations(factorial_digits, 8) # FIXME: get all possible combos with all digits
+#     # print(possible_combos)
 
-    for combo in possible_combos:
-        print("hello", combo)
+#     for combo in possible_combos:
+#         print("hello", combo)
 
 
 
-derive_brute_force()
+# derive_brute_force()
 
 
 
