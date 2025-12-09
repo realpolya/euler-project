@@ -19,6 +19,16 @@ from extras.problem79_extra import ATTEMPTS
 import math
 from itertools import combinations
 
+samples = [
+    319,
+    680,
+    180,
+    690,
+    129,
+    620,
+    762
+]
+
 
 def reorder_list(primary, malleable):
 
@@ -26,6 +36,25 @@ def reorder_list(primary, malleable):
     reordered = [x for x in primary if x in malleable] + extras
 
     return reordered
+
+
+def analyze_attempts(attempts=ATTEMPTS):
+
+    passcode = []
+
+    for attempt in attempts:
+
+        att_list = list(str(attempt))
+
+        passcode = reorder_list(att_list, passcode)
+        print("passcode now is", passcode)
+
+analyze_attempts(samples)
+    
+
+
+
+
 
 
 # -----------------------------extras--------------------
