@@ -15,22 +15,15 @@ possible secret passcode of unknown length.
 
 '''
 
-from extras.problem79_extra import ATTEMPTS
-import math
-from itertools import combinations
+# topological sort idea: Directed Acyclic Graph (DAG)
 
-samples = [
-    319,
-    680,
-    180,
-    690,
-    129,
-    620,
-    762
-]
+from extras.problem79_extra import ATTEMPTS
+# import math
+# from itertools import combinations
 
 
 def is_subsequence(main, incoming):
+    '''check that incoming list is in the same order as main'''
 
     it = iter(main)
 
@@ -39,29 +32,20 @@ def is_subsequence(main, incoming):
 
 def reorder_list(new_att, passcode, rulebook):
 
-    print("------------------start reorder list-------------")
-
-    print("new_att is now", new_att, "passcode is now", passcode)
-
+    # if subsequence has the same order as passcode
     if is_subsequence(passcode, new_att):
-        print("already in order")
         return passcode
 
-    print("not in order or extra items")
+    # identifying new digits
     extras = [x for x in new_att if x not in passcode]
     reordered = [x for x in new_att if x in passcode]
 
-
+    # if no overlap between new_att and passcode
     if len(reordered) == 0:
         reordered = passcode + extras
         return reordered
 
-    print("extras are", extras, "reordered is ", reordered)
-
-    # new_att is now ['6', '8', '0'] passcode is now ['3', '1', '9']
-    # extras are ['6', '8', '0'] reordered is  ['6', '8', '0']
-    # passcode now is ['6', '8', '0'] 
-
+    # if digits exist and need reordering
     pass_copy = list(passcode) + extras
 
     for a, b in zip(new_att, new_att[1:]):
@@ -93,20 +77,21 @@ def analyze_attempts(attempts=ATTEMPTS):
             first = False
 
         passcode = reorder_list(att_list, passcode, rulebook)
-        print("passcode now is", passcode)
+        # print("passcode now is", passcode)
 
         # add to rulebook
         rulebook.append(att_list)
 
+
+    # double check that the rulebook was followed
     count = 0
-    # double check
     for attempt in attempts:
 
         if not is_subsequence(passcode, list(str(attempt))):
             print("ERROR")
-        else:
-            print(count, ". ALL checks out. Attempt:", attempt, "Passcode:", passcode)
-            count += 1
+        # else:
+        #     print(count, ". ALL checks out. Attempt:", attempt, "Passcode:", passcode)
+        #     count += 1
 
     return ''.join(passcode)
 
