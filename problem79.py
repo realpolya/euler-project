@@ -66,6 +66,7 @@ def reorder_list(new_att, passcode):
 def analyze_attempts(attempts=ATTEMPTS):
 
     passcode = []
+    rulebook = [] # attempts already covered
     first = True
 
     for attempt in attempts:
@@ -78,6 +79,9 @@ def analyze_attempts(attempts=ATTEMPTS):
 
         passcode = reorder_list(att_list, passcode)
         print("passcode now is", passcode)
+
+        # add to rulebook
+        rulebook.append(att_list)
 
 
 analyze_attempts(samples)
