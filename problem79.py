@@ -98,6 +98,13 @@ def analyze_attempts(attempts=ATTEMPTS):
         # add to rulebook
         rulebook.append(att_list)
 
+    # double check
+    for attempt in attempts:
+
+        if not is_subsequence(passcode, list(str(attempt))):
+            print("ERROR")
+        else:
+            print("ALL checks out. Attempt:", attempt, "Passcode:", passcode)
 
 analyze_attempts(samples)
     
