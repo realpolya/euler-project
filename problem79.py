@@ -20,19 +20,22 @@ import math
 from itertools import combinations
 
 
+# -----------------------------extras--------------------
+
+
 # compare every two attempts, then merge and compare every four (up until you have all 50)
 
-def compare_lists(list1, list2):
-    ''' compare two lists of numbers and return a combination with possible order '''
+# def compare_lists(list1, list2):
+#     ''' compare two lists of numbers and return a combination with possible order '''
 
-    new_order = list1.copy()
+#     new_order = list1.copy()
 
-    for digit in list2:
+#     for digit in list2:
 
-        if digit not in new_order:
-            new_order.append(digit)
+#         if digit not in new_order:
+#             new_order.append(digit)
         
-    # 680 and 180 can return two possibilities: 6180 and 1680
+#     # 680 and 180 can return two possibilities: 6180 and 1680
 
 
 # branching would become too extreme (tree too large)
