@@ -29,6 +29,7 @@ samples = [
     762
 ]
 
+
 def is_subsequence(main, incoming):
 
     it = iter(main)
@@ -36,7 +37,7 @@ def is_subsequence(main, incoming):
     return all(x in it for x in incoming)
 
 
-def reorder_list(new_att, passcode):
+def reorder_list(new_att, passcode, rulebook):
 
     print("------------------start reorder list-------------")
 
@@ -53,6 +54,7 @@ def reorder_list(new_att, passcode):
 
     if len(reordered) == 0:
         reordered = passcode + extras
+        return reordered
 
     print("extras are", extras, "reordered is ", reordered)
 
@@ -60,7 +62,20 @@ def reorder_list(new_att, passcode):
     # extras are ['6', '8', '0'] reordered is  ['6', '8', '0']
     # passcode now is ['6', '8', '0'] 
 
-    return reordered
+    pass_copy = list(passcode) + extras
+
+    for a, b in zip(new_att, new_att[1:]):
+
+        # get indices for a and b
+        ia = pass_copy.index(a)
+        ib = pass_copy.index(b)
+
+        if ia > ib:
+            pass_copy.pop(ia)
+            ib = pass_copy.index(b)
+            pass_copy.insert(ib, a)
+        
+    return pass_copy
 
 
 def analyze_attempts(attempts=ATTEMPTS):
@@ -77,7 +92,7 @@ def analyze_attempts(attempts=ATTEMPTS):
             passcode.extend(att_list)
             first = False
 
-        passcode = reorder_list(att_list, passcode)
+        passcode = reorder_list(att_list, passcode, rulebook)
         print("passcode now is", passcode)
 
         # add to rulebook
