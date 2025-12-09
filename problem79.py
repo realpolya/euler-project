@@ -20,6 +20,14 @@ import math
 from itertools import combinations
 
 
+def reorder_list(primary, malleable):
+
+    extras = [x for x in malleable if x not in primary]
+    reordered = [x for x in primary if x in malleable] + extras
+
+    return reordered
+
+
 # -----------------------------extras--------------------
 
 
