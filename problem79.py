@@ -38,12 +38,18 @@ def is_subsequence(main, incoming):
 
 def reorder_list(new_att, passcode):
 
+    print("------------------start reorder list-------------")
+
     print("new_att is now", new_att, "passcode is now", passcode)
 
+    if is_subsequence(passcode, new_att):
+        print("already in order")
+        return passcode
+
+    print("not in order or extra items")
     extras = [x for x in new_att if x not in passcode]
     reordered = [x for x in new_att if x in passcode]
 
-    
 
     if len(reordered) == 0:
         reordered = passcode + extras
