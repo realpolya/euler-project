@@ -29,11 +29,30 @@ samples = [
     762
 ]
 
+def is_subsequence(main, incoming):
 
-def reorder_list(primary, malleable):
+    it = iter(main)
 
-    extras = [x for x in malleable if x not in primary]
-    reordered = [x for x in primary if x in malleable] + extras
+    return all(x in it for x in incoming)
+
+
+def reorder_list(new_att, passcode):
+
+    print("new_att is now", new_att, "passcode is now", passcode)
+
+    extras = [x for x in new_att if x not in passcode]
+    reordered = [x for x in new_att if x in passcode]
+
+    
+
+    if len(reordered) == 0:
+        reordered = passcode + extras
+
+    print("extras are", extras, "reordered is ", reordered)
+
+    # new_att is now ['6', '8', '0'] passcode is now ['3', '1', '9']
+    # extras are ['6', '8', '0'] reordered is  ['6', '8', '0']
+    # passcode now is ['6', '8', '0'] 
 
     return reordered
 
@@ -41,13 +60,19 @@ def reorder_list(primary, malleable):
 def analyze_attempts(attempts=ATTEMPTS):
 
     passcode = []
+    first = True
 
     for attempt in attempts:
 
         att_list = list(str(attempt))
 
+        if first:
+            passcode.extend(att_list)
+            first = False
+
         passcode = reorder_list(att_list, passcode)
         print("passcode now is", passcode)
+
 
 analyze_attempts(samples)
     
