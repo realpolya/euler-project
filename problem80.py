@@ -12,3 +12,35 @@ For the first one hundred natural numbers, find the total of the digital
 sums of the first one hundred decimal digits for all the irrational square roots.
 
 '''
+
+def count_decimal_digits(num=2):
+
+    target_len = 100
+    sum = 0
+    complete = False
+    x = 1
+
+    # use the Newton-Raphson formula
+    while not complete:
+
+        # use x 
+        new_x = (1 / 2) * (x + (num / x))
+
+        # reassign x
+        x = new_x
+
+        decimals = str(new_x).split(".", 1)[1]
+
+        if len(decimals) >= target_len:
+            complete = True
+    
+
+
+
+
+
+
+
+
+def is_num_irrational(num=2):
+
