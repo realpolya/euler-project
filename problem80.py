@@ -32,8 +32,14 @@ def count_decimal_digits(num=2):
         decimals = str(new_x).split(".", 1)[1]
 
         if len(decimals) >= target_len:
+
+            for d in decimals:
+
+                sum += int(d)
+
             complete = True
     
+    return sum
 
 
 
