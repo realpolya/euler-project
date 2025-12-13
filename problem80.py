@@ -18,17 +18,23 @@ from decimal import Decimal, getcontext
 def count_decimal_digits(num=2):
 
     target_len = 100
+
+    getcontext().prec = target_len
+
     sum = 0
     complete = False
-    x = 1
+
+    x = Decimal(1)
+    n = Decimal(num)
 
     count = 0
+
 
     # use the Newton-Raphson formula
     while not complete:
 
         # use x 
-        new_x = (1 / 2) * (x + (num / x))
+        new_x = (x + (n / x)) / 2
 
         print("new_x is ", new_x, "old x is", x)
 
