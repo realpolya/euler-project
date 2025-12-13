@@ -20,14 +20,19 @@ def count_decimal_digits(num=2):
     complete = False
     x = 1
 
+    count = 0
+
     # use the Newton-Raphson formula
     while not complete:
 
         # use x 
         new_x = (1 / 2) * (x + (num / x))
 
+        print("new_x is ", new_x, "old x is", x)
+
         # reassign x
         x = new_x
+
 
         decimals = str(new_x).split(".", 1)[1]
 
@@ -38,15 +43,18 @@ def count_decimal_digits(num=2):
                 sum += int(d)
 
             complete = True
+        
+        count += 1
+
+        if count > 10:
+
+            complete = True
     
     return sum
 
 
 
+print(count_decimal_digits())
 
-
-
-
-
-def is_num_irrational(num=2):
+# def is_num_irrational(num=2):
 
