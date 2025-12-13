@@ -13,6 +13,8 @@ sums of the first one hundred decimal digits for all the irrational square roots
 
 '''
 
+from decimal import Decimal, getcontext
+
 def count_decimal_digits(num=2):
 
     target_len = 100
