@@ -19,9 +19,11 @@ def count_decimal_digits(num=2):
 
     # length of digits
     target_len = 100
+    guard = 25
+    work_precision = target_len + guard
 
     # assign length of digits to decimal
-    getcontext().prec = target_len
+    getcontext().prec = work_precision
 
     sum = 0
     complete = False
@@ -63,9 +65,4 @@ def count_decimal_digits(num=2):
     
     return sum
 
-
-
 print(count_decimal_digits())
-
-# def is_num_irrational(num=2):
-
