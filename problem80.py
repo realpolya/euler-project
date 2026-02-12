@@ -50,44 +50,4 @@ def count_decimal_digits(num=2):
         frac_sum = sum(int(d) for d in frac_part)
         return frac_sum
 
-        # count = 0
-
-        # # need to increase resolution
-
-        # # use the Newton-Raphson formula for computing digits
-        # while not complete:
-
-        #     # use x 
-        #     new_x = (x + (n / x)) / 2
-
-        #     # if the two are the same, the precision stays the same
-        #     if x == new_x:
-
-        #         complete = True
-
-        #     print("new_x is ", new_x, "old x is", x)
-
-        #     # reassign x
-        #     x = new_x
-
-        #     # change to fixed-point formatting
-        #     decimals = str(new_x).split(".", 1)[1]
-
-        #     if len(decimals) >= target_len:
-
-        #         for d in decimals:
-
-        #             sum += int(d)
-
-        #         complete = True
-            
-        #     count += 1
-
-        #     # 10 rounds for now
-        #     if count > 10:
-
-        #         complete = True
-    
-    # return sum
-
-print(count_decimal_digits())
+print("for number 2, the count is: ", count_decimal_digits())
