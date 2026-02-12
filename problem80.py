@@ -13,6 +13,7 @@ sums of the first one hundred decimal digits for all the irrational square roots
 
 '''
 
+import math
 from decimal import Decimal, getcontext, localcontext
 
 def count_decimal_digits(num=2):
@@ -49,5 +50,18 @@ def count_decimal_digits(num=2):
 
         frac_sum = sum(int(d) for d in frac_part)
         return frac_sum
+    
+
+def sum_decimal_digits_sqrt(num=2):
+
+    target_len = 100
+    scaled = math.isqrt(num * 10 ** (2 * target_len))
+
+    s = str(scaled).zfill(target_len + 1)
+    frac = s[1:]
+    frac_sum = sum(int(char) for char in frac)
+    return frac_sum
+
 
 print("for number 2, the count is: ", count_decimal_digits())
+print("for number 2, the count of second function is: ", sum_decimal_digits_sqrt())
