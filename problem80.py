@@ -18,12 +18,6 @@ from decimal import Decimal, getcontext, localcontext
 
 from extras.utils import is_irrational_sqrt
 
-# def is_irrational_sqrt(n):
-
-#     root = math.isqrt(n)
-#     return root * root != n
-
-
 def count_decimal_digits(num=2):
 
     # length of digits
@@ -79,8 +73,16 @@ def expansion_sum(limit=100):
 
     grand_sum = 0
 
+    for n in range(1, limit + 1):
+
+        if is_irrational_sqrt(n):
+
+            grand_sum += sum_decimal_digits_sqrt(n)
+
     return grand_sum
 
 
 print("for number 2, the count is: ", count_decimal_digits())
 print("for number 2, the count of second function is: ", sum_decimal_digits_sqrt())
+
+print("the answer", expansion_sum())
