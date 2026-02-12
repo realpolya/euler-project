@@ -16,6 +16,14 @@ sums of the first one hundred decimal digits for all the irrational square roots
 import math
 from decimal import Decimal, getcontext, localcontext
 
+from extras.utils import is_irrational_sqrt
+
+# def is_irrational_sqrt(n):
+
+#     root = math.isqrt(n)
+#     return root * root != n
+
+
 def count_decimal_digits(num=2):
 
     # length of digits
@@ -66,6 +74,12 @@ def sum_decimal_digits_sqrt(num=2):
     return frac_sum
 
 
+def expansion_sum(limit=100):
+    '''sum all of the first 100 digits of each irrational square root'''
+
+    grand_sum = 0
+
+    return grand_sum
 
 
 print("for number 2, the count is: ", count_decimal_digits())

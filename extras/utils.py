@@ -19,6 +19,12 @@ def is_prime(number):
     return True
 
 
+def is_irrational_sqrt(n):
+
+    root = math.isqrt(n)
+    return root * root != n
+
+
 def sieve_eratosthenes(limit):
     '''Calculate a set of primes up to a limit'''
 
