@@ -54,16 +54,19 @@ def count_decimal_digits(num=2):
         return frac_sum
     
 
-# def sum_decimal_digits_sqrt(num=2):
+def sum_decimal_digits_sqrt(num=2):
 
-#     target_len = 100
-#     scaled = math.isqrt(num * 10 ** (2 * target_len))
+    target_len = 100
+    scaled = math.isqrt(num * 10 ** (2 * target_len))
 
-#     s = str(scaled).zfill(target_len + 1)
-#     frac = s[1:]
-#     frac_sum = sum(int(char) for char in frac)
-#     return frac_sum
+    s = str(scaled).zfill(target_len + 1)
+    # frac = s[1:]
+    first_100_digits = s[:target_len]
+    frac_sum = sum(int(char) for char in first_100_digits)
+    return frac_sum
+
+
 
 
 print("for number 2, the count is: ", count_decimal_digits())
-# print("for number 2, the count of second function is: ", sum_decimal_digits_sqrt())
+print("for number 2, the count of second function is: ", sum_decimal_digits_sqrt())
