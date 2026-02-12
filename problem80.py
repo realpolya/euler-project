@@ -17,8 +17,10 @@ from decimal import Decimal, getcontext
 
 def count_decimal_digits(num=2):
 
+    # length of digits
     target_len = 100
 
+    # assign length of digits to decimal
     getcontext().prec = target_len
 
     sum = 0
@@ -29,8 +31,9 @@ def count_decimal_digits(num=2):
 
     count = 0
 
+    # need to increase resolution
 
-    # use the Newton-Raphson formula
+    # use the Newton-Raphson formula for computing digits
     while not complete:
 
         # use x 
@@ -40,7 +43,6 @@ def count_decimal_digits(num=2):
 
         # reassign x
         x = new_x
-
 
         decimals = str(new_x).split(".", 1)[1]
 
@@ -54,6 +56,7 @@ def count_decimal_digits(num=2):
         
         count += 1
 
+        # 10 rounds for now
         if count > 10:
 
             complete = True
