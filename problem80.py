@@ -13,7 +13,7 @@ sums of the first one hundred decimal digits for all the irrational square roots
 
 '''
 
-from decimal import Decimal, getcontext
+from decimal import Decimal, getcontext, localcontext
 
 def count_decimal_digits(num=2):
 
@@ -23,46 +23,71 @@ def count_decimal_digits(num=2):
     work_precision = target_len + guard
 
     # assign length of digits to decimal
-    getcontext().prec = work_precision
+    # getcontext().prec = work_precision
 
-    sum = 0
-    complete = False
+    with localcontext() as ctx:
 
-    x = Decimal(1)
-    n = Decimal(num)
+        ctx.prec = work_precision
 
-    count = 0
+        # sum = 0
+        # complete = False
 
-    # need to increase resolution
+        n = Decimal(num)
+        x = Decimal(1)
 
-    # use the Newton-Raphson formula for computing digits
-    while not complete:
-
-        # use x 
-        new_x = (x + (n / x)) / 2
-
-        print("new_x is ", new_x, "old x is", x)
-
-        # reassign x
-        x = new_x
-
-        decimals = str(new_x).split(".", 1)[1]
-
-        if len(decimals) >= target_len:
-
-            for d in decimals:
-
-                sum += int(d)
-
-            complete = True
+        while True:
+            new_x = (x + (n / x)) / 2
+            if x == new_x:
+                break
+            x = new_x
         
-        count += 1
+        # force fixed point output to see all of the digits
+        fixed_point = format(x, 'f')
+        frac_part = fixed_point.split('.', 1)[1]
+        zeros = "0" * target_len
+        frac_part = (frac_part + zeros)[:target_len]
 
-        # 10 rounds for now
-        if count > 10:
+        frac_sum = sum(int(d) for d in frac_part)
+        return frac_sum
 
-            complete = True
+        # count = 0
+
+        # # need to increase resolution
+
+        # # use the Newton-Raphson formula for computing digits
+        # while not complete:
+
+        #     # use x 
+        #     new_x = (x + (n / x)) / 2
+
+        #     # if the two are the same, the precision stays the same
+        #     if x == new_x:
+
+        #         complete = True
+
+        #     print("new_x is ", new_x, "old x is", x)
+
+        #     # reassign x
+        #     x = new_x
+
+        #     # change to fixed-point formatting
+        #     decimals = str(new_x).split(".", 1)[1]
+
+        #     if len(decimals) >= target_len:
+
+        #         for d in decimals:
+
+        #             sum += int(d)
+
+        #         complete = True
+            
+        #     count += 1
+
+        #     # 10 rounds for now
+        #     if count > 10:
+
+        #         complete = True
     
-    return sum
+    # return sum
 
 print(count_decimal_digits())
