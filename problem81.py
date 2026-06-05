@@ -20,3 +20,18 @@ right by only moving right and down in
 80 by 80 matrix.
 
 '''
+
+def get_txt_matrix(file: str):
+
+    rows = []
+
+    with open(file, "r", encoding="utf-8") as f:
+        rows = [[int(value) for value in line.strip().split(",")] for line in f if line.strip()]
+
+    return rows
+
+
+# TODO: try lattice paths, combinators, binomial coefficient
+
+print("the length of rows is", len(get_txt_matrix("./extras/problem81_matrix.txt")))
+print(get_txt_matrix("./extras/problem81_matrix.txt")[1])
