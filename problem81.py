@@ -21,6 +21,8 @@ right by only moving right and down in
 
 '''
 
+from extras.utils import binomial_coefficient
+
 def get_txt_matrix(file: str):
 
     rows = []
@@ -35,3 +37,6 @@ def get_txt_matrix(file: str):
 
 print("the length of rows is", len(get_txt_matrix("./extras/problem81_matrix.txt")))
 print(get_txt_matrix("./extras/problem81_matrix.txt")[1])
+
+
+print(binomial_coefficient(158, 79))
