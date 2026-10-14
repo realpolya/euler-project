@@ -76,19 +76,18 @@ def reverse_path(matrix: list, size: int):
     '''try starting from the bottom of the matrix and reverse engineering the minimal sum path'''
 
 
-
     # current gets assigned to the bottom right number in the 2d matrix
     x = -1
     y = -1
     current = matrix[x][y]
     # variable for sum
-    sum = current
+    sum = current + matrix [0][0]
     moves = 0
 
-    while moves < (size * 2) - 2:
+    while moves < (size * 2) - 3:
 
         moves += 1
-
+        
         up_candidate = matrix[x][y-1]
         left_candidate = matrix[x-1][y]
 
@@ -102,7 +101,9 @@ def reverse_path(matrix: list, size: int):
             current = left_candidate
             x -= 1
 
-    
+        print("current is", current)
+
+    print("sum is", sum)
 
     # always add the smaller one
 
@@ -110,5 +111,6 @@ def reverse_path(matrix: list, size: int):
 
 
 
-create_matrix(SAMPLE_MATRIX, 5)
+matrix = create_matrix(SAMPLE_MATRIX, 5)
+reverse_path(matrix, 5)
 # print(binomial_coefficient(158, 79))
