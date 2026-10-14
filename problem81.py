@@ -45,7 +45,7 @@ def get_txt_matrix(file: str):
 # try reverse-engineering the path
 
 # print("the length of rows is", len(get_txt_matrix("./extras/problem81_matrix.txt")))
-# print(get_txt_matrix("./extras/problem81_matrix.txt")[1])
+long_matrix = get_txt_matrix("./extras/problem81_matrix.txt")
 
 
 def create_matrix(text: str, size: int):
@@ -87,6 +87,21 @@ def reverse_path(matrix: list, size: int):
     while moves < (size * 2) - 3:
 
         moves += 1
+
+        if (y-1) < -size:
+            # ignore up candidates, just sum up the left candidates
+            left_candidate = matrix[x-1][y]
+            sum += left_candidate
+            current = left_candidate
+            x -= 1
+            continue
+
+        if (x-1) < -size:
+            up_candidate = matrix[x][y-1]
+            sum += up_candidate
+            current = up_candidate
+            y -= 1
+            continue
         
         up_candidate = matrix[x][y-1]
         left_candidate = matrix[x-1][y]
@@ -105,12 +120,15 @@ def reverse_path(matrix: list, size: int):
 
     print("sum is", sum)
 
+    return sum
+
     # always add the smaller one
 
     # move the current x
 
 
-
-matrix = create_matrix(SAMPLE_MATRIX, 5)
-reverse_path(matrix, 5)
+# matrix = create_matrix(SAMPLE_MATRIX, 5)
+# reverse_path(matrix, 5)
 # print(binomial_coefficient(158, 79))
+
+reverse_path(long_matrix, 80)
