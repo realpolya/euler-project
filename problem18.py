@@ -65,6 +65,7 @@ def pyramid_to_dict(str=pyramid):
     
     return pyra_dict
 
+
 def max_sum(dict):
 
     # create a copy of dictionary

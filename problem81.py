@@ -72,6 +72,36 @@ def create_matrix(text: str, size: int):
     return matrix
 
 
+def get_pyramid_top(matrix: list, size: int):
+
+    pyra_dict = {}
+
+    # loop through the matrix
+    for i_row, row in enumerate(matrix):
+        for i_num, num in enumerate(row):
+            current_key = i_row + i_num
+
+            if current_key not in pyra_dict:
+                pyra_dict[current_key] = []
+
+            pyra_dict[current_key].append(num)
+
+    for numbers in pyra_dict.values():
+        numbers.reverse()
+
+    print(pyra_dict)
+
+    
+
+    # establish indices
+    # [0][0], [1][0], [1][1]    
+    # for 
+
+
+# def get_pyramid_bottom(matrix:list, size:int):
+
+
+
 def reverse_path(matrix: list, size: int):
     '''try starting from the bottom of the matrix and reverse engineering the minimal sum path'''
 
@@ -127,8 +157,10 @@ def reverse_path(matrix: list, size: int):
     # move the current x
 
 
-# matrix = create_matrix(SAMPLE_MATRIX, 5)
+matrix = create_matrix(SAMPLE_MATRIX, 5)
+get_pyramid_top(matrix, 5)
+
 # reverse_path(matrix, 5)
 # print(binomial_coefficient(158, 79))
 
-reverse_path(long_matrix, 80)
+# reverse_path(long_matrix, 80)
