@@ -100,6 +100,13 @@ def count_min_sum(text_matrix, size):
     matrix = create_matrix(text_matrix, size)
     pyramid = get_pyramid(matrix, size)
 
+    # count the min sum of the top half of the pyramid
+
+    # separate by the number of keys
+    top_pyramid = {key: value for key, value in pyramid.items() if key < size}
+    bottom_pyramid = {key: value for key, value in pyramid.items() if key >= size}
+
+    print("this is top_pyramid", top_pyramid)
 
 
 count_min_sum(SAMPLE_MATRIX, 5)
