@@ -28,8 +28,6 @@ SAMPLE_MATRIX = '''131 673 234 103 18
 805 732 524 37 331
 '''
 
-from extras.utils import binomial_coefficient
-
 def get_txt_matrix(file: str):
     '''obtain the matrix from txt'''
 
@@ -41,10 +39,6 @@ def get_txt_matrix(file: str):
     return rows
 
 
-# TODO: try lattice paths, combinators, binomial coefficient
-# try reverse-engineering the path
-
-# print("the length of rows is", len(get_txt_matrix("./extras/problem81_matrix.txt")))
 long_matrix = get_txt_matrix("./extras/problem81_matrix.txt")
 
 
@@ -184,8 +178,6 @@ def count_min_sum(matrix, size):
     # print("bottom pyramid min sum is ", bottom_pyramid_min_sum)
 
     # print("min sum total", top_pyramid_min_sum + bottom_pyramid_min_sum)
-
-
 
 
 
