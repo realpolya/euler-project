@@ -95,21 +95,101 @@ def get_pyramid(matrix: list, size: int):
     return pyra_dict
 
 
-def count_min_sum(text_matrix, size):
+def get_min_sum(dict, size):
+    '''get minimal path sum – adapted from problem 18 maximum path sum'''
 
-    matrix = create_matrix(text_matrix, size)
+    # create a copy of dictionary
+    new_dict =  dict.copy()
+    current_count = 0 # counting when the center of the pyramid is reached
+
+    for i in range(len(new_dict.keys()) - 2, -1, -1): # start at row second to last, end at 0
+        
+        # interior loop for every row
+        for index, num in enumerate(new_dict[i]):
+
+            if current_count < size - 1:
+
+                # TODO:
+
+                if index == 0:
+
+                    # First element: only one neighbor
+                    new_dict[i][index] += new_dict[i+1][index]
+
+                elif index == len(new_dict[i]) - 1:
+                    # Last element: only one neighbor
+                    new_dict[i][index] += new_dict[i+1][index-1]
+
+                else:
+                    # Middle elements: choose the smaller of two neighbors
+                    new_dict[i][index] += min(
+                        new_dict[i+1][index-1],
+                        new_dict[i+1][index]
+                    )
+
+            else:
+
+                # compare the options below
+                if new_dict[i+1][index] < new_dict[i+1][index+1]:
+
+                    new_dict[i][index] += new_dict[i+1][index]
+                
+                elif new_dict[i+1][index] >= new_dict[i+1][index+1]:
+
+                    new_dict[i][index] += new_dict[i+1][index+1]
+
+        current_count += 1
+                
+    return new_dict[0][0]
+
+
+
+def count_min_sum(matrix, size):
+
+    # matrix = create_matrix(text_matrix, size)
     pyramid = get_pyramid(matrix, size)
+
+    # print("pyramid is", pyramid)
+    pyramid_min_sum = get_min_sum(pyramid, size)
+    print(pyramid_min_sum)
 
     # count the min sum of the top half of the pyramid
 
     # separate by the number of keys
-    top_pyramid = {key: value for key, value in pyramid.items() if key < size}
-    bottom_pyramid = {key: value for key, value in pyramid.items() if key >= size}
+    # top_pyramid = {key: value for key, value in pyramid.items() if key < size}
+    # bottom_pyramid = {key: value for key, value in pyramid.items() if key >= size}
 
-    print("this is top_pyramid", top_pyramid)
+    # # print("this is top_pyramid", top_pyramid)
+    # print("this is bottom_pyramid", bottom_pyramid)
+
+    # top_pyramid_min_sum = get_min_sum(top_pyramid)
+    # print("top pyramid min sum is ", top_pyramid_min_sum)
+
+    # # copy bottom pyramid
+    # bottom_copy = {key: values.copy() for key, values in bottom_pyramid.items()}
+
+    # shifted_bottom = {key - size: value for key, value in bottom_copy.items()}
+    # last_key = max(shifted_bottom)
+    # reversed_bottom = {
+    #     last_key - key: value for key, value in shifted_bottom.items()
+    # }
+
+    # reversed_bottom_pyramid = dict(sorted(reversed_bottom.items()))
+
+    # # print(reversed_bottom_pyramid)
 
 
-count_min_sum(SAMPLE_MATRIX, 5)
+    # bottom_pyramid_min_sum = get_min_sum(reversed_bottom_pyramid)
+
+    # print("bottom pyramid min sum is ", bottom_pyramid_min_sum)
+
+    # print("min sum total", top_pyramid_min_sum + bottom_pyramid_min_sum)
+
+
+
+
+
+count_min_sum(long_matrix, 80)
 
 
 
