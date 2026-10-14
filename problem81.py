@@ -21,6 +21,13 @@ right by only moving right and down in
 
 '''
 
+MATRIX = '''131 673 234 103 18
+201 96 342 965 150
+630 803 746 422 111
+537 699 497 121 956
+805 732 524 37 331
+'''
+
 from extras.utils import binomial_coefficient
 
 def get_txt_matrix(file: str):
@@ -34,9 +41,29 @@ def get_txt_matrix(file: str):
 
 
 # TODO: try lattice paths, combinators, binomial coefficient
+# try reverse-engineering the path
 
 print("the length of rows is", len(get_txt_matrix("./extras/problem81_matrix.txt")))
 print(get_txt_matrix("./extras/problem81_matrix.txt")[1])
 
 
-print(binomial_coefficient(158, 79))
+def create_matrix(text: str, size: int):
+
+    # create 2D array 
+    matrix = [[] for _ in range(size)]
+
+    lines = text.splitlines()
+    print("lines are", lines)
+
+    for i, line in enumerate(lines):
+
+        numbers = line.split()
+
+        for number in numbers:
+
+            matrix[i].append(int(number))
+
+    print(matrix)
+
+create_matrix(MATRIX, 5)
+# print(binomial_coefficient(158, 79))
