@@ -72,7 +72,8 @@ def create_matrix(text: str, size: int):
     return matrix
 
 
-def get_pyramid_top(matrix: list, size: int):
+def get_pyramid(matrix: list, size: int):
+    '''get the matrix into a dictionary with key-value pairs'''
 
     pyra_dict = {}
 
@@ -91,16 +92,21 @@ def get_pyramid_top(matrix: list, size: int):
 
     print(pyra_dict)
 
-    
-
-    # establish indices
-    # [0][0], [1][0], [1][1]    
-    # for 
+    return pyra_dict
 
 
-# def get_pyramid_bottom(matrix:list, size:int):
+def count_min_sum(text_matrix, size):
+
+    matrix = create_matrix(text_matrix, size)
+    pyramid = get_pyramid(matrix, size)
 
 
+
+count_min_sum(SAMPLE_MATRIX, 5)
+
+
+
+# ------------------ OLD SOLUTION ------------------------
 
 def reverse_path(matrix: list, size: int):
     '''try starting from the bottom of the matrix and reverse engineering the minimal sum path'''
@@ -157,8 +163,6 @@ def reverse_path(matrix: list, size: int):
     # move the current x
 
 
-matrix = create_matrix(SAMPLE_MATRIX, 5)
-get_pyramid_top(matrix, 5)
 
 # reverse_path(matrix, 5)
 # print(binomial_coefficient(158, 79))
